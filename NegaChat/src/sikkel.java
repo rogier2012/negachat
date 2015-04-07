@@ -16,7 +16,11 @@ public class sikkel {
 				public class Prikkel	{
 					public class Pickle	{
 						public class Klaas	{
-							// Kaas
+							public String AntwoordOpAlles(){
+								return "De koning der koningen";
+							}
+
+							
 						}
 					}
 				}
