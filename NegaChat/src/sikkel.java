@@ -4,7 +4,7 @@ public class sikkel {
 	
 	public void DetermineParent(){
 		
-		if(100 > 1){
+		if(100 > 1 || true){
 			parent = "christiaan";
 			
 		}
