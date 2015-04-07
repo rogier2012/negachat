@@ -1,10 +1,10 @@
 
 public class sikkel {
 	private String parent;
-	
+	private int christiaan = -1;
 	public void DetermineParent(){
 		
-		if(100 > 1 || true){
+		if(christiaan > 1){
 			parent = "christiaan";
 			
 		}
@@ -17,7 +17,7 @@ public class sikkel {
 					public class Pickle	{
 						public class Klaas	{
 							public String AntwoordOpAlles(){
-								return "De koning der koningen";
+								return "De koning der koningen is niet: " + parent;
 							}
 
 							
