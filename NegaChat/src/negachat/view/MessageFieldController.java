@@ -3,23 +3,17 @@ package negachat.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MessageFieldController {
+public class MessageFieldController implements ActionListener {
 	private MessageField mField;
-	private ActionListener actionListener;
 	
 	public MessageFieldController(MessageField mField){
 		this.mField = mField;
+		this.mField.getButton().addActionListener(this);
 	}
 	
-	public void control(){        
-        actionListener = new ActionListener() {
-              public void actionPerformed(ActionEvent actionEvent) {                  
-                  linkBtnAndLabel();
-              }
-        };                
-        mField.getButton().addActionListener(actionListener);   
+	public void actionPerformed(ActionEvent actionEvent) {                  
+        linkBtnAndLabel();
     }
-	
 	public void linkBtnAndLabel(){
 		
 	}

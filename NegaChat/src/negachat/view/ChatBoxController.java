@@ -5,6 +5,14 @@ public class ChatBoxController implements Runnable {
 	
 	public ChatBoxController(ChatBox chatbox){
 		this.chatBox = chatbox;
+		Thread thread = new Thread(this);
+		thread.start();
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

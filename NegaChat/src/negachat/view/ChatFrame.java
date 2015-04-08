@@ -48,14 +48,14 @@ public class ChatFrame extends JPanel {
 		gbc_chatbox.gridy = 0;
 		add(chatbox, gbc_chatbox);
 		
-		WhoIsOnline online = new WhoIsOnline();
+		online = new WhoIsOnline();
 		GridBagConstraints gbc_online = new GridBagConstraints();
 		gbc_online.fill = GridBagConstraints.BOTH;
 		gbc_online.gridx = 1;
 		gbc_online.gridy = 0;
 		add(online, gbc_online);
 
-		MessageField mField = new MessageField();
+		mField = new MessageField();
 		GridBagConstraints gbc_mField = new GridBagConstraints();
 		gbc_mField.gridwidth = 2;
 		gbc_mField.fill = GridBagConstraints.BOTH;
