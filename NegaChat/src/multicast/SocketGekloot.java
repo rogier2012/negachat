@@ -31,26 +31,25 @@ public class SocketGekloot {
 	
 	public void nogmeerGekloot() throws IOException {
 		// join a Multicast group and send the group salutations
-		 String msg = "Hello";
+		 String msg = "Hello RON!:)";
 		 InetAddress group = InetAddress.getByName("228.5.6.7");
-		 MulticastSocket s = new MulticastSocket();
-		
-		 System.out.println(group);
-		 System.out.println("s.getPort(): " + s.getPort());
+		 MulticastSocket s = new MulticastSocket(6789);
 		
 		 s.joinGroup(group);
 		 DatagramPacket hi = new DatagramPacket(msg.getBytes(), msg.length(),
 		                             group, 6789);
 		 s.send(hi);
+		 System.out.println("sent hi");
 		 // get their responses!
 		 byte[] buf = new byte[1000];
 		 DatagramPacket recv = new DatagramPacket(buf, buf.length);
 		 s.receive(recv);
 		 
-		 System.out.println();
 		 
-		 
-		 
+		 System.out.println("String: " + recv.toString());
+		 System.out.println("getdata.tostring: " + recv.getData().toString());
+		 System.out.println("recv.getdata.length: " + recv.getData().length);
+ 		 
 		 // OK, I'm done talking - leave the group...
 //		 s.leaveGroup(group);
 	}
