@@ -8,11 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.JButton;
+import java.awt.Insets;
 
 public class NegaView {
 
 	private JFrame frame;
-	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -49,19 +52,29 @@ public class NegaView {
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("Mijn beste vriend Gijs", null, panel_1, null);
-		panel_1.setLayout(new BorderLayout(0, 0));
+		tabbedPane.addTab("Group", null, panel_1, null);
+		GridBagLayout gbl_panel_1 = new GridBagLayout();
+		gbl_panel_1.columnWidths = new int[]{429, 0, 0};
+		gbl_panel_1.rowHeights = new int[]{232, 0, 0};
+		gbl_panel_1.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		panel_1.setLayout(gbl_panel_1);
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setText("");
-		panel_1.add(textPane, BorderLayout.CENTER);
+		JTextPane txtpnText = new JTextPane();
+		txtpnText.setText("text");
+		GridBagConstraints gbc_txtpnText = new GridBagConstraints();
+		gbc_txtpnText.fill = GridBagConstraints.BOTH;
+		gbc_txtpnText.insets = new Insets(0, 0, 0, 5);
+		gbc_txtpnText.gridx = 0;
+		gbc_txtpnText.gridy = 1;
+		panel_1.add(txtpnText, gbc_txtpnText);
 		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Group", null, panel, null);
-		
-		textField = new JTextField();
-		panel.add(textField);
-		textField.setColumns(10);
+		JButton btnSend = new JButton("SEND");
+		GridBagConstraints gbc_btnSend = new GridBagConstraints();
+		gbc_btnSend.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnSend.gridx = 1;
+		gbc_btnSend.gridy = 1;
+		panel_1.add(btnSend, gbc_btnSend);
 	}
 
 }
