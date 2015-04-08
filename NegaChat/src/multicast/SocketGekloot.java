@@ -1,5 +1,6 @@
 package multicast;
 
+import java.io.IOException;
 import java.net.MulticastSocket;
 
 public class SocketGekloot {
@@ -7,7 +8,13 @@ public class SocketGekloot {
 	MulticastSocket socket;
 	
 	public SocketGekloot()	{
-		 socket = new MulticastSocket(6789);
+		 
+		 try {
+			 socket = new MulticastSocket(6789);
+		 }
+		 catch (IOException e) {
+	            e.printStackTrace();
+	        }
 	}
 	
 	
