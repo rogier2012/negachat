@@ -1,6 +1,7 @@
 package multicast;
 
 import java.io.IOException;
+
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -27,8 +28,6 @@ public class SocketGekloot {
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	public void nogmeerGekloot() throws IOException {
 		// join a Multicast group and send the group salutations
