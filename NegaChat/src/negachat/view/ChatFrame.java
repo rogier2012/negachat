@@ -1,10 +1,9 @@
 package negachat.view;
 
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import javax.swing.JTextPane;
 import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.GridBagLayout;
+
+import javax.swing.JPanel;
 
 public class ChatFrame extends JPanel {
 
@@ -12,9 +11,14 @@ public class ChatFrame extends JPanel {
 	 * Create the panel.
 	 */
 	public ChatFrame() {
+		initialize();
+		
+	}
+	
+	public void initialize(){
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{232, 0, 0};
-		gridBagLayout.rowHeights = new int[]{184, 0, 0};
+		gridBagLayout.columnWidths = new int[]{230, 0};
+		gridBagLayout.rowHeights = new int[]{184, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
@@ -41,7 +45,6 @@ public class ChatFrame extends JPanel {
 		gbc_mField.gridx = 0;
 		gbc_mField.gridy = 1;
 		add(mField, gbc_mField);
-		
 	}
 
 }

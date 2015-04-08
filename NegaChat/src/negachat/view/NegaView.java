@@ -50,6 +50,9 @@ public class NegaView {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		
+		ChatFrame cFrame1 = new ChatFrame();
+		tabbedPane.add("Group", cFrame1);
 	}
 
 }
