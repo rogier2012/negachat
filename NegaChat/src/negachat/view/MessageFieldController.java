@@ -2,19 +2,27 @@ package negachat.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
-public class MessageFieldController implements ActionListener {
+public class MessageFieldController extends Observable implements ActionListener {
 	private MessageField mField;
+	private String message;
 	
-	public MessageFieldController(MessageField mField){
+	public String getMessage() {
+		return message;
+	}
+
+	public MessageFieldController(MessageField mField, Observer observer){
 		this.mField = mField;
 		this.mField.getButton().addActionListener(this);
+		this.addObserver(observer);
 	}
 	
 	public void actionPerformed(ActionEvent actionEvent) {                  
-        linkBtnAndLabel();
+		message = mField.getText();
+		setChanged();
+	    notifyObservers();
     }
-	public void linkBtnAndLabel(){
-		
-	}
+	
 }

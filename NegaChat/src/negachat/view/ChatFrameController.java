@@ -1,6 +1,9 @@
 package negachat.view;
 
-public class ChatFrameController {
+import java.util.Observable;
+import java.util.Observer;
+
+public class ChatFrameController implements Observer {
 	// main view of this Controller
 	private ChatFrame cFrame;
 	
@@ -25,8 +28,17 @@ public class ChatFrameController {
 		 chatbox = cFrame.getChatbox();
 		 cbController = new ChatBoxController(chatbox);
 		 mField = cFrame.getmField();
-		 mfController = new MessageFieldController(mField);
+		 mfController = new MessageFieldController(mField, this);
 		 online = cFrame.getOnline();
 		 wioController = new WhoIsOnlineController(online);
+	}
+
+
+	@Override
+	public void update(Observable obs, Object arg) {
+		if(obs == mfController){
+			chatbox.setMessage(mfController.getMessage());
+			chatbox.repaint();
+		}
 	}
 }

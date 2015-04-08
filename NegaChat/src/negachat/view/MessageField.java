@@ -44,12 +44,12 @@ public class MessageField extends JPanel {
 		add(textField, gbc_textField);
 		textField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Send");
+		btnSend = new JButton("Send");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 1;
-		add(btnNewButton, gbc_btnNewButton);
+		add(btnSend, gbc_btnNewButton);
 
 		
 		
@@ -57,6 +57,12 @@ public class MessageField extends JPanel {
 	
 	public JButton getButton(){
 		return btnSend;
+	}
+	
+	public String getText(){
+		String message = textField.getText();
+		textField.setText("");
+		return "Me: " + message + "\n";
 	}
 	
 	public JTextArea getTxtInput(){
