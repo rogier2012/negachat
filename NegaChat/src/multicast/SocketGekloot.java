@@ -11,6 +11,9 @@ public class SocketGekloot {
 
 	MulticastSocket socket;
 	Packet packet;
+	InetAddress group;
+	MulticastSocket s;
+
 
 	public SocketGekloot() {
 		packet = new Packet("pens", "jens", "jensiepensie");
@@ -25,45 +28,44 @@ public class SocketGekloot {
 
 	public static void main(String[] args) {
 		SocketGekloot sock = new SocketGekloot();
-		sock.doeiets();
+		sock.run();
 	}
 	
-	public void doeiets() {
+	public void run() {
 		try {
+			connectToGroup();
 			sendPacket(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void sendPacket(Packet packet) throws IOException {
-		// join a Multicast group and send the group salutations
-		InetAddress group = InetAddress.getByName("228.5.6.7");
-		MulticastSocket s = new MulticastSocket(6789);
-
-		byte[] bytePacket = packet.composePacket();
-		
+	private void connectToGroup() throws IOException {
+		// join a Multicast group
+		group = InetAddress.getByName("228.5.6.7");
+		s = new MulticastSocket(6789);
 		s.joinGroup(group);
-		
-		System.out.println("Trying to send...");
+	}
+
+	public void sendPacket(Packet packet) throws IOException {
+		// send the message
+		byte[] bytePacket = packet.composePacket();
+		System.out.println("Trying to send packet with length " + bytePacket.length + "...");
 		if (bytePacket != null) {
 			DatagramPacket hi = new DatagramPacket(bytePacket, bytePacket.length,
 					group, 6789);
 			s.send(hi);
-			System.out.println("succesfully sent packet");
+			System.out.println("succesfully sent packet!");
 		} else {
-			System.out.println("couldn't send packet! probably bytePacket = null!");
+			System.out.println("couldn't send packet!");
 		}
 		// // get their responses!
 		byte[] buf = new byte[1000];
 		DatagramPacket recv = new DatagramPacket(buf, buf.length);
 		s.receive(recv);
 
-		System.out.println("recv.toString(): " + recv.toString());
-		System.out.println("getdata.tostring: " + recv.getData().toString());
-		System.out.println("recv.getdata.length: " + recv.getData().length);
 		String received = new String(recv.getData(), 0, recv.getLength());
-		System.out.println("final string: " + received);
+		System.out.println("received: " + received);
 
 		// OK, I'm done talking - leave the group...
 		s.leaveGroup(group);
