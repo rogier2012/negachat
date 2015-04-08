@@ -1,17 +1,13 @@
 package negachat.view;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-
-import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import java.awt.GridLayout;
-import javax.swing.JEditorPane;
-import javax.swing.JTextPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 public class NegaView {
 
@@ -45,7 +41,7 @@ public class NegaView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("NegaChat");
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
