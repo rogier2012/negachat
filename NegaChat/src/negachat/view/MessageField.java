@@ -1,27 +1,17 @@
 package negachat.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JCheckBox;
-import javax.swing.BoxLayout;
-import javax.swing.SwingConstants;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class MessageField extends JPanel {
 	
 	
 	private JButton btnSend;
-	private JTextArea txtInput;
 	private JTextField textField;
 
 	/**
@@ -50,8 +40,6 @@ public class MessageField extends JPanel {
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 1;
 		add(btnSend, gbc_btnNewButton);
-
-		
 		
 	}
 	
@@ -59,14 +47,15 @@ public class MessageField extends JPanel {
 		return btnSend;
 	}
 	
+	public JTextField getTextField(){
+		return textField;
+	}
+	
 	public String getText(){
 		String message = textField.getText();
 		textField.setText("");
 		return "Me: " + message + "\n";
 	}
-	
-	public JTextArea getTxtInput(){
-		return txtInput;
-	}
+
 
 }

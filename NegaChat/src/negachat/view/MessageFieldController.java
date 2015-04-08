@@ -16,6 +16,7 @@ public class MessageFieldController extends Observable implements ActionListener
 	public MessageFieldController(MessageField mField, Observer observer){
 		this.mField = mField;
 		this.mField.getButton().addActionListener(this);
+		this.mField.getTextField().addActionListener(this);
 		this.addObserver(observer);
 	}
 	
