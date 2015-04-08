@@ -6,7 +6,24 @@ import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 
 public class ChatFrame extends JPanel {
+	ChatBox chatbox;
+	MessageField mField;
+	WhoIsOnline online;
+	
+	
+	public MessageField getmField() {
+		return mField;
+	}
 
+	public WhoIsOnline getOnline() {
+		return online;
+	}
+	
+	public ChatBox getChatbox() {
+		return chatbox;
+	}
+
+	
 	/**
 	 * Create the panel.
 	 */
@@ -23,7 +40,7 @@ public class ChatFrame extends JPanel {
 		gridBagLayout.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		ChatBox chatbox = new ChatBox();
+		chatbox = new ChatBox();
 		GridBagConstraints gbc_chatbox = new GridBagConstraints();
 		gbc_chatbox.anchor = GridBagConstraints.NORTH;
 		gbc_chatbox.fill = GridBagConstraints.BOTH;

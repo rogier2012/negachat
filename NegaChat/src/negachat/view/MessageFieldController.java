@@ -11,12 +11,16 @@ public class MessageFieldController {
 		this.mField = mField;
 	}
 	
-	public void contol(){        
+	public void control(){        
         actionListener = new ActionListener() {
               public void actionPerformed(ActionEvent actionEvent) {                  
-//                  linkBtnAndLabel();
+                  linkBtnAndLabel();
               }
         };                
         mField.getButton().addActionListener(actionListener);   
     }
+	
+	public void linkBtnAndLabel(){
+		
+	}
 }

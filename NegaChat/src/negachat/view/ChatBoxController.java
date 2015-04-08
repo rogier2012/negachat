@@ -1,8 +1,10 @@
 package negachat.view;
 
 public class ChatBoxController {
+	ChatBox chatBox;
 	
-	public ChatBoxController(){
+	public ChatBoxController(ChatBox chatbox){
+		this.chatBox = chatbox;
 	}
 	
 	
