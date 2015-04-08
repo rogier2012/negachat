@@ -10,7 +10,7 @@ public class SocketGekloot {
 	
 	MulticastSocket socket;
 	
-	public SocketGekloot()	{
+	public SocketGekloot()	{ 
 //		 try {
 //			socket = new MulticastSocket(6789);
 //		} catch (IOException e) {
