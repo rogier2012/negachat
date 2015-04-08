@@ -7,7 +7,10 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.FlowLayout;
+import javax.swing.SpringLayout;
 
+@SuppressWarnings("serial")
 public class MessageField extends JPanel {
 	
 	
@@ -19,27 +22,27 @@ public class MessageField extends JPanel {
 	 */
 	public MessageField() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {370, 130};
-		gridBagLayout.rowHeights = new int[] {240, 60};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0};
+		gridBagLayout.columnWidths = new int[] {340, 85, 0};
+		gridBagLayout.rowHeights = new int[]{46, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 0, 5);
 		gbc_textField.fill = GridBagConstraints.BOTH;
+		gbc_textField.insets = new Insets(0, 0, 0, 5);
 		gbc_textField.gridx = 0;
-		gbc_textField.gridy = 1;
+		gbc_textField.gridy = 0;
 		add(textField, gbc_textField);
-		textField.setColumns(10);
+		textField.setColumns(20);
 		
 		btnSend = new JButton("Send");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 1;
-		add(btnSend, gbc_btnNewButton);
+		GridBagConstraints gbc_btnSend = new GridBagConstraints();
+		gbc_btnSend.fill = GridBagConstraints.BOTH;
+		gbc_btnSend.gridx = 1;
+		gbc_btnSend.gridy = 0;
+		add(btnSend, gbc_btnSend);
 		
 	}
 	
@@ -53,7 +56,7 @@ public class MessageField extends JPanel {
 	
 	public String getText(){
 		String message = textField.getText();
-		textField.setText("");
+		textField.setText(" ");
 		return "Me: " + message + "\n";
 	}
 

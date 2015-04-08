@@ -1,7 +1,7 @@
 package negachat.view;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Font;
 
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;

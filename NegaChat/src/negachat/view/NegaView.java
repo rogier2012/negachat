@@ -26,6 +26,7 @@ public class NegaView {
 				try {
 					NegaView window = new NegaView();
 					window.frame.setVisible(true);
+					window.frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
