@@ -35,8 +35,10 @@ public class SocketGekloot {
 		 String msg = "Hello";
 		 InetAddress group = InetAddress.getByName("228.5.6.7");
 		 MulticastSocket s = new MulticastSocket();
+		
 		 System.out.println(group);
 		 System.out.println("s.getPort(): " + s.getPort());
+		
 		 s.joinGroup(group);
 		 DatagramPacket hi = new DatagramPacket(msg.getBytes(), msg.length(),
 		                             group, 6789);
@@ -45,8 +47,13 @@ public class SocketGekloot {
 		 byte[] buf = new byte[1000];
 		 DatagramPacket recv = new DatagramPacket(buf, buf.length);
 		 s.receive(recv);
+		 
+		 System.out.println();
+		 
+		 
+		 
 		 // OK, I'm done talking - leave the group...
-		 s.leaveGroup(group);
+//		 s.leaveGroup(group);
 	}
 	
 }
