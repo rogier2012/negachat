@@ -1,9 +1,14 @@
 package negachat.view;
 
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 
-public class ChatBox extends JComponent{
-	public ChatBox(){
-		
+public class ChatBox extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public ChatBox() {
+
 	}
+
 }
