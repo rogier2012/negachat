@@ -11,10 +11,12 @@ import javax.swing.JPanel;
 import java.awt.GridLayout;
 import javax.swing.JEditorPane;
 import javax.swing.JTextPane;
+import javax.swing.JTextField;
 
 public class NegaView {
 
 	private JFrame frame;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -50,9 +52,6 @@ public class NegaView {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Group", null, panel, null);
-		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Mijn beste vriend Gijs", null, panel_1, null);
 		panel_1.setLayout(new BorderLayout(0, 0));
@@ -60,6 +59,13 @@ public class NegaView {
 		JTextPane textPane = new JTextPane();
 		textPane.setText("");
 		panel_1.add(textPane, BorderLayout.CENTER);
+		
+		JPanel panel = new JPanel();
+		tabbedPane.addTab("Group", null, panel, null);
+		
+		textField = new JTextField();
+		panel.add(textField);
+		textField.setColumns(10);
 	}
 
 }
