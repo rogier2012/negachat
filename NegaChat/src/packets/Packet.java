@@ -13,8 +13,6 @@ public class Packet {
 	 * 
 	 */
 	
-	public static final byte TYPE = 0;
-	
 	private byte type;
 	private byte options;
 	private String source, destination, message, hash;
@@ -114,6 +112,10 @@ public class Packet {
 
 	public String getDestination() {
 		return destination;
+	}
+	
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
 
 	public String getMessage() {
