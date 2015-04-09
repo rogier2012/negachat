@@ -8,20 +8,18 @@ import java.net.MulticastSocket;
 import packets.Packet;
 import packets.createPacket;
 
-public class socketSend implements Runnable {
+public class socketSend {
 	
 	Packet packet;
 	InetAddress group;
 	MulticastSocket sock;
 
 	public socketSend(InetAddress group, MulticastSocket sock) {
-		this.packet = createPacket.createPacket();
 		this.group = group;
 		this.sock = sock;
 	}
 	
-	@Override
-	public void run() {
+	public void send() {
 		byte[] bytePacket = packet.composePacket();
 		System.out.println("Trying to send packet with length " + bytePacket.length + "...");
 		DatagramPacket hi = new DatagramPacket(bytePacket, bytePacket.length,

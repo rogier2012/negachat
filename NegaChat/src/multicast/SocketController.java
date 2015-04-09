@@ -39,10 +39,9 @@ public class SocketController {
 	}
 
 	public void startThreads() throws IOException {
-		socketSend = new socketSend( group, socket);
-		Thread threadSend = new Thread(socketSend);
+		socketSend = new socketSend(group, socket);
+		
 		Thread threadReceive = new Thread(socketReceive);
-		threadSend.start();
 		threadReceive.start();
 
 	}
