@@ -9,7 +9,6 @@ import java.net.ServerSocket;
 import packets.Packet;
 
 public class ReceivingSocket implements Runnable {
-		private ServerSocket ssocket;
 		private DatagramSocket clientsocket;
 		public final int SERVER_PORT = 1488;
 		InputStream reader;
@@ -22,7 +21,7 @@ public class ReceivingSocket implements Runnable {
 		public void run() {
 			do {
 				byte[] buf = new byte[1000];
-				DatagramPacket recv = new DatagramPacket(buf, 144);
+				DatagramPacket recv = new DatagramPacket(buf, 146);
 				try {
 					clientsocket.receive(recv);
 				} catch (IOException e) {
