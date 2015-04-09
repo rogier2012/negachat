@@ -28,7 +28,7 @@ public class SendingSocket {
 		DatagramPacket toSend = new DatagramPacket(bytePacket, bytePacket.length, address, 1488);
 		try {
 			sendingSocket.send(toSend);		
-			System.out.println("succesfully sent packet!");
+			System.out.println("Succesfully sent packet!");
 			sendingSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -6,12 +6,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
-import multicast.SocketController;
-import packets.createPacket;
+import negachat.messages.ReceivingSocket;
 
 public class NegaView {
 
 	private JFrame frame;
+	private String myName;
 
 	/**
 	 * Launch the application.
@@ -48,8 +48,13 @@ public class NegaView {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		ChatFrame cFrame1 = new ChatFrame();
-		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1);
-		tabbedPane.add("Group", cFrame1);
+		String nickname = "Group";
+		ReceivingSocket rsocket = new ReceivingSocket(myName);
+		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, nickname, rsocket);
+		
+		rsocket.addObserver(cFrameControl1);
+		Thread t1 = new Thread(rsocket);
+		tabbedPane.add(nickname, cFrame1);
 		
 	}
 
