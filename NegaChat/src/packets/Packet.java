@@ -15,12 +15,23 @@ public class Packet {
 	
 	public static final byte TYPE = 0;
 	
-	private byte[] type, options;
+	private byte type;
+	private byte options;
 	private String source, destination, message, hash;
 	
 	public Packet(String destination, String source) {
 		this.setSource(source);
 		this.setDestination(destination);
+	}
+	
+	public Packet(byte[] packetArray){
+		type = packetArray[0];
+		byte[] destArray = null;
+		System.arraycopy(packetArray, 1, destArray, 0, 16);
+		destination = new String(destArray);
+		byte[] sourceArray = null;
+		System.arraycopy(packetArray, 1, sourceArray, 0, 16);
+		destination = new String(sourceArray);
 	}
 	
 	

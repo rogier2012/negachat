@@ -16,7 +16,6 @@ public class ReceivingSocket implements Runnable {
 		public ReceivingSocket(String nickname){
 			this.nickname = nickname;
 		}
-
 		
 		public void run() {
 			do {
