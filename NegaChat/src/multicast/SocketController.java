@@ -7,16 +7,16 @@ import java.net.MulticastSocket;
 import packets.Packet;
 import packets.createPacket;
 
-public class Communication {
+public class SocketController {
 	Packet packet;
 	InetAddress group;
-	MulticastSocket s;
+	MulticastSocket socket;
 	socketReceive socketReceive;
 	socketSend socketSend;
 	BufferedReader reader;
-	createPacket creatour;
+	createPacket creator;
 
-	public static void main(String[] args) {
+	public SocketController() {
 		SocketGekloot sock = new SocketGekloot();
 		sock.run();
 	}
@@ -24,8 +24,8 @@ public class Communication {
 	public void run() {
 		try {
 			connectToGroup();
-			socketReceive = new socketReceive(s);
-			startThreads(packet);
+			socketReceive = new socketReceive(socket);
+			startThreads();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -34,12 +34,12 @@ public class Communication {
 	private void connectToGroup() throws IOException {
 		// join a Multicast group
 		group = InetAddress.getByName("228.5.6.7");
-		s = new MulticastSocket(6789);
-		s.joinGroup(group);
+		socket = new MulticastSocket(6789);
+		socket.joinGroup(group);
 	}
 
-	public void startThreads(Packet packet) throws IOException {
-		socketSend = new socketSend(packet, group, s);
+	public void startThreads() throws IOException {
+		socketSend = new socketSend( group, socket);
 		Thread threadSend = new Thread(socketSend);
 		Thread threadReceive = new Thread(socketReceive);
 		threadSend.start();

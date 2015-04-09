@@ -2,12 +2,18 @@ package negachat.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+
+import multicast.SocketController;
+import packets.createPacket;
 
 public class NegaView {
 
 	private JFrame frame;
+	private SocketController sockControl;
+	private createPacket creator;
 
 	/**
 	 * Launch the application.
@@ -30,8 +36,11 @@ public class NegaView {
 	 * Create the application.
 	 */
 	public NegaView() {
+		sockControl = new SocketController();
+		creator = new createPacket();
 		initialize();
 	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -44,10 +53,8 @@ public class NegaView {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		ChatFrame cFrame1 = new ChatFrame();
-		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1);
+		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, creator);
 		tabbedPane.add("Group", cFrame1);
-		ChatFrame cFrame2 = new ChatFrame();
-		tabbedPane.add("Christiaan", cFrame2);
 	}
 
 }
