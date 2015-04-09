@@ -46,6 +46,8 @@ public class NegaView {
 		ChatFrame cFrame1 = new ChatFrame();
 		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1);
 		tabbedPane.add("Group", cFrame1);
+		ChatFrame cFrame2 = new ChatFrame();
+		tabbedPane.add("Christiaan", cFrame2);
 	}
 
 }
