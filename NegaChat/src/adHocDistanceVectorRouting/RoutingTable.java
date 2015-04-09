@@ -4,6 +4,6 @@ import java.util.Map;
 
 public class RoutingTable {
 	
-	private Map<Node, Route> table;
+	private Map<Destination, RouteEntry> table;
 	
 }
