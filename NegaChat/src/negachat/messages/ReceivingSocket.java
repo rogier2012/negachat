@@ -58,9 +58,10 @@ public class ReceivingSocket extends Observable implements Runnable {
 				    notifyObservers();
 				    // zoek dest op in routingtbble en stuur door
 				}
-			} else if  {
-				// zoek dest op in routingtable en stuur door
 			}
+//			} else if (als packet.getDestination()) {
+//				// zoek dest op in routingtable en stuur door
+//			} 
 			
 		}
 		

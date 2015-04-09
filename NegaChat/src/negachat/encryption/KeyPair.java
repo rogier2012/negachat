@@ -18,7 +18,7 @@ public class KeyPair {
 		try{
 			KeyPairGenerator kpg = KeyPairGenerator.getInstance(ENCRYPTIONALGORITHM);
 			kpg.initialize(1024);
-			KeyPair kp = kpg.generateKeyPair();
+//			KeyPair kp = kpg.generateKeyPair();
 			
 			
 		} catch (Exception e){
