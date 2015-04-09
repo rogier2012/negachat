@@ -1,9 +1,20 @@
 package negachat.view;
 
-import javax.swing.JComponent;
+import java.awt.Color;
 
-public class ChatBox extends JComponent{
-	public ChatBox(){
-		
+import javax.swing.JTextArea;
+import javax.swing.border.LineBorder;
+
+@SuppressWarnings("serial")
+public class ChatBox extends JTextArea {
+	
+	
+	/**
+	 * Create the panel.
+	 */
+	public ChatBox() {
+		setBorder(new LineBorder(new Color(0, 0, 0)));
+		this.setEditable(false);
 	}
+
 }
