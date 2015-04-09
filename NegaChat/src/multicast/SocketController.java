@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import packets.Packet;
-import packets.createPacket;
+
+import negachat.packets.CreatePacket;
+import negachat.packets.Packet;
 
 public class SocketController {
 	Packet packet;
@@ -14,9 +15,9 @@ public class SocketController {
 	socketReceive socketReceive;
 	socketSend socketSend;
 	BufferedReader reader;
-	createPacket creator;
+	CreatePacket creator;
 
-	public SocketController(createPacket creator) {
+	public SocketController(CreatePacket creator) {
 		SocketGekloot sock = new SocketGekloot();
 		this.creator = creator;
 		sock.run();

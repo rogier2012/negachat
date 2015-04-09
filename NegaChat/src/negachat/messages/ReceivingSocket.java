@@ -7,7 +7,7 @@ import java.net.DatagramSocket;
 import java.util.Observable;
 import java.util.Observer;
 
-import packets.Packet;
+import negachat.packets.Packet;
 
 public class ReceivingSocket extends Observable implements Runnable {
 		private DatagramSocket clientsocket;

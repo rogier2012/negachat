@@ -1,6 +1,6 @@
 package adHocDistanceVectorRouting;
 
-import packets.Packet;
+import negachat.packets.Packet;
 import packets.AODV.HELLO;
 import packets.AODV.RERR;
 import packets.AODV.RREP;

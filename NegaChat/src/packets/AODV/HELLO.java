@@ -1,6 +1,6 @@
 package packets.AODV;
 
-import packets.*;
+import negachat.packets.*;
 
 public class HELLO extends Packet {
 	

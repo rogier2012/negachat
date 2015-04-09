@@ -1,4 +1,4 @@
-package packets;
+package negachat.packets;
 
 public class Packet {
 	

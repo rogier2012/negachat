@@ -1,4 +1,4 @@
-import packets.createPacket;
+import negachat.packets.CreatePacket;
 
 
 public class TestCreatePacket {
@@ -7,7 +7,7 @@ public class TestCreatePacket {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		createPacket creator = new createPacket();
+		CreatePacket creator = new CreatePacket();
 		creator.setMessage("/all/ Dit is een test!:)");
 		creator.composePacket();
 	}

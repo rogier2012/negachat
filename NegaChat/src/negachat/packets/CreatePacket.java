@@ -1,4 +1,4 @@
-package packets;
+package negachat.packets;
 
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -8,7 +8,7 @@ import javax.swing.Action;
 import multicast.socketReceive;
 import multicast.socketSend;
 
-public class createPacket{
+public class CreatePacket{
 	InetAddress group;
 	MulticastSocket s;
 	socketReceive socketReceive;

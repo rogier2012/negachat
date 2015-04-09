@@ -1,6 +1,6 @@
 package packets.AODV;
 
-import packets.Packet;
+import negachat.packets.Packet;
 
 public class RERR extends Packet {
 

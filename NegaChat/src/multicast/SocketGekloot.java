@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-import packets.Packet;
+import negachat.packets.Packet;
 
 public class SocketGekloot {
 
