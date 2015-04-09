@@ -25,7 +25,6 @@ public class Communication {
 		try {
 			connectToGroup();
 			socketReceive = new socketReceive(s);
-			startThreads(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -38,8 +37,8 @@ public class Communication {
 		s.joinGroup(group);
 	}
 
-	public void startThreads(Packet packet) throws IOException {
-		socketSend = new socketSend(packet, group, s);
+	public void startThreads() throws IOException {
+		socketSend = new socketSend(group, s);
 		Thread threadSend = new Thread(socketSend);
 		Thread threadReceive = new Thread(socketReceive);
 		threadSend.start();

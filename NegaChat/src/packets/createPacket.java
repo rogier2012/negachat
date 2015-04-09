@@ -16,6 +16,7 @@ public class createPacket {
 	socketReceive socketReceive;
 	socketSend socketSend;
 	String message;
+	
 	public String getMessage() {
 		return message;
 	}
