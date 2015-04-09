@@ -8,7 +8,7 @@ public class RREP extends MessagePacket {
 	
 	public RREP(String destination, String source) {
 		super(destination, source);
-		// TODO Auto-generated constructor stub
+		this.setType(TYPE);
 	}
 	
 }
