@@ -13,15 +13,20 @@ public class MessagePacket {
 	 * 
 	 */
 	
-	public  final byte TYPE = 0;
+	public static final byte TYPE = 0;
 	
 	private byte type, options;
 	private String source, destination, message, hash;
 
+	public MessagePacket(String source) {
+		this.source = source;
+		setType(TYPE);
+	}
+	
 	public MessagePacket(String destination, String source) {
 		this.source = source;
 		this.destination = destination;
-		setType((byte)0x00);
+		setType(TYPE);
 	}
 	
 	public MessagePacket(byte[] packetArray){

@@ -2,10 +2,10 @@ package negachat.client;
 
 import java.util.ArrayList;
 
-public class ClientsOnline {
+public class OnlineClients {
 	private ArrayList<String> clients;
 	
-	public ClientsOnline(){
+	public OnlineClients(){
 		clients = new ArrayList<String>();
 	}
 

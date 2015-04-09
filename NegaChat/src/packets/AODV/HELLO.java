@@ -6,8 +6,8 @@ public class HELLO extends MessagePacket {
 	
 	public static final byte TYPE = 1;
 	
-	public HELLO(String destination, String source) {
-		super(destination, source);
+	public HELLO(String source) {
+		super(source);
 		this.setType(TYPE);
 	}
 	
