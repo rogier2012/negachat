@@ -6,6 +6,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
 
+import packets.Packet;
+
 public class ReceivingSocket implements Runnable {
 		private ServerSocket ssocket;
 		private DatagramSocket clientsocket;
@@ -27,23 +29,27 @@ public class ReceivingSocket implements Runnable {
 					e.printStackTrace();
 					System.out.println("Oops... Something went wrong receiving a packet.");
 				}
-		
-				byte[] packet = recv.getData();	
-				handleData(packet);
+				if (recv.getData()[0] == 0){
+					Packet packet = new Packet(recv.getData());	
+					handleMessage(packet);
+				} else if (recv.getData()[0] == 1){
+					
+				}
+				
 			} while (1<2);
 		}
 		
-		public void handleData(byte[] packet){
-			byte[] destination = new byte[16];
-			for (int i = 0; i < 16; i++){
-				destination[i] = packet[i+1];
-			}
-			String destNickname = new String(destination, 0, packet.length);
-			if (nickname.equals(destNickname)){
+		public void handleMessage(Packet packet){
+			
+			if (nickname.equals(packet.getDestination())){
 				// verwerk message plz
 			} else {
 				// zoek dest op in routingtable en stuur door
 			}
+			
+		}
+		
+		public void handleAODV(Packet packet){
 			
 		}
 		
