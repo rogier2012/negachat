@@ -13,7 +13,6 @@ public class Packet {
 	 * 
 	 */
 	
-	
 	private byte[] source, destination, message, options, hash;
 
 	public Packet(String destination, String source) {
