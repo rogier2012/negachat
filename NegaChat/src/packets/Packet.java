@@ -13,7 +13,9 @@ public class Packet {
 	 * 
 	 */
 	
-	private byte[] source, destination, message, options, hash;
+	public static final byte TYPE = 0;
+	
+	private byte[] type, source, destination, message, options, hash;
 
 	public Packet(String destination, String source) {
 		this.setSource(source);
@@ -30,7 +32,8 @@ public class Packet {
 //	}
 	
 	public byte[] composePacket() {
-		byte[] dest, src, msg, opt, hash;
+		byte[] type, dest, src, msg, opt, hash;
+		type = new byte[]{TYPE};
 		dest = getDestination();
 		src = getSource();
 		msg = getMessage();
@@ -40,7 +43,7 @@ public class Packet {
 		
 		hash = getHash();
 
-		byte[] bytePacket = new byte[dest.length + src.length + msg.length + opt.length + hash.length];
+		byte[] bytePacket = new byte[type.length + dest.length + src.length + msg.length + opt.length + hash.length];
 		
 		System.arraycopy(dest, 0, bytePacket, 0, dest.length);
 		System.arraycopy(src, 0, bytePacket, dest.length, src.length);
