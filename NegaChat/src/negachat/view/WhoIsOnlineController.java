@@ -7,17 +7,14 @@ import java.util.Observable;
 import java.util.Set;
 
 import negachat.client.ClientHandler;
-import negachat.client.ClientsOnline;
 
 public class WhoIsOnlineController extends Observable implements ActionListener {
 	private WhoIsOnline online;
-	private ClientsOnline clientList;
 	private ClientHandler handler;
 	private Set<String> tabs;
 	
 	public WhoIsOnlineController(WhoIsOnline online, ClientHandler handler){
 		this.online = online;
-		clientList = new ClientsOnline();
 		this.handler = handler;
 		tabs = new HashSet<String>();
 	}
