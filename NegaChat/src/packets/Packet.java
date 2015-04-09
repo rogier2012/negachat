@@ -13,8 +13,9 @@ public class Packet {
 	 * 
 	 */
 	
-	private byte type;
-	private byte options;
+	public  final byte TYPE = 0;
+	
+	private byte type, options;
 	private String source, destination, message, hash;
 
 	public Packet(String destination, String source) {
@@ -26,11 +27,20 @@ public class Packet {
 		setType(packetArray[0]);
 		byte[] destArray = null;
 		System.arraycopy(packetArray, 1, destArray, 0, 16);
-		destination = new String(destArray);
+		setDestination(new String(destArray));
 		byte[] sourceArray = null;
 		System.arraycopy(packetArray, 1, sourceArray, 0, 16);
-		destination = new String(sourceArray);
+		setSource(new String(sourceArray));
+		byte[] messageArray = null;
+		System.arraycopy(packetArray, 1, messageArray, 0, 16);
+		setMessage(new String(messageArray));
+		setOptions(packetArray[140]);
+		byte[] hashArray = null;
+		System.arraycopy(packetArray, 1, hashArray, 0, 16);
+		setHash(new String(hashArray));
 	}
+	
+	
 	
 	
 //	TODO options nog verder uitwerken... hoe gaan we die setten en wat betekent het?
@@ -109,16 +119,20 @@ public class Packet {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	public void setDestination(String destination){
+		this.destination = destination;
+	}
 
 	public String getDestination() {
 		return destination;
 	}
-	
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
 
 	public String getMessage() {
 		return message;
+	}
+	
+	public void setHash(String hash){
+		this.hash = hash;
 	}
 }
