@@ -7,8 +7,6 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.FlowLayout;
-import javax.swing.SpringLayout;
 
 @SuppressWarnings("serial")
 public class MessageField extends JPanel {

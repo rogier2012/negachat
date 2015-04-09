@@ -1,7 +1,6 @@
 package negachat.view;
 
 import java.awt.Color;
-import java.awt.Font;
 
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
@@ -19,6 +18,7 @@ public class ChatBox extends JTextArea {
 	public ChatBox() {
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		this.setEditable(false);
+		
 	}
 
 }
