@@ -2,19 +2,18 @@ package multicast;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.MulticastSocket;
 
 import packets.Packet;
-import packets.createPacket;
 
 public class socketSend {
 	
 	Packet packet;
 	InetAddress group;
-	MulticastSocket sock;
+	DatagramSocket sock;
 
-	public socketSend(InetAddress group, MulticastSocket sock) {
+	public socketSend(InetAddress group, DatagramSocket sock) {
 		this.group = group;
 		this.sock = sock;
 	}
