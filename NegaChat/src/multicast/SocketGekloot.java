@@ -6,11 +6,11 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-import negachat.packets.Packet;
+import negachat.packets.MessagePacket;
 
 public class SocketGekloot {
 
-	Packet packet;
+	MessagePacket packet;
 	InetAddress group;
 	MulticastSocket s;
 	socketReceive socketReceive;
@@ -64,7 +64,7 @@ public class SocketGekloot {
 		s.joinGroup(group);
 	}
 
-	public void startThreads(Packet packet) throws IOException {
+	public void startThreads(MessagePacket packet) throws IOException {
 		socketSend = new socketSend(group, s);
 		Thread threadReceive = new Thread(socketReceive);
 		threadReceive.start();

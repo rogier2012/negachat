@@ -45,8 +45,8 @@ public class ChatFrameController implements Observer {
 			cbController.setMessage(mfController.getMessage());
 		} else if (obs == rsocket
 				&& (rsocket.getRecvPacket().getSource().equals(otherName) || rsocket
-						.getRecvPacket().getSource().equals("All"))) {
-			cbController.setMessage(rsocket.getRecvPacket().getSource() + ": " + rsocket.getRecvPacket().getMessage());
+						.getRecvPacket().getDestination().equals("All"))) {
+			cbController.setMessage(rsocket.getRecvPacket().getSource() + ": " + rsocket.getRecvPacket().getMessage() + "\n");
 		}
 	}
 }

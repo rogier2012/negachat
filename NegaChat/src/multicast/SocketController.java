@@ -6,10 +6,10 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 import negachat.packets.CreatePacket;
-import negachat.packets.Packet;
+import negachat.packets.MessagePacket;
 
 public class SocketController {
-	Packet packet;
+	MessagePacket packet;
 	InetAddress group;
 	MulticastSocket socket;
 	socketReceive socketReceive;

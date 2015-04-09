@@ -2,7 +2,7 @@ package packets.AODV;
 
 import negachat.packets.*;
 
-public class HELLO extends Packet {
+public class HELLO extends MessagePacket {
 	
 	public static final byte TYPE = 1;
 	

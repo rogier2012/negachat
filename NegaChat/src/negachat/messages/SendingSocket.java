@@ -5,7 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import negachat.packets.Packet;
+import negachat.packets.MessagePacket;
 import adHocDistanceVectorRouting.RoutingTable;
 
 public class SendingSocket {
@@ -23,7 +23,7 @@ public class SendingSocket {
 		}
 	}
 	
-	public void sendPacket(Packet packet) {
+	public void sendPacket(MessagePacket packet) {
 		byte[] bytePacket = packet.toByteArray();
 		System.out.println("Trying to send packet with length " + bytePacket.length + "...");
 		DatagramPacket toSend = new DatagramPacket(bytePacket, bytePacket.length, address, 1488);

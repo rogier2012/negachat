@@ -1,6 +1,6 @@
 package negachat.packets;
 
-public class Packet {
+public class MessagePacket {
 	
 	/*
 	 * AODV PACKETS TYPE IDENTIFIER BYTES:
@@ -18,12 +18,13 @@ public class Packet {
 	private byte type, options;
 	private String source, destination, message, hash;
 
-	public Packet(String destination, String source) {
+	public MessagePacket(String destination, String source) {
 		this.source = source;
 		this.destination = destination;
+		setType((byte)0x00);
 	}
 	
-	public Packet(byte[] packetArray){
+	public MessagePacket(byte[] packetArray){
 		setType(packetArray[0]);
 		byte[] destArray = null;
 		System.arraycopy(packetArray, 1, destArray, 0, 16);

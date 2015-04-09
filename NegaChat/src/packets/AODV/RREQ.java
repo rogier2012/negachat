@@ -1,8 +1,8 @@
 package packets.AODV;
 
-import negachat.packets.Packet;
+import negachat.packets.MessagePacket;
 
-public class RREQ extends Packet {
+public class RREQ extends MessagePacket {
 	
 	public static final byte TYPE = 2;
 	

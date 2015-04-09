@@ -1,8 +1,8 @@
 package packets.AODV;
 
-import negachat.packets.Packet;
+import negachat.packets.MessagePacket;
 
-public class RERR extends Packet {
+public class RERR extends MessagePacket {
 
 	public RERR(String destination, String source) {
 		super(destination, source);

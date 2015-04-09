@@ -11,7 +11,7 @@ import negachat.messages.ReceivingSocket;
 public class NegaView {
 
 	private JFrame frame;
-	private String myName;
+	private String myName = "Me";
 
 	/**
 	 * Launch the application.
@@ -48,14 +48,15 @@ public class NegaView {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		ChatFrame cFrame1 = new ChatFrame();
-		String nickname = "Group";
+		String groupChatName = "All";
 		ReceivingSocket rsocket = new ReceivingSocket(myName);
-		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, nickname, rsocket);
-		
-		rsocket.addObserver(cFrameControl1);
 		Thread t1 = new Thread(rsocket);
-		tabbedPane.add(nickname, cFrame1);
-		
+		t1.start();
+		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, groupChatName, rsocket);
+		rsocket.addObserver(cFrameControl1);
+		tabbedPane.add(groupChatName, cFrame1);
 	}
+	
+	
 
 }

@@ -7,7 +7,7 @@ import java.net.DatagramSocket;
 import java.util.Observable;
 import java.util.Observer;
 
-import negachat.packets.Packet;
+import negachat.packets.MessagePacket;
 
 public class ReceivingSocket extends Observable implements Runnable {
 		private DatagramSocket clientsocket;
@@ -15,7 +15,7 @@ public class ReceivingSocket extends Observable implements Runnable {
 		InputStream reader;
 		String myName;
 		String otherName;
-		Packet recvPacket;
+		MessagePacket recvPacket;
 		
 		public ReceivingSocket(String myName){
 			this.myName= myName;
@@ -32,7 +32,7 @@ public class ReceivingSocket extends Observable implements Runnable {
 					System.out.println("Oops... Something went wrong receiving a packet.");
 				}
 				if (recv.getData()[0] == 0){
-					Packet packet = new Packet(recv.getData());	
+					MessagePacket packet = new MessagePacket(recv.getData());	
 					handleMessage(packet);
 				} else if (recv.getData()[0] == 1){
 					
@@ -41,7 +41,7 @@ public class ReceivingSocket extends Observable implements Runnable {
 			} while (1<2);
 		}
 		
-		public void handleMessage(Packet packet){
+		public void handleMessage(MessagePacket packet){
 			if (myName.equals(packet.getDestination())){
 				// verwerk message plz
 				if (packet.makeHash() == packet.getHash()){
@@ -65,19 +65,19 @@ public class ReceivingSocket extends Observable implements Runnable {
 			
 		}
 		
-		public void handleAODV(Packet packet){
-			
-		}
+	public void handleAODV(MessagePacket packet){
 		
+	}
+	
+	public MessagePacket getRecvPacket(){
+		return recvPacket;
+	}
 		
-		public void addObserver(Observer observer){
-			this.addObserver(observer);
-		}
-		
-		public Packet getRecvPacket(){
-			return recvPacket;
-		}
-		
+	public void testrun(){
+		MessagePacket nPacket = new MessagePacket("All", "Henk");
+		nPacket.setMessage("Ik ben Rogier");
+		handleMessage(nPacket);
+	}
 		
 		
 }
