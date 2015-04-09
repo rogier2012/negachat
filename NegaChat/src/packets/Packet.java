@@ -18,18 +18,6 @@ public class Packet {
 	private byte type;
 	private byte options;
 	private String source, destination, message, hash;
-	
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public String getDestination() {
-		return destination;
-	}
-
-	public String getMessage() {
-		return message;
-	}
 
 	public Packet(String destination, String source) {
 		this.source = source;
@@ -122,5 +110,17 @@ public class Packet {
 
 	public void setSource(String source) {
 		this.source = source;
+	}
+	
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 }
