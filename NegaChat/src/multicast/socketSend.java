@@ -5,6 +5,8 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
+import packets.Packet;
+
 public class socketSend implements Runnable {
 	
 	Packet packet;

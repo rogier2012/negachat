@@ -2,7 +2,7 @@ package multicast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.DatagramPacket;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
@@ -19,15 +19,27 @@ public class SocketGekloot {
 
 
 	public SocketGekloot() {
-//		reader.ready();
-		packet = new Packet("Ron", "Gijs", "Hey Ron!");
-		System.out.println("Packet made...");
+		getInput();
 		// try {
 		// socket = new MulticastSocket(6789);
 		// } catch (IOException e) {
 		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
+	}
+
+	private void getInput() {
+		reader = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			String string = reader.readLine();
+			System.out.println("Did you type: '" + string + "'?");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Couldn't read!");
+		}
+		
+		
 	}
 
 	public static void main(String[] args) {
@@ -53,7 +65,7 @@ public class SocketGekloot {
 	}
 
 	public void startThreads(Packet packet) throws IOException {
-//		socketSend = new socketSend(packet, group, s);
+		socketSend = new socketSend(packet, group, s);
 		Thread threadSend = new Thread(socketSend);
 		Thread threadReceive = new Thread(socketReceive);
 		threadSend.start();
