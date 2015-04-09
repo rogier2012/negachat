@@ -1,12 +1,23 @@
 package packets;
 
 public class Packet {
+	
+	/*
+	 * AODV PACKETS TYPE IDENTIFIER BYTES:
+	 * 
+	 * 00000000 - Normal
+	 * 00000001 - HELLO
+	 * 00000010 - RREQ
+	 * 00000011 - RREP
+	 * 00000100 - RERR
+	 * 
+	 */
+	
 	private byte[] source, destination, message, options, hash;
 
-	public Packet(String destination, String source, String message) {
+	public Packet(String destination, String source) {
 		this.setSource(source);
 		this.setDestination(destination);
-		this.setMessage(message);
 	}
 	
 	
@@ -51,10 +62,6 @@ public class Packet {
 		        (byte) (hashCode & 0xFF)};
 		return hash;
 	}
-	
-	
-	
-	
 	
 
 	public byte[] getDestination() {

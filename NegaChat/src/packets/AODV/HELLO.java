@@ -5,7 +5,7 @@ import packets.*;
 public class HELLO extends Packet {
 
 	public HELLO(String destination, String source, String message) {
-		super(destination, source, message);
+		super(destination, source);
 		// TODO Auto-generated constructor stub
 	}
 
