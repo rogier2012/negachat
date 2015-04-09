@@ -29,14 +29,14 @@ public class Packet {
 		System.arraycopy(packetArray, 1, destArray, 0, 16);
 		setDestination(new String(destArray));
 		byte[] sourceArray = null;
-		System.arraycopy(packetArray, 1, sourceArray, 0, 16);
+		System.arraycopy(packetArray, 17, sourceArray, 0, 16);
 		setSource(new String(sourceArray));
 		byte[] messageArray = null;
-		System.arraycopy(packetArray, 1, messageArray, 0, 16);
+		System.arraycopy(packetArray, 33, messageArray, 0, 16);
 		setMessage(new String(messageArray));
 		setOptions(packetArray[140]);
 		byte[] hashArray = null;
-		System.arraycopy(packetArray, 1, hashArray, 0, 16);
+		System.arraycopy(packetArray, 141, hashArray, 0, 16);
 		setHash(new String(hashArray));
 	}
 	
