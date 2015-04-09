@@ -19,13 +19,25 @@ public class Packet {
 	private byte options;
 	private String source, destination, message, hash;
 	
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
 	public Packet(String destination, String source) {
-		this.setSource(source);
-		this.setDestination(destination);
+		this.source = source;
+		this.destination = destination;
 	}
 	
 	public Packet(byte[] packetArray){
-		type = packetArray[0];
+		setType(packetArray[0]);
 		byte[] destArray = null;
 		System.arraycopy(packetArray, 1, destArray, 0, 16);
 		destination = new String(destArray);
@@ -51,14 +63,14 @@ public class Packet {
 //	PACKET FORMAT:
 	
 //	[prococol]	[destination]	[source]	[message]	[options]	[hash]
-//		1 bit		16 bytes	16 bytes	128 bytes	1 byte		4 bytes
+//		1 byte		16 bytes	16 bytes	128 bytes	1 byte		4 bytes
 
 	public byte[] toByteArray() {
 		byte[] type, dest, src, msg, opt, hash;
 		type = new byte[]{TYPE};
-		dest = getDestination();
-		src = getSource();
-		msg = getMessage();
+		dest = getDestination().getBytes();
+		src = getSource().getBytes();
+		msg = getMessage().getBytes();
 		
 //		TODO options
 		opt = new byte[8];
@@ -87,33 +99,28 @@ public class Packet {
 		        (byte) (hashCode & 0xFF)};
 		return hash;
 	}
-	
 
-	public String getDestination() {
-		return destination;
-	}
-	public void setDestination(String destination) {
-		this.destination = destination.getBytes();
-	}
-	public byte[] getSource() {
-		return sour		dest = getDestination();
-ce;
-	}
-	public void setSource(String source) {
-		this.source = source.getBytes();
-	}
-	public byte[] getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message.getBytes();
+	public byte getType() {
+		return type;
 	}
 
-	public byte[] getOptions() {
+	public void setType(byte type) {
+		this.type = type;
+	}
+
+	public byte getOptions() {
 		return options;
 	}
 
-	public void setOptions(byte[] options) {
+	public void setOptions(byte options) {
 		this.options = options;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 }
