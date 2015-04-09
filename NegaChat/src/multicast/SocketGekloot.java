@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
+import packets.Packet;
+
 public class SocketGekloot {
 
 	Packet packet;
@@ -17,7 +19,7 @@ public class SocketGekloot {
 
 	public SocketGekloot() {
 //		reader.ready();
-		packet = new Packet("Ron", "Gijs", "Hey Ron!");
+		packet = new Packet("pens", "jens", "jensiepensie");
 		System.out.println("Packet made...");
 		// try {
 		// socket = new MulticastSocket(6789);
@@ -49,36 +51,29 @@ public class SocketGekloot {
 		s.joinGroup(group);
 	}
 
-	public void startThreads(Packet packet) throws IOException {
-		socketSend = new socketSend(packet, group, s);
-		Thread threadSend = new Thread(socketSend);
-		Thread threadReceive = new Thread(socketReceive);
-		threadSend.start();
-		threadReceive.start();
+	public void sendPacket(Packet packet) throws IOException {
+		// send the message
+		byte[] bytePacket = packet.composePacket();
+		System.out.println("Trying to send packet with length " + bytePacket.length + "...");
+		if (bytePacket != null) {
+			DatagramPacket hi = new DatagramPacket(bytePacket, bytePacket.length,
+					group, 6789);
+			s.send(hi);
+			System.out.println("succesfully sent packet!");
+		} else {
+			System.out.println("couldn't send packet!");
+		}
+		// // get their responses!
+		byte[] buf = new byte[1000];
+		DatagramPacket recv = new DatagramPacket(buf, buf.length);
+		s.receive(recv);
 
-		
-//		// send the message
-//		byte[] bytePacket = packet.composePacket();
-//		System.out.println("Trying to send packet with length " + bytePacket.length + "...");
-//		if (bytePacket != null) {
-//			DatagramPacket hi = new DatagramPacket(bytePacket, bytePacket.length,
-//					group, 6789);
-//			s.send(hi);
-//			System.out.println("succesfully sent packet!");
-//		} else {
-//			System.out.println("couldn't send packet!");
-//		}
-//		// get their responses!
-//		byte[] buf = new byte[1000];
-//		DatagramPacket recv = new DatagramPacket(buf, buf.length);
-//		s.receive(recv);
-//
-//		String received = new String(recv.getData(), 0, recv.getLength());
-//		System.out.println("received: " + received);
-//
-//		// OK, I'm done talking - leave the group...
-//		s.leaveGroup(group);
-//		System.out.println("group " + group + " left.");
+		String received = new String(recv.getData(), 0, recv.getLength());
+		System.out.println("received: " + received);
+
+		// OK, I'm done talking - leave the group...
+		s.leaveGroup(group);
+		System.out.println("group " + group + " left.");
 	}
 
 }
