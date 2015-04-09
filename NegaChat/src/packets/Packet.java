@@ -40,7 +40,7 @@ public class Packet {
 		setType(packetArray[0]);
 		byte[] destArray = null;
 		System.arraycopy(packetArray, 1, destArray, 0, 16);
-		destination = new String(destArray);
+		setDestination(new String(destArray));
 		byte[] sourceArray = null;
 		System.arraycopy(packetArray, 1, sourceArray, 0, 16);
 		source = new String(sourceArray);
