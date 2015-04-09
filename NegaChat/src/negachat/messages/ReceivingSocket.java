@@ -47,9 +47,18 @@ public class ReceivingSocket extends Observable implements Runnable {
 				if (packet.makeHash() == packet.getHash()){
 					long timestamp = System.currentTimeMillis();
 					recvPacket = packet;
-					// zet hem op de goede chatbox
+					setChanged();
+				    notifyObservers();
 				}
-			} else {
+			} else if (packet.getDestination().equals("All")) {
+				if (packet.makeHash() == packet.getHash()){
+					long timestamp = System.currentTimeMillis();
+					recvPacket = packet;
+					setChanged();
+				    notifyObservers();
+				    // zoek dest op in routingtbble en stuur door
+				}
+			} else if  {
 				// zoek dest op in routingtable en stuur door
 			}
 			
