@@ -23,9 +23,23 @@ public class createPacket{
 		this.message = message;
 	}
 	
-//	public Packet composePacket() {
-////		String
-////		return packet;
-//	}
+
+	public void composePacket() {
+		String msg = getMessage();
+		
+		String dest = msg.split("/")[1];
+		String message = msg.split("/")[2].trim();
+		
+		System.out.println("dest: " + dest);
+		System.out.println("rest: " + message);
+		
+		
+		
+		
+		
+		
+		
+//		return packet;
+	}
 	
 }
