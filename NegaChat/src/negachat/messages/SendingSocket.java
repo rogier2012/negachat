@@ -1,28 +1,32 @@
-package multicast;
+package negachat.messages;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-
 import packets.Packet;
+import adHocDistanceVectorRouting.RoutingTable;
 
-public class socketSend {
+public class SendingSocket {
+	DatagramSocket sendingSocket;
+	private static final int PORT = 1488;
+	InetAddress address;
 	
-	Packet packet;
-	InetAddress group;
-	DatagramSocket sock;
-
-	public socketSend(InetAddress group, DatagramSocket sock) {
-		this.group = group;
-		this.sock = sock;
+	
+	public SendingSocket(RoutingTable table) {
+		try {
+			address = InetAddress.getByName(table.getNextHop(88));
+			sendingSocket = new DatagramSocket(PORT, address);
+		} catch (IOException e) {
+			System.out.println("Couldn't connect to port " + PORT);
+		}
 	}
 	
-	public void send() {
+	public void sendPacket(Packet packet) {
 		byte[] bytePacket = packet.toByteArray();
 		System.out.println("Trying to send packet with length " + bytePacket.length + "...");
 		DatagramPacket hi = new DatagramPacket(bytePacket, bytePacket.length,
-				group, 6789);
+				InetAddress.getByName(address), 1488);
 		try {
 			sock.send(hi);
 		} catch (IOException e) {
@@ -32,5 +36,8 @@ public class socketSend {
 		}
 		System.out.println("succesfully sent packet!");
 	}
-
+	}
+	
+	
+	
 }
