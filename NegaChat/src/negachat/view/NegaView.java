@@ -1,16 +1,9 @@
 package negachat.view;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import java.awt.GridLayout;
-import javax.swing.JEditorPane;
-import javax.swing.JTextPane;
 
 public class NegaView {
 
@@ -25,6 +18,7 @@ public class NegaView {
 				try {
 					NegaView window = new NegaView();
 					window.frame.setVisible(true);
+					window.frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,23 +37,17 @@ public class NegaView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("NegaChat");
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
-		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Group", null, panel, null);
-		
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("Mijn beste vriend Gijs", null, panel_1, null);
-		panel_1.setLayout(new BorderLayout(0, 0));
-		
-		JTextPane textPane = new JTextPane();
-		textPane.setText("");
-		panel_1.add(textPane, BorderLayout.CENTER);
+		ChatFrame cFrame1 = new ChatFrame();
+		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1);
+		tabbedPane.add("Group", cFrame1);
+		ChatFrame cFrame2 = new ChatFrame();
+		tabbedPane.add("Christiaan", cFrame2);
 	}
 
 }
