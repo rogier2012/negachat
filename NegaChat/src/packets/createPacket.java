@@ -15,20 +15,13 @@ public class createPacket {
 	MulticastSocket s;
 	socketReceive socketReceive;
 	socketSend socketSend;
-	BufferedReader reader;
-
-	
-	private void getInput() {
-		reader = new BufferedReader(new InputStreamReader(System.in));
-		try {
-			String string = reader.readLine();
-			System.out.println("Did you type: '" + string + "'?");
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("Couldn't read!");
-		}
-		
-		
+	String message;
+	public String getMessage() {
+		return message;
 	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
+	
 }
