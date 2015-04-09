@@ -16,8 +16,9 @@ public class SocketController {
 	BufferedReader reader;
 	createPacket creator;
 
-	public SocketController() {
+	public SocketController(createPacket creator) {
 		SocketGekloot sock = new SocketGekloot();
+		this.creator = creator;
 		sock.run();
 	}
 

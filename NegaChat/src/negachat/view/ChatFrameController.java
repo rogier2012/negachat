@@ -19,13 +19,9 @@ public class ChatFrameController implements Observer {
 	private MessageFieldController mfController;
 	private WhoIsOnlineController wioController;
 	
-	// Packets
-	private createPacket creator;
-	
 
-	public ChatFrameController(ChatFrame cFrame, createPacket creator){
+	public ChatFrameController(ChatFrame cFrame){
 		this.cFrame = cFrame;
-		this.creator = creator;
 		initialize();
 	}
 	
@@ -42,7 +38,6 @@ public class ChatFrameController implements Observer {
 	public void update(Observable obs, Object arg) {
 		if(obs == mfController){
 			cbController.setMessage(mfController.getMessage());
-			creator.setMessage(mfController.getMessage());
 		}
 	}
 }

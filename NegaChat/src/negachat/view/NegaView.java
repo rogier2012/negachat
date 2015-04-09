@@ -12,8 +12,6 @@ import packets.createPacket;
 public class NegaView {
 
 	private JFrame frame;
-	private SocketController sockControl;
-	private createPacket creator;
 
 	/**
 	 * Launch the application.
@@ -36,8 +34,6 @@ public class NegaView {
 	 * Create the application.
 	 */
 	public NegaView() {
-//		sockControl = new SocketController();
-		creator = new createPacket();
 		initialize();
 	}
 
@@ -52,7 +48,7 @@ public class NegaView {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		ChatFrame cFrame1 = new ChatFrame();
-		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, creator);
+		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1);
 		tabbedPane.add("Group", cFrame1);
 		
 	}
