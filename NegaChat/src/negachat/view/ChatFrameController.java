@@ -25,6 +25,7 @@ public class ChatFrameController implements Observer {
 
 	public ChatFrameController(ChatFrame cFrame){
 		this.cFrame = cFrame;
+		createP = new createPacket();
 		initialize();
 	}
 	
