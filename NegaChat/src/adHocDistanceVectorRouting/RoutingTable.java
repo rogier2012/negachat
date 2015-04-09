@@ -7,8 +7,8 @@ public class RoutingTable {
 	private Map<Node, Route> table;
 	
 	
-	public int getNextHop(int iets){
-		return 0;
+	public String getNextHop(int iets){
+		return "ietsanders";
 	}
 	
 }

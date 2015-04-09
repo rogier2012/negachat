@@ -19,7 +19,7 @@ public class socketSend {
 	}
 	
 	public void send() {
-		byte[] bytePacket = packet.composePacket();
+		byte[] bytePacket = packet.toByteArray();
 		System.out.println("Trying to send packet with length " + bytePacket.length + "...");
 		DatagramPacket hi = new DatagramPacket(bytePacket, bytePacket.length,
 				group, 6789);

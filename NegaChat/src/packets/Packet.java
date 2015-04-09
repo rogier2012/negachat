@@ -15,8 +15,9 @@ public class Packet {
 	
 	public static final byte TYPE = 0;
 	
-	private byte[] type, source, destination, message, options, hash;
-
+	private byte[] type, options;
+	private String source, destination, message, hash;
+	
 	public Packet(String destination, String source) {
 		this.setSource(source);
 		this.setDestination(destination);
@@ -37,7 +38,7 @@ public class Packet {
 //	[prococol]	[destination]	[source]	[message]	[options]	[hash]
 //		1 bit		16 bytes	16 bytes	128 bytes	1 byte		4 bytes
 
-	public byte[] composePacket() {
+	public byte[] toByteArray() {
 		byte[] type, dest, src, msg, opt, hash;
 		type = new byte[]{TYPE};
 		dest = getDestination();
@@ -73,14 +74,15 @@ public class Packet {
 	}
 	
 
-	public byte[] getDestination() {
+	public String getDestination() {
 		return destination;
 	}
 	public void setDestination(String destination) {
 		this.destination = destination.getBytes();
 	}
 	public byte[] getSource() {
-		return source;
+		return sour		dest = getDestination();
+ce;
 	}
 	public void setSource(String source) {
 		this.source = source.getBytes();
