@@ -1,19 +1,20 @@
 package packets;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+
+import javax.swing.Action;
+
 import multicast.socketReceive;
 import multicast.socketSend;
 
-public class createPacket {
+public class createPacket{
 	InetAddress group;
 	MulticastSocket s;
 	socketReceive socketReceive;
 	socketSend socketSend;
 	String message;
+	Action packetHasToBeSend;
 	
 	public String getMessage() {
 		return message;
@@ -22,16 +23,9 @@ public class createPacket {
 		this.message = message;
 	}
 	
-	public Packet composePacket() {
-		String
-		
-		
-		
-		
-		
-		
-		return packet;
-		
-	}
+//	public Packet composePacket() {
+////		String
+////		return packet;
+//	}
 	
 }
