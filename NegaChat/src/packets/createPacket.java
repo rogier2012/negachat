@@ -22,16 +22,9 @@ public class createPacket {
 		this.message = message;
 	}
 	
-	public Packet composePacket() {
-		String
-		
-		
-		
-		
-		
-		
-		return packet;
-		
-	}
+//	public Packet composePacket() {
+//	//	String
+//	//	return packet;
+//	}
 	
 }
