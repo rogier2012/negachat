@@ -65,10 +65,8 @@ public class SocketGekloot {
 	}
 
 	public void startThreads(Packet packet) throws IOException {
-		socketSend = new socketSend(packet, group, s);
-		Thread threadSend = new Thread(socketSend);
+		socketSend = new socketSend(group, s);
 		Thread threadReceive = new Thread(socketReceive);
-		threadSend.start();
 		threadReceive.start();
 
 		

@@ -31,6 +31,12 @@ public class Packet {
 //		this.setOptions(options);
 //	}
 	
+	
+//	PACKET FORMAT:
+	
+//	[prococol]	[destination]	[source]	[message]	[options]	[hash]
+//		1 bit		16 bytes	16 bytes	128 bytes	1 byte		4 bytes
+
 	public byte[] composePacket() {
 		byte[] type, dest, src, msg, opt, hash;
 		type = new byte[]{TYPE};
