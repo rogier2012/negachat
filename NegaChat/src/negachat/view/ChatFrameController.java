@@ -12,12 +12,11 @@ public class ChatFrameController implements Observer {
 	// Sub views
 	private ChatBox chatbox;
 	private MessageField mField;
-	private WhoIsOnline online;
+	private WhoIsOnlineController online;
 
 	// Controllers of sub views
 	private ChatBoxController cbController;
 	private MessageFieldController mfController;
-	private WhoIsOnlineController wioController;
 
 	String otherName;
 
@@ -36,8 +35,6 @@ public class ChatFrameController implements Observer {
 		cbController = new ChatBoxController(chatbox);
 		mField = cFrame.getmField();
 		mfController = new MessageFieldController(mField, this);
-		online = cFrame.getOnline();
-		wioController = new WhoIsOnlineController(online);
 	}
 
 	public void update(Observable obs, Object arg) {
@@ -47,6 +44,6 @@ public class ChatFrameController implements Observer {
 				&& (rsocket.getRecvPacket().getSource().equals(otherName) || rsocket
 						.getRecvPacket().getDestination().equals("All"))) {
 			cbController.setMessage(rsocket.getRecvPacket().getSource() + ": " + rsocket.getRecvPacket().getMessage() + "\n");
-		}
+		} 
 	}
 }

@@ -13,7 +13,7 @@ public class MessagePacket {
 	 * 
 	 */
 	
-	public  final byte TYPE = 0;
+	public final byte TYPE = 0;
 	
 	private byte type, options;
 	private String source, destination, message, hash;
@@ -21,7 +21,7 @@ public class MessagePacket {
 	public MessagePacket(String destination, String source) {
 		this.source = source;
 		this.destination = destination;
-		setType((byte)0x00);
+		setType(TYPE);
 	}
 	
 	public MessagePacket(byte[] packetArray){
