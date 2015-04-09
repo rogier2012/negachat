@@ -13,6 +13,7 @@ public class RREQ extends Packet {
 		super(destination, source);
 		this.lifeSpan = lifeSpan;
 		this.identifier = identifier;
+		this.setType(TYPE);
 	}
 	
 }

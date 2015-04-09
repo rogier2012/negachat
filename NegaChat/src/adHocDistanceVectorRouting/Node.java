@@ -13,7 +13,7 @@ public class Node {
 	private RoutingTable table;
 	
 	public HELLO sendHello()	{
-		return null;//TODO
+		return new HELLO();
 	}
 	
 	public Packet replyRREQ	(RREQ request)	{

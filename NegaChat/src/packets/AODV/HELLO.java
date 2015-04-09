@@ -8,6 +8,7 @@ public class HELLO extends Packet {
 	
 	public HELLO(String destination, String source) {
 		super(destination, source);
+		this.setType(TYPE);
 	}
 	
 }
