@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 import packets.Packet;
+import packets.createPacket;
 
 public class socketSend implements Runnable {
 	
@@ -13,8 +14,8 @@ public class socketSend implements Runnable {
 	InetAddress group;
 	MulticastSocket sock;
 
-	public socketSend(Packet packet, InetAddress group, MulticastSocket sock) {
-		this.packet = packet;
+	public socketSend(InetAddress group, MulticastSocket sock) {
+		this.packet = createPacket.createPacket();
 		this.group = group;
 		this.sock = sock;
 	}
