@@ -21,7 +21,7 @@ public class MessageFieldController extends Observable implements ActionListener
 	}
 	
 	public void actionPerformed(ActionEvent actionEvent) {                  
-		message = mField.getText();
+		message = "Me: " + mField.getText() + "\n";
 		setChanged();
 	    notifyObservers();
     }

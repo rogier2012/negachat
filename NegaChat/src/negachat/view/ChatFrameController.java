@@ -33,12 +33,9 @@ public class ChatFrameController implements Observer {
 		 wioController = new WhoIsOnlineController(online);
 	}
 
-
-	@Override
 	public void update(Observable obs, Object arg) {
 		if(obs == mfController){
-			chatbox.setMessage(mfController.getMessage());
-			chatbox.repaint();
+			cbController.setMessage(mfController.getMessage());
 		}
 	}
 }

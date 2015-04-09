@@ -54,8 +54,8 @@ public class MessageField extends JPanel {
 	
 	public String getText(){
 		String message = textField.getText();
-		textField.setText(" ");
-		return "Me: " + message + "\n";
+		textField.setText("");
+		return message;
 	}
 
 
