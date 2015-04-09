@@ -31,7 +31,11 @@ public class Packet {
 		destination = new String(destArray);
 		byte[] sourceArray = null;
 		System.arraycopy(packetArray, 1, sourceArray, 0, 16);
-		destination = new String(sourceArray);
+		source = new String(sourceArray);
+		byte[] messageArray = null;
+		System.arraycopy(packetArray, 1, messageArray, 0, 16);
+		message = new String(messageArray);
+		
 	}
 	
 	
