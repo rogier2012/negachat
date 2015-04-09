@@ -4,18 +4,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.ServerSocket;
+import java.util.Observable;
+import java.util.Observer;
 
 import packets.Packet;
 
-public class ReceivingSocket implements Runnable {
+public class ReceivingSocket extends Observable implements Runnable {
 		private DatagramSocket clientsocket;
 		public final int SERVER_PORT = 1488;
 		InputStream reader;
-		String nickname;
+		String myName;
+		String otherName;
+		Packet recvPacket;
 		
-		public ReceivingSocket(String nickname){
-			this.nickname = nickname;
+		public ReceivingSocket(String myName){
+			this.myName= myName;
 		}
 		
 		public void run() {
@@ -39,12 +42,26 @@ public class ReceivingSocket implements Runnable {
 		}
 		
 		public void handleMessage(Packet packet){
-			
-			if (nickname.equals(packet.getDestination())){
+			if (myName.equals(packet.getDestination())){
 				// verwerk message plz
-			} else {
-				// zoek dest op in routingtable en stuur door
+				if (packet.makeHash() == packet.getHash()){
+					long timestamp = System.currentTimeMillis();
+					recvPacket = packet;
+					setChanged();
+				    notifyObservers();
+				}
+			} else if (packet.getDestination().equals("All")) {
+				if (packet.makeHash() == packet.getHash()){
+					long timestamp = System.currentTimeMillis();
+					recvPacket = packet;
+					setChanged();
+				    notifyObservers();
+				    // zoek dest op in routingtbble en stuur door
+				}
 			}
+//			} else if (als packet.getDestination()) {
+//				// zoek dest op in routingtable en stuur door
+//			} 
 			
 		}
 		
@@ -53,8 +70,13 @@ public class ReceivingSocket implements Runnable {
 		}
 		
 		
-				
+		public void addObserver(Observer observer){
+			this.addObserver(observer);
+		}
 		
+		public Packet getRecvPacket(){
+			return recvPacket;
+		}
 		
 		
 		
