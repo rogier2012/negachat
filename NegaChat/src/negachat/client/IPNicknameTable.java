@@ -8,7 +8,7 @@ public class IPNicknameTable {
 	
 	private static Map<String, String> table;
 	
-	public String getIP(String nickName) {
+	public static String getIP(String nickName) {
 		return table.get(nickName);
 	}
 
