@@ -10,10 +10,12 @@ public class Node {
 	
 	public static final int MAX_ROUTE_AGE = 1000000;
 	
+	private String IP = null;
+	
 	private RoutingTable table;
 	
 	public HELLO sendHello()	{
-		return new HELLO();
+		return new HELLO(IP);
 	}
 	
 	public MessagePacket replyRREQ	(RREQ request)	{

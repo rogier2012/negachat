@@ -1,14 +1,14 @@
 package negachat.view;
 
-import negachat.client.ClientsOnline;
+import negachat.client.OnlineClients;
 
 public class WhoIsOnlineController implements Runnable {
 	private WhoIsOnline online;
-	private ClientsOnline clientList;
+	private OnlineClients clientList;
 	
 	public WhoIsOnlineController(WhoIsOnline online){
 		this.online = online;
-		clientList = new ClientsOnline();
+		clientList = new OnlineClients();
 		Thread thread = new Thread(this);
 		thread.start();
 	}
