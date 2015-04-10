@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import negachat.packets.CreatePacket;
+
 public class TestCreatePacket {
 	public static final int MAX_MESSAGE_LENGTH = 128;
 
@@ -28,10 +30,10 @@ public class TestCreatePacket {
 		System.out.println(message);
 		System.out.println(message.length());
 		System.out.println(message.getBytes().length);
-//		
-//		CreatePacket creator = new CreatePacket();
-//		creator.setMessage("/all/ Dit is een test!:)");
-//		creator.composePacket();
+		
+		CreatePacket creator = new CreatePacket();
+		creator.setMessage("/all/ Dit is een test!:)");
+		creator.composePacket();
 	}
 
 }
