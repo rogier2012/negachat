@@ -32,13 +32,13 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 				System.out
 						.println("Oops... Something went wrong receiving a packet.");
 			}
-			if (recv.getData()[0] == 0) {
+			if (recv.getData()[0] == MessagePacket.TYPE) {
 				MessagePacket packet = new MessagePacket(recv.getData());
 				handlePacket(packet);
-			} else if (recv.getData()[0] == 3) {
+			} else if (recv.getData()[0] == RREP.TYPE) {
 				RREP packet = new RREP(recv.getData());
 				handlePacket(packet);
-			} else if (recv.getData()[0] == 4) {
+			} else if (recv.getData()[0] == RERR.TYPE) {
 				RERR packet = new RERR(recv.getData());
 				handlePacket(packet);
 			}

@@ -30,13 +30,13 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				e.printStackTrace();
 				System.out.println("Oops... Something went wrong receiving a packet.");
 			}
-			if (recv.getData()[0] == 1) {
+			if (recv.getData()[0] == HELLO.TYPE) {
 				HELLO packet = new HELLO(recv.getData());
 				handlePacket(packet);
-			} else if (recv.getData()[0] == 2) {
+			} else if (recv.getData()[0] == RREQ.TYPE) {
 				RREQ packet = new RREQ(recv.getData());
 				handlePacket(packet);
-			} else if (recv.getData()[0] == 5) {
+			} else if (recv.getData()[0] == GroupMessagePacket.TYPE) {
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
 			}
@@ -45,7 +45,13 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	}
 
 	public void handlePacket(Packet packet) {
-		
+		if (packet instanceof HELLO){
+			
+		} else if (packet instanceof RREQ){
+			
+		} else if (packet instanceof GroupMessagePacket){
+			
+		}
 	}
 	
 	

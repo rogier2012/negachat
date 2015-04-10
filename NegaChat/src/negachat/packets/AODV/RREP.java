@@ -19,6 +19,10 @@ public class RREP extends Packet {
 		super(source);
 		this.setType(TYPE);
 	}
+	
+	public RREP(byte[]data){
+		super(data);
+	}
 
 	/*
 	 * Queries

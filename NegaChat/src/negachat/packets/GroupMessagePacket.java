@@ -12,6 +12,10 @@ public class GroupMessagePacket extends Packet{
 		super(source);
 		setType(TYPE);
 	}
+	
+	public GroupMessagePacket(byte[] data){
+		super(data);
+	}
 
 	@Override
 	public byte[] toByteArray() {
