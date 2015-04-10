@@ -22,12 +22,16 @@ public class MessageFieldController extends Observable implements ActionListener
 		this.addObserver(observer);
 	}
 	
-	public void actionPerformed(ActionEvent actionEvent) {                  
-		message = NegaView.getMyName() + ": " + mField.getText() + "\n";
-		CreatePacket creator = new CreatePacket();
-		creator.setMessage(mField.getText());
-		setChanged();
-	    notifyObservers();
+	public void actionPerformed(ActionEvent actionEvent) {
+		message = mField.getText();
+		if (!message.equals("")){
+			message = NegaView.getMyName() + ": " + message + "\n";
+			CreatePacket creator = new CreatePacket();
+			creator.setMessage(mField.getText());
+			setChanged();
+		    notifyObservers();
+		}
+		
     }
 	
 }

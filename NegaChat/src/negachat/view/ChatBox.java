@@ -15,6 +15,8 @@ public class ChatBox extends JTextArea {
 	public ChatBox() {
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		this.setEditable(false);
+		this.setLineWrap(true);
+		this.setWrapStyleWord(true);
 	}
 
 }
