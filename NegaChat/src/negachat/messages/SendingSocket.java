@@ -23,6 +23,7 @@ public class SendingSocket {
 		}
 	}
 	
+
 	public void sendPacket(MessagePacket packet) {
 		byte[] bytePacket = packet.toByteArray();
 		System.out.println("Trying to send packet with length " + bytePacket.length + "...");
