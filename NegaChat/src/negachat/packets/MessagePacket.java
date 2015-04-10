@@ -22,7 +22,7 @@ public class MessagePacket extends Packet {
 		setType(TYPE); 
 	}
 	
-	public MessagePacket convertToPacket (byte[] packetArray)	{
+	public MessagePacket(byte[] packetArray)	{
 		setType(packetArray[0]);
 		byte[] destArray = null;
 		System.arraycopy(packetArray, PROTOCOL, destArray, 0, DESTINATION);
@@ -37,9 +37,6 @@ public class MessagePacket extends Packet {
 		byte[] hashArray = null;
 		System.arraycopy(packetArray, PROTOCOL+DESTINATION+SOURCE+MESSAGE, hashArray, 0, HASH);
 		setHash(new String(hashArray));
-		
-		
-		
 	}
 	
 	
