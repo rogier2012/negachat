@@ -10,7 +10,7 @@ public class MessagePacket extends Packet {
 	public static final int SOURCE = 16;
 	public static final int MESSAGE = 128;
 	public static final int OPTIONS = 1;
-	public static final int HASH = 4;
+	public static final int HASH = 4; 
 	
 	private byte type, options;
 	private String source, destination, message, hash;
