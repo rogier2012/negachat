@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import negachat.client.ClientHandler;
@@ -12,7 +13,7 @@ import negachat.messages.ReceivingSocket;
 public class NegaView {
 
 	private JFrame frame;
-	private String myName = "Me";
+	private static String myName;
 	private WhoIsOnline online;
 	private WhoIsOnlineController wioController;
 
@@ -24,6 +25,7 @@ public class NegaView {
 			public void run() {
 				try {
 					NegaView window = new NegaView();
+					
 					window.frame.setVisible(true);
 					window.frame.setResizable(false);
 				} catch (Exception e) {
@@ -37,6 +39,8 @@ public class NegaView {
 	 * Create the application.
 	 */
 	public NegaView() {
+		myName = JOptionPane.showInputDialog(frame,
+                "What is your nickname?", null);
 		initialize();
 	}
 
@@ -71,6 +75,8 @@ public class NegaView {
 		wioController.addClient("Gijs");
 	}
 	
-	
+	public static String getMyName(){
+		return myName;
+	}
 
 }
