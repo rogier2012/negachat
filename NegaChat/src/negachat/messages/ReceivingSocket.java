@@ -6,6 +6,15 @@ import negachat.packets.Packet;
 
 public abstract class ReceivingSocket extends Observable implements Runnable {
 	protected Packet recvPacket;
+	protected long timestamp;
+
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
+	}
 
 	public abstract void run();
 
