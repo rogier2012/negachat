@@ -2,9 +2,7 @@ package negachat.client;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.swing.JTabbedPane;
-
 import negachat.messages.ReceivingSocket;
 import negachat.view.ChatFrame;
 import negachat.view.ChatFrameController;

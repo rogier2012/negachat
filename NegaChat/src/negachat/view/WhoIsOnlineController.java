@@ -25,9 +25,7 @@ public class WhoIsOnlineController extends Observable implements ActionListener 
 
 	public void actionPerformed(ActionEvent actionEvent) {
 		String name = actionEvent.getActionCommand();
-
 		handler.addChat(name, this);
-
 		this.setChanged();
 		this.notifyObservers(online);
 
