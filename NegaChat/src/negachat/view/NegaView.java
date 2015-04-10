@@ -57,12 +57,14 @@ public class NegaView {
 		
 		String groupChatName = "All";
 		
-		ReceivingSingleSocket rsocket = new ReceivingSingleSocket(myName);
+		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(myName);
 		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket();
-//		Thread t1 = new Thread(rsocket);
-//		t1.start();
+		Thread threadrs = new Thread(rssocket);
+		Thread threadrm = new Thread(rmsocket);
+		threadrs.start();
+		threadrm.start();
 		online = new WhoIsOnline();
-		ClientHandler handler = new ClientHandler(tabbedPane, rsocket);
+		ClientHandler handler = new ClientHandler(tabbedPane, rssocket);
 		wioController = new WhoIsOnlineController(online, handler);
 		ChatFrame cFrame1 = new ChatFrame();
 		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, groupChatName, rmsocket);

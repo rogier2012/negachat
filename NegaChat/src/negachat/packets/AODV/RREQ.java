@@ -19,28 +19,51 @@ public class RREQ extends Packet {
 	public static final byte TYPE = 2;
 	
 	// How many Bytes are reserved for this data
-	public static final
-	public static final
-	public static final
-	public static final
+	public static final int LIFESPANLENGTH = 1;
+	public static final int IDENTIFIERLENGTH = 1;
+	public static final int DESTINATIONLENGTH = 16;
 	
+	// Index of data
+	public static final int DESTINATIONINDEX = SOURCEINDEX + SOURCELENGTH;
+	public static final int LIFESPANINDEX = DESTINATIONINDEX + DESTINATIONLENGTH;
+	public static final int IDENTIFIERINDEX = LIFESPANINDEX + LIFESPANLENGTH;
 	
 	/*
 	 * Instance Variables
 	 */
 	
-	private int lifeSpan;
-	private int identifier;
+	private byte lifeSpan;
+	private byte identifier;
+
+	private String destination;
 	
 	/*
 	 * Constructors
 	 */
 	
-	public RREQ(String destination, String source, int lifeSpan, int identifier) {
+	public RREQ(String destination, String source, byte lifeSpan, byte identifier) {
 		super(source);
+		this.destination = destination;
 		this.lifeSpan = lifeSpan;
 		this.identifier = identifier;
 		this.setType(TYPE);
+	}
+	
+	public RREQ(byte[] byteArray)	{
+		super(byteArray);
+		this.setType(TYPE);
+		
+		byte[] temp = null;
+		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, DESTINATIONINDEX);
+		this.setSource(new String(temp));
+		
+		temp = null;
+		System.arraycopy(byteArray, DESTINATIONINDEX, temp, 0, LIFESPANINDEX);
+		this.setDestination(new String(temp));
+		
+		this.lifeSpan = byteArray[LIFESPANINDEX];
+		this.identifier = byteArray[IDENTIFIERINDEX];
+		
 	}
 
 	/*
@@ -49,24 +72,47 @@ public class RREQ extends Packet {
 	
 	@Override
 	public byte[] toByteArray() {
-		// TODO Auto-generated method stub
-		return null;
+		byte[] source = this.getSource().getBytes();
+		byte[] destination = this.destination.getBytes();
+		byte[] lifeSpan = new byte[]{this.lifeSpan};
+		byte[] identifier = new byte[]{this.identifier};
+		
+		byte[] result = new byte[]{this.getType()};
+		
+		System.arraycopy(source, 0, result, result.length, SOURCELENGTH);
+		System.arraycopy(destination, 0, result, result.length, DESTINATIONLENGTH);
+		System.arraycopy(lifeSpan, 0, result, result.length, LIFESPANLENGTH);
+		System.arraycopy(identifier, 0, result, result.length, IDENTIFIERLENGTH);
+		
+		return result;
 	}
+	
+	/*
+	 * Getters and Setters
+	 */
 
-	public int getLifeSpan() {
+	public byte getLifeSpan() {
 		return lifeSpan;
 	}
 
-	public void setLifeSpan(int lifeSpan) {
+	public void setLifeSpan(byte lifeSpan) {
 		this.lifeSpan = lifeSpan;
 	}
 
-	public int getIdentifier() {
+	public byte getIdentifier() {
 		return identifier;
 	}
 
-	public void setIdentifier(int identifier) {
+	public void setIdentifier(byte identifier) {
 		this.identifier = identifier;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
 	
 }
