@@ -52,7 +52,7 @@ public class MessagePacket extends Packet {
 	
 //	PACKET FORMAT:
 	
-//	[protocol]	[destination]	[source]	[message]	[options]	[hash]
+//	
 //		1 byte		16 bytes	16 bytes	128 bytes	1 byte		4 bytes
 
 	public byte[] toByteArray() {
