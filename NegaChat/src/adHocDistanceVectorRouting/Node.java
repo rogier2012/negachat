@@ -1,6 +1,7 @@
 package adHocDistanceVectorRouting;
 
 import negachat.packets.MessagePacket;
+import negachat.packets.Packet;
 import negachat.packets.AODV.HELLO;
 import negachat.packets.AODV.RERR;
 import negachat.packets.AODV.RREP;
@@ -26,7 +27,7 @@ public class Node {
 		return null;//TODO
 	}
 	
-	public void updateTable(MessagePacket packet)	{
+	public void updateTable(Packet packet)	{
 		if (packet instanceof HELLO)	{
 			
 			
