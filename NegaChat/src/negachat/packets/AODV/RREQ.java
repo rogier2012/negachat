@@ -2,16 +2,31 @@ package negachat.packets.AODV;
 
 import negachat.packets.Packet;
 
+/*
+ * RREQ are route requests that are flooded over the network until the destination has been found.
+ * 
+ * Lay-Out:
+ * [Type][Source][Destination][Lifespan][Identifier]
+ */
+
 public class RREQ extends Packet {
 	
 	/*
 	 * Constants
 	 */
 	
+	// Type ID of packet
 	public static final byte TYPE = 2;
 	
+	// How many Bytes are reserved for this data
+	public static final
+	public static final
+	public static final
+	public static final
+	
+	
 	/*
-	 * Intance Variables
+	 * Instance Variables
 	 */
 	
 	private int lifeSpan;

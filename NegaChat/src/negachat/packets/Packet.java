@@ -5,13 +5,25 @@ public abstract class Packet {
 	/*
 	 * AODV PACKETS TYPE IDENTIFIER BYTES:
 	 * 
-	 * 00000000 - Normal
+	 * 00000000 - MessagePacket
 	 * 00000001 - HELLO
 	 * 00000010 - RREQ
 	 * 00000011 - RREP
 	 * 00000100 - RERR
 	 * 00000101 - GroupMessage
 	 */
+	
+	/*
+	 * Constants
+	 */
+	
+	// How many bytes are reserved for the source header
+	public static final int TYPELENGTH = 1;
+	public static final int SOURCELENGTH = 16;
+	
+	// Index of data
+	public static final int TYPEINDEX = 0;
+	public static final int SOURCEINDEX = TYPEINDEX + TYPELENGTH;
 	
 	/*
 	 * Instance Variables

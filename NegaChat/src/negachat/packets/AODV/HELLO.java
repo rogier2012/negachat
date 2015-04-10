@@ -15,7 +15,16 @@ public class HELLO extends Packet {
 	 * Constants
 	 */
 	
+	// Type ID of packet
 	public static final byte TYPE = 1;
+	
+	// How many Bytes are reserved for this data
+	public static final int HOPCOUNTLENGTH = 1;
+	public static final int IDENTIFIERLENGTH = 1;
+	
+	// Index of data
+	public static final int HOPCOUNTINDEX = TYPELENGTH;
+	public static final int IDENTIFIERINDEX = HOPCOUNTINDEX + HOPCOUNTLENGTH;
 	
 	/*
 	 * Instance Variables
@@ -33,6 +42,13 @@ public class HELLO extends Packet {
 		this.setType(TYPE);
 		this.hopCount = 0;
 		this.identifier = identifier;
+	}
+	
+	public HELLO(byte[] byteArray)	{
+		super(byteArray);
+		this.setType(TYPE);
+		this.hopCount = byteArray[HOPCOUNTINDEX];
+		this.identifier = byteArray[IDENTIFIERINDEX];
 	}
 	
 	/*
