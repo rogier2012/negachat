@@ -10,20 +10,25 @@ import multicast.socketSend;
 import negachat.client.IPNicknameTable;
 import negachat.view.NegaView;
 
+//	Class to create a MessagePacket or GroupMessagePacket
+
+
 public class CreatePacket{
 	private InetAddress group;
 	private MulticastSocket s;
-	private socketReceive socketReceive;
-	private socketSend socketSend;
 	private String message;
 	private String destination;
 	private Action packetHasToBeSend;	
 	
 	public static final int MAX_MESSAGE_LENGTH = 128;
+	
+	public CreatePacket() {
+		
+	}
 
 	public Packet composePacket() {
 //		TODO IPNicknameTable moet gemaakt worden
-			if (destination.toLowerCase().equals("all")) {
+			if (destination.equals("all")) {
 //				TODO maken GroupMessagePacket
 
 //				GroupMessagePacket packet = new GroupMessagePacket(NegaView.getMyName());
@@ -58,6 +63,30 @@ public class CreatePacket{
 	}
 	public String getDestination() { 
 		return destination;
+	}
+
+	public InetAddress getGroup() {
+		return group;
+	}
+
+	public void setGroup(InetAddress group) {
+		this.group = group;
+	}
+
+	public MulticastSocket getS() {
+		return s;
+	}
+
+	public void setS(MulticastSocket s) {
+		this.s = s;
+	}
+
+	public Action getPacketHasToBeSend() {
+		return packetHasToBeSend;
+	}
+
+	public void setPacketHasToBeSend(Action packetHasToBeSend) {
+		this.packetHasToBeSend = packetHasToBeSend;
 	}
 
 	
