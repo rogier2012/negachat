@@ -9,7 +9,6 @@ import java.net.ServerSocket;
 import packets.Packet;
 
 public class ReceivingSocket implements Runnable {
-		private ServerSocket ssocket;
 		private DatagramSocket clientsocket;
 		public final int SERVER_PORT = 1488;
 		InputStream reader;
