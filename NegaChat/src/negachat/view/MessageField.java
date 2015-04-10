@@ -6,6 +6,7 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
@@ -27,6 +28,7 @@ public class MessageField extends JPanel {
 		setLayout(gridBagLayout);
 		
 		textField = new JTextField();
+		textField.setDocument(new MyTextFieldLimit(128));
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.BOTH;
 		gbc_textField.insets = new Insets(0, 0, 0, 5);

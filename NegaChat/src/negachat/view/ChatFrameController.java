@@ -3,7 +3,11 @@ package negachat.view;
 import java.util.Observable;
 import java.util.Observer;
 
+import negachat.messages.ReceivingSingleSocket;
 import negachat.messages.ReceivingSocket;
+import negachat.multicast.ReceivingMultiSocket;
+import negachat.packets.GroupMessagePacket;
+import negachat.packets.MessagePacket;
 
 public class ChatFrameController implements Observer {
 	// main view of this Controller
@@ -12,21 +16,19 @@ public class ChatFrameController implements Observer {
 	// Sub views
 	private ChatBox chatbox;
 	private MessageField mField;
-	private WhoIsOnlineController online;
 
 	// Controllers of sub views
 	private ChatBoxController cbController;
 	private MessageFieldController mfController;
 
-	String otherName;
+	private String chatName;
 
-	ReceivingSocket rsocket;
+	private ReceivingSocket socket;
 
-	public ChatFrameController(ChatFrame cFrame, String otherName,
-			ReceivingSocket rsocket) {
+	public ChatFrameController(ChatFrame cFrame, String chatName,ReceivingSocket socket) {
 		this.cFrame = cFrame;
-		this.otherName = otherName;
-		this.rsocket = rsocket;
+		this.chatName = chatName;
+		this.socket = socket;
 		initialize();
 	}
 
@@ -40,10 +42,14 @@ public class ChatFrameController implements Observer {
 	public void update(Observable obs, Object arg) {
 		if (obs == mfController) {
 			cbController.setMessage(mfController.getMessage());
-		} else if (obs == rsocket
-				&& (rsocket.getRecvPacket().getSource().equals(otherName) || rsocket
-						.getRecvPacket().getDestination().equals("All"))) {
-			cbController.setMessage(rsocket.getRecvPacket().getSource() + ": " + rsocket.getRecvPacket().getMessage() + "\n");
-		} 
+		} else if (obs instanceof ReceivingSingleSocket && socket.getRecvPacket().getSource().equals(chatName)) {
+			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((MessagePacket)socket.getRecvPacket()).getMessage() + "\n");
+		} else if (obs instanceof ReceivingMultiSocket && socket.getRecvPacket().getType() == 5){
+			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((GroupMessagePacket)socket.getRecvPacket()).getMessage() + "\n" );
+		}
+	}
+	
+	public String getChatName(){
+		return chatName;
 	}
 }
