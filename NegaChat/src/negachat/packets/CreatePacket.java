@@ -12,14 +12,14 @@ public class CreatePacket{
 	public static final int MAX_MESSAGE_LENGTH = 128;
 
 	public Packet composePacket() {
-		Packet packet = null;
 			if (destination.equals("all")) {
 				GroupMessagePacket GroupPacket = new GroupMessagePacket(NegaView.getMyName());
 				GroupPacket.setMessage(message);
 				GroupPacket.setType((byte) 5);
 				GroupPacket.setOptions((byte) 0);
+				return GroupPacket;
 			} else {
-				packet = new MessagePacket(destination, NegaView.getMyName());
+				MessagePacket packet= new MessagePacket(destination, NegaView.getMyName());
 				if(message.length() < MAX_MESSAGE_LENGTH) {
 					int length = message.length();
 					int todo = MAX_MESSAGE_LENGTH - length;
@@ -29,13 +29,15 @@ public class CreatePacket{
 					((MessagePacket) packet).setMessage(message);
 					((MessagePacket) packet).setType((byte) 0);
 					((MessagePacket) packet).setOptions((byte) 0);
+					return packet;
 				} else if (message.length() > MAX_MESSAGE_LENGTH) {
 					System.out.println("Message exceeds maximum length!\nMaximum length is " + MAX_MESSAGE_LENGTH + ", you have " + message.length() + " characters.");
+					return null;
 				}
 				
 
 			}
-		return packet;
+			return null;
 	}
 	
 	public String getMessage() {
