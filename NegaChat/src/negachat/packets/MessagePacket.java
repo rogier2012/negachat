@@ -19,7 +19,7 @@ public class MessagePacket extends Packet {
 		super(source);
 		this.source = source;
 		this.destination = destination;
-		setType(TYPE);
+		setType(TYPE); 
 	}
 	
 	public MessagePacket convertToPacket (byte[] packetArray)	{
