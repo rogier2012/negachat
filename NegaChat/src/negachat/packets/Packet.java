@@ -14,7 +14,7 @@ public abstract class Packet {
 	 */
 	
 	/*
-	 * Constants
+	 * Constants 
 	 */
 	
 	// How many bytes are reserved for the source header
