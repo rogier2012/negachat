@@ -48,17 +48,18 @@ public class GroupMessagePacket extends Packet{
 		type = getType();
 		src = getSource().getBytes();
 		msg = getMessage().getBytes(); 
-		opt = 0;	
+		opt = (byte) 0;	
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
 		bytePacket[0] = type;
 		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE - 1);
 		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+SOURCE, MESSAGE - 1);
-		System.arraycopy(opt, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE, OPTIONS);
-		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+OPTIONS, HASH);
+		bytePacket[TOTAL - HASH - 1] = opt;
+//		System.arraycopy(opt, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE, OPTIONS - 1);
+		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+OPTIONS, HASH - 1);
 		
-		System.out.println("bytePacket composed");
+		System.out.println("GroupMessagePackage bytePacket composed");
 		System.out.println("length: " + bytePacket.length);
 		System.out.println("bytePacket string: " + new String(bytePacket));
 		
