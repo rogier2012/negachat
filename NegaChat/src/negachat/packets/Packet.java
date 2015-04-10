@@ -29,7 +29,6 @@ public abstract class Packet {
 	}
 	
 	public Packet(byte[] byteArray){
-		
 	}
 	
 	/*
