@@ -18,14 +18,13 @@ public class ChatFrameController implements Observer {
 	private ChatBoxController cbController;
 	private MessageFieldController mfController;
 
-	String otherName;
+	String chatName;
 
 	ReceivingSocket rsocket;
 
-	public ChatFrameController(ChatFrame cFrame, String otherName,
-			ReceivingSocket rsocket) {
+	public ChatFrameController(ChatFrame cFrame, String chatName,ReceivingSocket rsocket) {
 		this.cFrame = cFrame;
-		this.otherName = otherName;
+		this.chatName = chatName;
 		this.rsocket = rsocket;
 		initialize();
 	}
@@ -41,9 +40,12 @@ public class ChatFrameController implements Observer {
 		if (obs == mfController) {
 			cbController.setMessage(mfController.getMessage());
 		} else if (obs == rsocket
-				&& (rsocket.getRecvPacket().getSource().equals(otherName) || rsocket
-						.getRecvPacket().getDestination().equals("All"))) {
+				&& (rsocket.getRecvPacket().getSource().equals(chatName)|| rsocket.getRecvPacket().getType() == 5)) {
 			cbController.setMessage(rsocket.getRecvPacket().getSource() + ": " + rsocket.getRecvPacket().getMessage() + "\n");
 		} 
+	}
+	
+	public String getChatName(){
+		return chatName;
 	}
 }

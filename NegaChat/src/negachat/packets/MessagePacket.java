@@ -41,9 +41,6 @@ public class MessagePacket extends Packet {
 		setHash(new String(hashArray));
 	}
 	
-	
-	
-	
 //	TODO options nog verder uitwerken... hoe gaan we die setten en wat betekent het?
 //	public Packet(String source, String destination, String message, byte[] options) {
 //		this.setSource(source);

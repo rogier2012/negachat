@@ -14,6 +14,13 @@ public abstract class Packet {
 	 */
 	
 	/*
+	 * Constants
+	 */
+	
+	// How many bytes are reserved for the source header
+	public static final int SOURCELENGTH = 16;
+	
+	/*
 	 * Instance Variables
 	 */
 	
@@ -29,7 +36,6 @@ public abstract class Packet {
 	}
 	
 	public Packet(byte[] byteArray){
-		
 	}
 	
 	/*
