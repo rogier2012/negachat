@@ -11,14 +11,9 @@ public class HELLO extends Packet {
 	private int identifier;
 	
 	public HELLO(String source) {
+		super(source);
 		this.setType(TYPE);
 		this.hopCount = 0;
-	}
-
-	@Override
-	public Packet convertToPacket(byte[] byteArray) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

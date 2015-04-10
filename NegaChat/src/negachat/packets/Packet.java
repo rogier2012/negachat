@@ -21,10 +21,21 @@ public abstract class Packet {
 	private String source;
 	
 	/*
-	 * Queries
+	 * Constructors
 	 */
 	
-	public abstract Packet convertToPacket(byte[] byteArray);
+	public Packet(String source)	{
+		this.source = source;
+	}
+	
+	public Packet(byte[] byteArray){
+		
+	}
+	
+	
+	/*
+	 * Queries
+	 */
 	
 	public abstract byte[] toByteArray();
 

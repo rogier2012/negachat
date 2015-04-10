@@ -16,12 +16,14 @@ public class MessagePacket extends Packet {
 	private String source, destination, message, hash;
 	
 	public MessagePacket(String destination, String source) {
+		super(source);
 		this.source = source;
 		this.destination = destination;
 		setType(TYPE);
 	}
 	
 	public MessagePacket(byte[] packetArray)	{
+		super(packetArray);
 		setType(packetArray[0]);
 		byte[] destArray = null;
 		System.arraycopy(packetArray, PROTOCOL, destArray, 0, DESTINATION);
@@ -139,10 +141,5 @@ public class MessagePacket extends Packet {
 	public String getHash(){
 		return hash;
 	}
-
-	@Override
-	public Packet convertToPacket(byte[] byteArray) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

@@ -11,15 +11,10 @@ public class RREQ extends Packet {
 	private int identifier;
 	
 	public RREQ(String destination, String source, int lifeSpan, int identifier) {
+		super(source);
 		this.lifeSpan = lifeSpan;
 		this.identifier = identifier;
 		this.setType(TYPE);
-	}
-
-	@Override
-	public Packet convertToPacket(byte[] byteArray) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
