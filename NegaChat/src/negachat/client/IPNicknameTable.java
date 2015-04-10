@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class IPNicknameTable {
 	
-//	Format Map<NickName, IP>
+//	Format Map<String NickName, String IP>
 	
 	private Map<String, String> table;
 	
@@ -14,5 +14,9 @@ public class IPNicknameTable {
 	
 	public String getNickName(String IP) {
 		return null;
+	}
+
+	public boolean contains(String nickName) {
+		return table.containsKey(nickName);
 	}
 }
