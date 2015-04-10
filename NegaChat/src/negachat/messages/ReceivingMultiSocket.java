@@ -1,15 +1,15 @@
-package negachat.multicast;
+package negachat.messages;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-import negachat.messages.ReceivingSocket;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
 import negachat.packets.AODV.HELLO;
 import negachat.packets.AODV.RREQ;
+import adHocDistanceVectorRouting.RoutingTable;
 
 public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;
@@ -17,10 +17,14 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	
 	public static final int MULTICAST_PORT = 6112;
 	
+	public ReceivingMultiSocket(RoutingTable table){
+		super(table);
+	}
+	
 	public void run() {
 		do{
 			byte[] buf = new byte[1000];
-			DatagramPacket recv = new DatagramPacket(buf, buf.length);
+			DatagramPacket recv = new DatagramPacket(buf, 166);
 			try {
 				multisocket = new MulticastSocket(MULTICAST_PORT);
 				group = InetAddress.getByName("228.5.6.7");
@@ -50,7 +54,13 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 		} else if (packet instanceof RREQ){
 			
 		} else if (packet instanceof GroupMessagePacket){
-			
+			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
+				setTimestamp(System.currentTimeMillis());
+				recvPacket = packet;
+				setChanged();
+				notifyObservers();
+				//stuur door naar neighbours
+			}
 		}
 	}
 	

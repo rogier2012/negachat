@@ -3,9 +3,9 @@ package negachat.view;
 import java.util.Observable;
 import java.util.Observer;
 
+import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
 import negachat.messages.ReceivingSocket;
-import negachat.multicast.ReceivingMultiSocket;
 import negachat.packets.CreatePacket;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.MessagePacket;
