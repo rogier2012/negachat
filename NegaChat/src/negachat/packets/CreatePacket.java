@@ -1,5 +1,6 @@
 package negachat.packets;
 
+
 import negachat.view.NegaView;
 
 //	Class to create a MessagePacket or GroupMessagePacket
@@ -8,44 +9,57 @@ import negachat.view.NegaView;
 public class CreatePacket{
 	private String message;
 	private String destination;
+	private String myName = NegaView.getMyName();
 	
 	public static final int MAX_MESSAGE_LENGTH = 128;
+	public static final int MAX_NAME_LENGTH = 16;
 
 	public Packet composePacket() {
-			if (destination.equals("all")) {
-				GroupMessagePacket GroupPacket = new GroupMessagePacket(NegaView.getMyName());
-				GroupPacket.setMessage(message);
-				GroupPacket.setType((byte) 5);
-				GroupPacket.setOptions((byte) 0);
-				checkLengths();
-				return GroupPacket;
-			} else {
-				MessagePacket packet= new MessagePacket(destination, NegaView.getMyName());
-					((MessagePacket) packet).setMessage(message);
-					((MessagePacket) packet).setType((byte) 0);
-					((MessagePacket) packet).setOptions((byte) 0);
-					return packet;
-				} else if (message.length() > MAX_MESSAGE_LENGTH) {
-					System.out.println("Message exceeds maximum length!\nMaximum length is " + MAX_MESSAGE_LENGTH + ", you have " + message.length() + " characters.");
-					return null;
-				}
-				
-
+		checkLengths();
+		if (destination.equals("all")) {
+			GroupMessagePacket GroupPacket = new GroupMessagePacket(myName);
+			GroupPacket.setMessage(message);
+			GroupPacket.setType((byte) 5);
+			GroupPacket.setOptions((byte) 0);
+			checkLengths();
+			return GroupPacket;
+		} else {
+			MessagePacket MessagePacket = new MessagePacket(destination, myName);
+			MessagePacket.setMessage(message);
+			MessagePacket.setType((byte) 0);
+			MessagePacket.setOptions((byte) 0);
+			return MessagePacket;
 			}
-			return null;
-	}
+		}
 	
 //	Checken van de lengtes van source, destination en message
 	
 	private void checkLengths() {
-		// TODO Auto-generated method stub
-						if(message.length() < MAX_MESSAGE_LENGTH) {
-					int length = message.length();
-					int todo = MAX_MESSAGE_LENGTH - length;
-					for (int i = todo; i > 0; i--) {
-						message += "0";
-					}					
-
+		if (myName.length() < MAX_NAME_LENGTH) {
+			int length = myName.length();
+			int todo = MAX_NAME_LENGTH - length;
+			for (int i = todo; i > 0; i--) {
+				myName += "=";
+			}
+		}
+		
+		if (message.length() < MAX_MESSAGE_LENGTH) {
+			int length = message.length();
+			int todo = MAX_MESSAGE_LENGTH - length;
+			for (int i = todo; i > 0; i--) {
+				message += "=";
+			}
+		}
+		
+		if (!destination.equals("all")) {
+			if (destination.length() < MAX_NAME_LENGTH) { 
+				int length = destination.length();
+				int todo = MAX_MESSAGE_LENGTH - length;
+				for (int i = todo; i > 0; i--) {
+					destination += "=";
+				}
+			}
+		}
 	}
 
 	public String getMessage() {
