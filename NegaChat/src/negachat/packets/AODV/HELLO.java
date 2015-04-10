@@ -19,7 +19,6 @@ public class HELLO extends Packet {
 	public static final byte TYPE = 1;
 	
 	// How many Bytes are reserved for this data
-	public static final int TYPELENGTH = 1;
 	public static final int HOPCOUNTLENGTH = 1;
 	public static final int IDENTIFIERLENGTH = 1;
 	
