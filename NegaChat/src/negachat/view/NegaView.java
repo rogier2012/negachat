@@ -8,7 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import negachat.client.ClientHandler;
-import negachat.messages.ReceivingSocket;
+import negachat.messages.ReceivingSingleSocket;
+import negachat.multicast.ReceivingMultiSocket;
 
 public class NegaView {
 
@@ -55,17 +56,18 @@ public class NegaView {
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		String groupChatName = "All";
-		ReceivingSocket rsocket = new ReceivingSocket(myName);
+		
+		ReceivingSingleSocket rsocket = new ReceivingSingleSocket(myName);
+		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket();
 //		Thread t1 = new Thread(rsocket);
 //		t1.start();
 		online = new WhoIsOnline();
-//		WHOISONLINE 
 		ClientHandler handler = new ClientHandler(tabbedPane, rsocket);
 		wioController = new WhoIsOnlineController(online, handler);
 		ChatFrame cFrame1 = new ChatFrame();
-		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, groupChatName, rsocket);
+		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, groupChatName, rmsocket);
 		wioController.addObserver(cFrameControl1);
-		rsocket.addObserver(cFrameControl1);
+		rmsocket.addObserver(cFrameControl1);
 		tabbedPane.add(groupChatName, cFrame1);
 		tabbedPane.add("Online", online);
 		
