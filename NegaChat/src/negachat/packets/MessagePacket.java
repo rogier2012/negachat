@@ -10,11 +10,10 @@ public class MessagePacket {
 	 * 00000010 - RREQ
 	 * 00000011 - RREP
 	 * 00000100 - RERR
-	 * 
+	 * 00000101 - GroupMessage
 	 */
 	
 	public static final byte TYPE = 0;
-
 	
 	private byte type, options;
 	private String source, destination, message, hash;

@@ -13,7 +13,6 @@ public class WhoIsOnlineController extends Observable implements ActionListener 
 	public WhoIsOnlineController(WhoIsOnline online, ClientHandler handler) {
 		this.online = online;
 		this.handler = handler;
-
 	}
 
 	public void addClient(String name) {
@@ -23,9 +22,7 @@ public class WhoIsOnlineController extends Observable implements ActionListener 
 
 	public void actionPerformed(ActionEvent actionEvent) {
 		String name = actionEvent.getActionCommand();
-
 		handler.addChat(name, this);
-
 		this.setChanged();
 		this.notifyObservers(online);
 
