@@ -23,6 +23,11 @@ public class ChatFrame extends JPanel {
 		return online;
 	}
 	
+	public void setOnline(WhoIsOnline online){
+		this.online = online;
+		online.repaint();
+	}
+	
 	public ChatBox getChatbox() {
 		return chatbox;
 	}
@@ -46,6 +51,7 @@ public class ChatFrame extends JPanel {
 		
 		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridwidth = 2;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.gridx = 0;
@@ -54,14 +60,6 @@ public class ChatFrame extends JPanel {
 		
 		chatbox = new ChatBox();
 		scrollPane.setViewportView(chatbox);
-		
-		online = new WhoIsOnline();
-		GridBagConstraints gbc_online = new GridBagConstraints();
-		gbc_online.insets = new Insets(0, 0, 5, 0);
-		gbc_online.fill = GridBagConstraints.BOTH;
-		gbc_online.gridx = 1;
-		gbc_online.gridy = 0;
-		add(online, gbc_online);
 
 		mField = new MessageField();
 		GridBagConstraints gbc_mField = new GridBagConstraints();

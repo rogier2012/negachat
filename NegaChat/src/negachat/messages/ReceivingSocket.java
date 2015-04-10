@@ -4,32 +4,36 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.ServerSocket;
+import java.util.Observable;
+import java.util.Observer;
 
-import packets.Packet;
+import negachat.packets.MessagePacket;
 
-public class ReceivingSocket implements Runnable {
+public class ReceivingSocket extends Observable implements Runnable {
 		private DatagramSocket clientsocket;
 		public final int SERVER_PORT = 1488;
 		InputStream reader;
-		String nickname;
+		String myName;
+		String otherName;
+		MessagePacket recvPacket;
 		
-		public ReceivingSocket(String nickname){
-			this.nickname = nickname;
+		public ReceivingSocket(String myName){
+			this.myName= myName;
 		}
 		
 		public void run() {
 			do {
 				byte[] buf = new byte[1000];
-				DatagramPacket recv = new DatagramPacket(buf, 144);
+				DatagramPacket recv = new DatagramPacket(buf, 146);
 				try {
+					clientsocket = new DatagramSocket(SERVER_PORT);
 					clientsocket.receive(recv);
 				} catch (IOException e) {
 					e.printStackTrace();
 					System.out.println("Oops... Something went wrong receiving a packet.");
 				}
 				if (recv.getData()[0] == 0){
-					Packet packet = new Packet(recv.getData());	
+					MessagePacket packet = new MessagePacket(recv.getData());	
 					handleMessage(packet);
 				} else if (recv.getData()[0] == 1){
 					
@@ -38,24 +42,43 @@ public class ReceivingSocket implements Runnable {
 			} while (1<2);
 		}
 		
-		public void handleMessage(Packet packet){
-			
-			if (nickname.equals(packet.getDestination())){
+		public void handleMessage(MessagePacket packet){
+			if (myName.equals(packet.getDestination())){
 				// verwerk message plz
-			} else {
-				// zoek dest op in routingtable en stuur door
+				if (packet.makeHash() == packet.getHash()){
+					long timestamp = System.currentTimeMillis();
+					recvPacket = packet;
+					setChanged();
+				    notifyObservers();
+				}
+			} else if (packet.getDestination().equals("All")) {
+				if (packet.makeHash() == packet.getHash()){
+					long timestamp = System.currentTimeMillis();
+					recvPacket = packet;
+					setChanged();
+				    notifyObservers();
+				    // zoek dest op in routingtbble en stuur door
+				}
 			}
+//			} else if (als packet.getDestination()) {
+//				// zoek dest op in routingtable en stuur door
+//			} 
 			
 		}
 		
-		public void handleAODV(Packet packet){
-			
-		}
+	public void handleAODV(MessagePacket packet){
 		
+	}
+	
+	public MessagePacket getRecvPacket(){
+		return recvPacket;
+	}
 		
-				
-		
-		
+	public void testrun(){
+		MessagePacket nPacket = new MessagePacket("All", "Henk");
+		nPacket.setMessage("Ik ben Rogier");
+		handleMessage(nPacket);
+	}
 		
 		
 }

@@ -1,6 +1,6 @@
-package packets;
+package negachat.packets;
 
-public class Packet {
+public class MessagePacket {
 	
 	/*
 	 * AODV PACKETS TYPE IDENTIFIER BYTES:
@@ -13,17 +13,24 @@ public class Packet {
 	 * 
 	 */
 	
-	public  final byte TYPE = 0;
+	public static final byte TYPE = 0;
+
 	
 	private byte type, options;
 	private String source, destination, message, hash;
 
-	public Packet(String destination, String source) {
+	public MessagePacket(String source) {
 		this.source = source;
-		this.destination = destination;
+		setType(TYPE);
 	}
 	
-	public Packet(byte[] packetArray){
+	public MessagePacket(String destination, String source) {
+		this.source = source;
+		this.destination = destination;
+		setType(TYPE);
+	}
+	
+	public MessagePacket(byte[] packetArray){
 		setType(packetArray[0]);
 		byte[] destArray = null;
 		System.arraycopy(packetArray, 1, destArray, 0, 16);
@@ -67,7 +74,7 @@ public class Packet {
 //		TODO options
 		opt = new byte[8];
 		
-		hash = getHash();
+		hash = getHash().getBytes();
 
 		byte[] bytePacket = new byte[type.length + dest.length + src.length + msg.length + opt.length + hash.length];
 		
@@ -82,14 +89,16 @@ public class Packet {
 		return bytePacket;
 	}
 	
-	private byte[] getHash() {
+	
+	// Deze functie werkt nog niet zoals die moet
+	public String makeHash() {
 		int hashCode = this.hashCode();
 		byte[] hash = new byte[]{
 				(byte) ((hashCode >> 24) & 0xFF),
 		        (byte) ((hashCode >> 16) & 0xFF),   
 		        (byte) ((hashCode >> 8) & 0xFF),  
 		        (byte) (hashCode & 0xFF)};
-		return hash;
+		return null;
 	}
 
 	public byte getType() {
@@ -134,5 +143,9 @@ public class Packet {
 	
 	public void setHash(String hash){
 		this.hash = hash;
+	}
+	
+	public String getHash(){
+		return hash;
 	}
 }

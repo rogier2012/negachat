@@ -1,6 +1,6 @@
 package adHocDistanceVectorRouting;
 
-import packets.Packet;
+import negachat.packets.MessagePacket;
 import packets.AODV.HELLO;
 import packets.AODV.RERR;
 import packets.AODV.RREP;
@@ -13,18 +13,18 @@ public class Node {
 	private RoutingTable table;
 	
 	public HELLO sendHello()	{
+		return new HELLO();
+	}
+	
+	public MessagePacket replyRREQ	(RREQ request)	{
 		return null;//TODO
 	}
 	
-	public Packet replyRREQ	(RREQ request)	{
+	public MessagePacket forwardPacket (MessagePacket packet)	{
 		return null;//TODO
 	}
 	
-	public Packet forwardPacket (Packet packet)	{
-		return null;//TODO
-	}
-	
-	public void updateTable(Packet packet)	{
+	public void updateTable(MessagePacket packet)	{
 		if (packet instanceof HELLO)	{
 			
 			

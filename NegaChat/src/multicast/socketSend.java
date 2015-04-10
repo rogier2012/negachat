@@ -5,11 +5,11 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import packets.Packet;
+import negachat.packets.MessagePacket;
 
 public class socketSend {
 	
-	Packet packet;
+	MessagePacket packet;
 	InetAddress group;
 	DatagramSocket sock;
 

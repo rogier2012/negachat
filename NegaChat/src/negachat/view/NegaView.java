@@ -6,12 +6,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
-import multicast.SocketController;
-import packets.createPacket;
+import negachat.client.ClientHandler;
+import negachat.messages.ReceivingSocket;
 
 public class NegaView {
 
 	private JFrame frame;
+	private String myName = "Me";
+	private WhoIsOnline online;
+	private WhoIsOnlineController wioController;
 
 	/**
 	 * Launch the application.
@@ -47,10 +50,27 @@ public class NegaView {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
-		ChatFrame cFrame1 = new ChatFrame();
-		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1);
-		tabbedPane.add("Group", cFrame1);
 		
+		String groupChatName = "All";
+		ReceivingSocket rsocket = new ReceivingSocket(myName);
+//		Thread t1 = new Thread(rsocket);
+//		t1.start();
+		online = new WhoIsOnline();
+//		WHOISONLINE 
+		ClientHandler handler = new ClientHandler(tabbedPane, rsocket);
+		wioController = new WhoIsOnlineController(online, handler);
+		ChatFrame cFrame1 = new ChatFrame();
+		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, groupChatName, rsocket);
+		wioController.addObserver(cFrameControl1);
+		rsocket.addObserver(cFrameControl1);
+		tabbedPane.add(groupChatName, cFrame1);
+		tabbedPane.add("Online", online);
+		
+		
+		wioController.addClient("Rogier");
+		wioController.addClient("Gijs");
 	}
+	
+	
 
 }
