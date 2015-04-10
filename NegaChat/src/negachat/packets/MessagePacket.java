@@ -58,7 +58,7 @@ public class MessagePacket extends Packet {
 
 	public byte[] toByteArray() {
 		byte[] type, dest, src, msg, opt, hash;
-		type = new byte[]{TYPE};
+		type = new byte[]{getType()};
 		dest = getDestination().getBytes();
 		src = getSource().getBytes();
 		msg = getMessage().getBytes(); 

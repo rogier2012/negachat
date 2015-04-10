@@ -2,6 +2,8 @@ package negachat.packets;
 
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Action;
 
@@ -28,6 +30,7 @@ public class CreatePacket{
 
 	public Packet composePacket() {
 //		TODO IPNicknameTable moet gemaakt worden
+		Packet packet;
 			if (destination.equals("all")) {
 //				TODO maken GroupMessagePacket
 
@@ -35,18 +38,28 @@ public class CreatePacket{
 //				packet.setMessage(message);
 //				packet.setDestination("all");
 			} else {
-				if (IPNicknameTable => table.contains(destination)) {
-					MessagePacket packet = new MessagePacket(destination, NegaView.getMyName());
+
 				
-//					als message kleiner is dan 128 bytes => aanvullen
+//				TODO IPNicknameTable class moet uitgebreid worden
+				if (IPNicknameTable => table.contains(destination)) {
+					packet = new MessagePacket(destination, NegaView.getMyName());
+				
 					if(message.length() < MAX_MESSAGE_LENGTH) {
-						for (int i = message.length(); i < MAX_MESSAGE_LENGTH; i++) {
-							
-						}
+						
+						int length = message.length();
+						int todo = MAX_MESSAGE_LENGTH - length;
+						List<String> messageList = new ArrayList<String>();
+						for (int i = todo; i > 0; i--) {
+							message += "0";
+						}					
+						((MessagePacket) packet).setMessage(message);
+						((MessagePacket) packet).setType((byte) 0);
+						((MessagePacket) packet).setOptions((byte) 0);
+					} else if (message.length() > MAX_MESSAGE_LENGTH) {
+						System.out.println("Message exceeds maximum length!\nMaximum length is " + MAX_MESSAGE_LENGTH + ", you have " + message.length() + " characters.");
 					}
 					
-					packet.setMessage(message);
-					packet.setDestination(destination);
+
 				}
 			}
 		return packet;
