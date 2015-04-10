@@ -1,5 +1,6 @@
 package negachat.packets.AODV;
 
+import negachat.packets.DirectPacket;
 import negachat.packets.Packet;
 
 /*
@@ -10,7 +11,7 @@ import negachat.packets.Packet;
  */
 
 
-public class RERR extends Packet {
+public class RERR extends Packet implements DirectPacket{
 	
 	
 	// Type ID of packet

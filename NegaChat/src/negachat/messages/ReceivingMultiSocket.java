@@ -5,11 +5,11 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
+import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
 import negachat.packets.AODV.HELLO;
 import negachat.packets.AODV.RREQ;
-import adHocDistanceVectorRouting.RoutingTable;
 
 public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;

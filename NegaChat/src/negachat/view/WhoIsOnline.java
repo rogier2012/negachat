@@ -25,6 +25,11 @@ public class WhoIsOnline extends JPanel {
 		buttons.put(name, btn);
 	}
 	
+	public void removeClient(String name){
+		this.remove(buttons.get(name));
+		buttons.remove(name);
+	}
+	
 	public JButton getButton(String name){
 		return buttons.get(name);
 	}

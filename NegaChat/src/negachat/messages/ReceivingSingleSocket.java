@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
+import negachat.client.RoutingTable;
 import negachat.packets.MessagePacket;
 import negachat.packets.Packet;
 import negachat.packets.AODV.RERR;
 import negachat.packets.AODV.RREP;
-import adHocDistanceVectorRouting.RoutingTable;
 
 public class ReceivingSingleSocket extends ReceivingSocket {
 	private DatagramSocket clientsocket;

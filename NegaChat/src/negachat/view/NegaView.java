@@ -8,9 +8,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import negachat.client.ClientHandler;
+import negachat.client.OnlineClients;
+import negachat.client.RoutingTable;
 import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
-import adHocDistanceVectorRouting.RoutingTable;
 
 public class NegaView {
 
@@ -80,10 +81,9 @@ public class NegaView {
 		rmsocket.addObserver(cFrameControl1);
 		tabbedPane.add(GROUP_CHAT_NAME, cFrame1);
 		tabbedPane.add(WHO_IS_ONLINE, online);
-		
-		
-		wioController.addClient("Rogier");
-		wioController.addClient("Gijs");
+		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
+		routingTable.addObserver(clientlist);
+		routingTable.addDestination("Rogier", "Gijs");
 	}
 	
 	public static String getMyName(){
