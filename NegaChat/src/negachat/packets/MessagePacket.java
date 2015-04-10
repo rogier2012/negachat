@@ -15,10 +15,18 @@ public class MessagePacket {
 	
 	public static final byte TYPE = 0;
 	
+//	Length of the headers in bytes
+	public static final int PROTOCOL = 1;
+	public static final int DESTINATION = 16;
+	public static final int SOURCE = 16;
+	public static final int MESSAGE = 128;
+	public static final int OPTIONS = 1;
+	public static final int HASH = 4;
+	
 	private byte type, options;
 	private String source, destination, message, hash;
 
-//	Ron's speciale pakketje
+//	Ron's speciale packet
 	public MessagePacket(String source) {
 		this.source = source;
 		setType(TYPE);
@@ -34,17 +42,17 @@ public class MessagePacket {
 	public MessagePacket(byte[] packetArray){
 		setType(packetArray[0]);
 		byte[] destArray = null;
-		System.arraycopy(packetArray, 1, destArray, 0, 16);
+		System.arraycopy(packetArray, PROTOCOL, destArray, 0, DESTINATION);
 		setDestination(new String(destArray));
 		byte[] sourceArray = null;
-		System.arraycopy(packetArray, 17, sourceArray, 0, 16);
+		System.arraycopy(packetArray, PROTOCOL+DESTINATION, sourceArray, 0, SOURCE);
 		setSource(new String(sourceArray));
 		byte[] messageArray = null;
-		System.arraycopy(packetArray, 33, messageArray, 0, 16);
+		System.arraycopy(packetArray, PROTOCOL+DESTINATION+SOURCE, messageArray, 0, MESSAGE);
 		setMessage(new String(messageArray));
 		setOptions(packetArray[140]);
 		byte[] hashArray = null;
-		System.arraycopy(packetArray, 141, hashArray, 0, 16);
+		System.arraycopy(packetArray, PROTOCOL+DESTINATION+SOURCE+MESSAGE, hashArray, 0, HASH);
 		setHash(new String(hashArray));
 	}
 	
@@ -62,7 +70,7 @@ public class MessagePacket {
 	
 //	PACKET FORMAT:
 	
-//	[prococol]	[destination]	[source]	[message]	[options]	[hash]
+//	[protocol]	[destination]	[source]	[message]	[options]	[hash]
 //		1 byte		16 bytes	16 bytes	128 bytes	1 byte		4 bytes
 
 	public byte[] toByteArray() {
