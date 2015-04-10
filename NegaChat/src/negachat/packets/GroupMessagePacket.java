@@ -12,7 +12,7 @@ public class GroupMessagePacket extends Packet{
 	public Packet convertToPacket(byte[] byteArray) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	} 
 
 	@Override
 	public byte[] toByteArray() {
