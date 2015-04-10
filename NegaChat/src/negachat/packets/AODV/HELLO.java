@@ -2,6 +2,13 @@ package negachat.packets.AODV;
 
 import negachat.packets.Packet;
 
+/*
+ * HELLO packets are broadcasted over the network to notify other nodes of its existence in the network.
+ * 
+ * Lay-Out:
+ * [Type][Source][Hop count][Identifier]
+ * 
+ */
 public class HELLO extends Packet {
 	
 	/*
@@ -14,17 +21,18 @@ public class HELLO extends Packet {
 	 * Instance Variables
 	 */
 	
-	private int hopCount;
-	private int identifier;
+	private byte hopCount;
+	private byte identifier;
 	
 	/*
 	 * Constructors
 	 */
 	
-	public HELLO(String source) {
+	public HELLO(String source, byte identifier) {
 		super(source);
 		this.setType(TYPE);
 		this.hopCount = 0;
+		this.identifier = identifier;
 	}
 	
 	/*
@@ -33,27 +41,26 @@ public class HELLO extends Packet {
 	
 	@Override
 	public byte[] toByteArray() {
-		// TODO Auto-generated method stub
-		return null;
+		return new byte[]{this.getType(), this.hopCount, this.identifier};
 	}
 
 	/*
 	 * Getters and Setters
 	 */
 	
-	public int getHopCount() {
+	public byte getHopCount() {
 		return hopCount;
 	}
 
-	public void setHopCount(int hopCount) {
+	public void setHopCount(byte hopCount) {
 		this.hopCount = hopCount;
 	}
 
-	public int getIdentifier() {
+	public byte getIdentifier() {
 		return identifier;
 	}
 
-	public void setIdentifier(int identifier) {
+	public void setIdentifier(byte identifier) {
 		this.identifier = identifier;
 	}
 	

@@ -16,7 +16,7 @@ public class Node {
 	private RoutingTable table;
 	
 	public HELLO sendHello()	{
-		return new HELLO(IP);
+		return null;
 	}
 	
 	public MessagePacket replyRREQ	(RREQ request)	{
