@@ -24,20 +24,21 @@ public class CreatePacket{
 	}
 	
 
-	public void composePacket() {
+	public MessagePacket composePacket() {
+		MessagePacket packet = null;
 		String msg = getMessage();
 		
-		String dest = msg.split("/")[1];
+		String dest = msg.split("/")[1].trim();
 		String message = msg.split("/")[2].trim();
 		
 		System.out.println("dest: " + dest);
-		System.out.println("rest: " + message);
+		System.out.println("message: " + message);
 		
 		
 		
 		
 		
-//		return packet;
+		return packet;
 	}
 	
 }
