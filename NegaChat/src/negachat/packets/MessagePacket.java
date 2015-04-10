@@ -11,6 +11,7 @@ public class MessagePacket extends Packet {
 	public static final int MESSAGE = 128;
 	public static final int OPTIONS = 1;
 	public static final int HASH = 4;
+	public static final int TOTAL = TYPELENGTH+DESTINATION+SOURCE+MESSAGE+OPTIONS+HASH;
 	
 	private byte type, options;
 	private String source, destination, message, hash;
@@ -49,10 +50,11 @@ public class MessagePacket extends Packet {
 //	}
 	
 	
-//	PACKET FORMAT:
+//	10/4 PACKET FORMAT:
 
-//		[type]	[destination]	[source]	[message]	[options]	[hash]
-//		1 byte		16 bytes	16 bytes	128 bytes	1 byte		4 bytes
+	
+//	[type]	[source] [destination]	[message]	[options]	[hash]
+//	1 byte	16 bytes	16 bytes	128 bytes	1 byte		4 bytes
 
 	public byte[] toByteArray() {
 		byte[] type, dest, src, msg, opt, hash;
@@ -60,21 +62,21 @@ public class MessagePacket extends Packet {
 		dest = getDestination().getBytes();
 		src = getSource().getBytes();
 		msg = getMessage().getBytes(); 
-		
-//		TODO options
-		opt = new byte[8];
-		
-		hash = getHash().getBytes();
+		opt = new byte[8];		
+		hash = makeHash().getBytes();
 
-		byte[] bytePacket = new byte[type.length + dest.length + src.length + msg.length + opt.length + hash.length];
+		byte[] bytePacket = new byte[TOTAL];
 		
-		System.arraycopy(dest, 0, bytePacket, 0, dest.length);
-		System.arraycopy(src, 0, bytePacket, dest.length, src.length);
-		System.arraycopy(msg, 0, bytePacket, dest.length+src.length, msg.length);
-		System.arraycopy(opt, 0, bytePacket, dest.length + src.length + msg.length, opt.length);
-		System.arraycopy(hash, 0, bytePacket, dest.length + src.length + msg.length + opt.length, hash.length);
+		System.arraycopy(type, 0, bytePacket, 0, TYPELENGTH);
+		System.arraycopy(dest, 0, bytePacket, TYPELENGTH, DESTINATION);
+		System.arraycopy(src, 0, bytePacket, TYPELENGTH+DESTINATION, SOURCE);
+		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+DESTINATION+SOURCE, MESSAGE);
+		System.arraycopy(opt, 0, bytePacket, TYPELENGTH+DESTINATION+SOURCE+MESSAGE, OPTIONS);
+		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+DESTINATION+SOURCE+MESSAGE+OPTIONS, HASH);
 		
 		System.out.println("bytePacket composed");
+		System.out.println("length: " + bytePacket.length);
+		System.out.println("bytePacket string: " + new String(bytePacket));
 		
 		return bytePacket;
 	}
