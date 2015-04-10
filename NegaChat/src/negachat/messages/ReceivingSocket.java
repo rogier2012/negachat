@@ -51,19 +51,7 @@ public class ReceivingSocket extends Observable implements Runnable {
 					setChanged();
 				    notifyObservers();
 				}
-//			} else if (packet.getDestination().equals("All")) {
-//				if (packet.makeHash() == packet.getHash()){
-//					long timestamp = System.currentTimeMillis();
-//					recvPacket = packet;
-//					setChanged();
-//				    notifyObservers();
-//				    // zoek dest op in routingtbble en stuur door
-//				}
 			}
-//			} else if (als packet.getDestination()) {
-//				// zoek dest op in routingtable en stuur door
-//			} 
-			
 		}
 		
 	public void handleAODV(MessagePacket packet){

@@ -39,8 +39,7 @@ public class NegaView {
 	 * Create the application.
 	 */
 	public NegaView() {
-		myName = JOptionPane.showInputDialog(frame,
-                "What is your nickname?", null);
+		myName = JOptionPane.showInputDialog(frame,"What is your nickname?", null);
 		initialize();
 	}
 
