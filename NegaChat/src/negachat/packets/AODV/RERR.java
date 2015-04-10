@@ -30,8 +30,6 @@ public class RERR extends Packet {
 	private String destination;
 	private String[] lostRoutes;
 	
-	public static final byte TYPE = 4;
-	
 	/*
 	 * Constructors
 	 */
@@ -76,10 +74,6 @@ public class RERR extends Packet {
 			// Raise index
 			index += DESTINATIONLENGTH;
 		}
-	}
-	
-	public RERR(byte[] data){
-		super(data);
 	}
 
 	/*

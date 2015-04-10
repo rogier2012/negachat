@@ -54,10 +54,6 @@ public class RREP extends Packet {
 		
 	}
 	
-	public RREP(byte[]data){
-		super(data);
-	}
-
 	/*
 	 * Queries
 	 */
