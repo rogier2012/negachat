@@ -25,10 +25,10 @@ public class SendingMultiSocket {
 	
 	public void send(Packet packet) {
 		byte[] bytePacket = packet.toByteArray();
-		DatagramPacket hi = new DatagramPacket(bytePacket, bytePacket.length,
+		DatagramPacket dPacket = new DatagramPacket(bytePacket, bytePacket.length,
 				group, MULTICAST_PORT);
 		try {
-			sendingSocket.send(hi);
+			sendingSocket.send(dPacket);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Oops... Something went wrong sending this packet.");

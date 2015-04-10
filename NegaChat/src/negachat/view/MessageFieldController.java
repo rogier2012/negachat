@@ -9,9 +9,13 @@ import negachat.packets.CreatePacket;
 
 public class MessageFieldController extends Observable implements ActionListener {
 	private MessageField mField;
+	private String cbmessage;
 	private String message;
 	
-	public String getMessage() {
+	public String getcbMessage() {
+		return cbmessage;
+	}
+	public String getMessage(){
 		return message;
 	}
 
@@ -25,7 +29,7 @@ public class MessageFieldController extends Observable implements ActionListener
 	public void actionPerformed(ActionEvent actionEvent) {
 		message = mField.getText();
 		if (!message.equals("")){
-			message = NegaView.getMyName() + ": " + message + "\n";
+			cbmessage = NegaView.getMyName() + ": " + message + "\n";
 			CreatePacket creator = new CreatePacket();
 			creator.setMessage(mField.getText());
 			setChanged();

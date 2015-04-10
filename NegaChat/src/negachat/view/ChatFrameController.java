@@ -44,7 +44,7 @@ public class ChatFrameController implements Observer {
 	public void update(Observable obs, Object arg) {
 		if (obs == mfController) {
 			sendPacket();
-			cbController.setMessage(mfController.getMessage());
+			cbController.setMessage(mfController.getcbMessage());
 		} else if (obs instanceof ReceivingSingleSocket && socket.getRecvPacket().getSource().equals(chatName)) {
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((MessagePacket)socket.getRecvPacket()).getMessage() + "\n");
 		} else if (obs instanceof ReceivingMultiSocket && socket.getRecvPacket().getType() == 5){
