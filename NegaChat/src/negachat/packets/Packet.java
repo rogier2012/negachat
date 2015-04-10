@@ -18,7 +18,12 @@ public abstract class Packet {
 	 */
 	
 	// How many bytes are reserved for the source header
+	public static final int TYPELENGTH = 1;
 	public static final int SOURCELENGTH = 16;
+	
+	// Index of data
+	public static final int TYPEINDEX = 0;
+	public static final int SOURCEINDEX = TYPEINDEX + TYPELENGTH;
 	
 	/*
 	 * Instance Variables
