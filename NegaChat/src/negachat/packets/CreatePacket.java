@@ -10,10 +10,6 @@ public class CreatePacket{
 	private String destination;
 	
 	public static final int MAX_MESSAGE_LENGTH = 128;
-	
-	public CreatePacket() {
-		
-	}
 
 	public Packet composePacket() {
 		Packet packet = null;
