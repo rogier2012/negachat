@@ -40,7 +40,7 @@ public class CreatePacket{
 //				TODO
 				packet = new GroupMessagePacket(NegaView.getMyName());
 				packet.setMessage(message);
-				packet.setDestination("all")
+				packet.setDestination("all");
 			} else {
 //				TODO
 				packet = new MessagePacket(NegaView.getMyName());
