@@ -81,7 +81,6 @@ public class MessagePacket extends Packet {
 	}
 	
 	
-	// Deze functie werkt nog niet zoals die moet
 	public String makeHash() {
 		int hashCode = this.hashCode();
 		byte[] hash = new byte[]{
@@ -89,7 +88,7 @@ public class MessagePacket extends Packet {
 		        (byte) ((hashCode >> 16) & 0xFF),   
 		        (byte) ((hashCode >> 8) & 0xFF),  
 		        (byte) (hashCode & 0xFF)};
-		return null;
+		return new String(hash);
 	}
 
 	public byte getType() {
@@ -140,9 +139,4 @@ public class MessagePacket extends Packet {
 		return hash;
 	}
 
-	@Override
-	public Packet convertToPacket(byte[] byteArray) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
