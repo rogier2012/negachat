@@ -13,11 +13,12 @@ import javax.crypto.IllegalBlockSizeException;
 
 public class AssymetricEncrypter {
 	Cipher RSACipher;
-	PrivateKey privateKey;
-	PublicKey publicKey;
+	private PrivateKey privateKey;
+	private PublicKey publicKey;
 	private final String ALGORITHM = "RSA";
 
 	public AssymetricEncrypter() {
+		createCipher();
 		generateKeys();
 	}
 
@@ -26,7 +27,7 @@ public class AssymetricEncrypter {
 		KeyPairGenerator keyGen;
 		try {
 			keyGen = KeyPairGenerator.getInstance(ALGORITHM);
-			keyGen.initialize(1024);
+			keyGen.initialize(2048);
 			KeyPair keyPair = keyGen.generateKeyPair();
 			privateKey = keyPair.getPrivate();
 			publicKey = keyPair.getPublic();
@@ -64,14 +65,11 @@ public class AssymetricEncrypter {
 		byte[] DecryptedMessage = null;
 		try {
 			RSACipher.init(Cipher.DECRYPT_MODE, privateKey);
-			try {
-				DecryptedMessage = RSACipher.doFinal(message);
-			} catch (IllegalBlockSizeException | BadPaddingException e) {
-				e.printStackTrace();
-			}
-		} catch (InvalidKeyException e) {
+			DecryptedMessage = RSACipher.doFinal(message);
+			return DecryptedMessage;
+		} catch (Exception e) {
+			return "could not decrypt".getBytes();
 		}
-		return DecryptedMessage;
 	}
 
 	public byte[] Encrypt(byte[] message, PublicKey pubKey) {

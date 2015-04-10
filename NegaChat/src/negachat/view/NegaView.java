@@ -8,8 +8,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import negachat.client.ClientHandler;
+import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
-import negachat.multicast.ReceivingMultiSocket;
+import adHocDistanceVectorRouting.RoutingTable;
 
 public class NegaView {
 
@@ -17,6 +18,10 @@ public class NegaView {
 	private static String myName;
 	private WhoIsOnline online;
 	private WhoIsOnlineController wioController;
+	
+	public static final String GROUP_CHAT_NAME = "All";
+	public static final String NEGA_CHAT = "NegaChat";
+	public static final String WHO_IS_ONLINE = "Online";
 
 	/**
 	 * Launch the application.
@@ -40,7 +45,10 @@ public class NegaView {
 	 * Create the application.
 	 */
 	public NegaView() {
-		myName = JOptionPane.showInputDialog(frame,"What is your nickname?", null);
+		myName = JOptionPane.showInputDialog(frame,"What is your nickname? Max. 16 characters", null);
+		while (myName.length() > 16){
+			myName = JOptionPane.showInputDialog(frame,"Please don't use more than 16 characters", null);
+		}
 		initialize();
 	}
 
@@ -48,28 +56,30 @@ public class NegaView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("NegaChat");
+		frame = new JFrame(NEGA_CHAT);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		String groupChatName = "All";
+		RoutingTable routingTable = new RoutingTable();
 		
-		ReceivingSingleSocket rsocket = new ReceivingSingleSocket(myName);
-		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket();
-//		Thread t1 = new Thread(rsocket);
-//		t1.start();
+		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(myName, routingTable);
+		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket(routingTable);
+		Thread threadrs = new Thread(rssocket);
+		Thread threadrm = new Thread(rmsocket);
+//		threadrs.start();
+//		threadrm.start();
 		online = new WhoIsOnline();
-		ClientHandler handler = new ClientHandler(tabbedPane, rsocket);
+		ClientHandler handler = new ClientHandler(tabbedPane, rssocket);
 		wioController = new WhoIsOnlineController(online, handler);
 		ChatFrame cFrame1 = new ChatFrame();
-		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, groupChatName, rmsocket);
+		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, GROUP_CHAT_NAME, rmsocket);
 		wioController.addObserver(cFrameControl1);
 		rmsocket.addObserver(cFrameControl1);
-		tabbedPane.add(groupChatName, cFrame1);
-		tabbedPane.add("Online", online);
+		tabbedPane.add(GROUP_CHAT_NAME, cFrame1);
+		tabbedPane.add(WHO_IS_ONLINE, online);
 		
 		
 		wioController.addClient("Rogier");

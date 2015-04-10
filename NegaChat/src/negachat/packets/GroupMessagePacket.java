@@ -1,5 +1,10 @@
 package negachat.packets;
 
+//10/4 PACKET FORMAT:
+
+//	[type]	[source] 	[message]	[options]	[hash]
+//	1 byte	16 bytes	128 bytes	1 byte		4 bytes
+
 public class GroupMessagePacket extends Packet{
 	
 	private byte type, options;
@@ -8,16 +13,69 @@ public class GroupMessagePacket extends Packet{
 
 	public static final byte TYPE = 0x05;
 	
+	public static final int TYPELENGTH = 1;
+	public static final int SOURCE = 16;
+	public static final int MESSAGE = 128;
+	public static final int OPTIONS = 1;
+	public static final int HASH = 4;
+	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + OPTIONS + HASH;
+	
 	public GroupMessagePacket(String source){
 		super(source);
+		setSource(source);
 		setType(TYPE);
+	}
+	
+	public GroupMessagePacket(byte[] data){
+			super(data);
+			setType(data[0]);
+			byte[] sourceArray = null;
+			System.arraycopy(data, TYPELENGTH, sourceArray, 0, SOURCE);
+			setSource(new String(sourceArray));
+			byte[] messageArray = null;
+			System.arraycopy(data, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
+			setMessage(new String(messageArray));
+			setOptions(data[TYPELENGTH + SOURCE + MESSAGE]);
+			byte[] hashArray = null;
+			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + OPTIONS, hashArray, 0, HASH);
+			setHash(new String(hashArray));
 	}
 
 	@Override
-	public byte[] toByteArray() {
-		// TODO Auto-generated method stub
-		return null;
+	public byte[] toByteArray() {		
+		byte[] src, msg, hash;
+		byte type, opt;
+		type = getType();
+		src = getSource().getBytes();
+		msg = getMessage().getBytes(); 
+		opt = (byte) 0;	
+		hash = makeHash().getBytes();
+
+		byte[] bytePacket = new byte[TOTAL];
+		bytePacket[0] = type;
+		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE - 1);
+		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+SOURCE, MESSAGE - 1);
+		bytePacket[TOTAL - HASH - 1] = opt;
+//		System.arraycopy(opt, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE, OPTIONS - 1);
+		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+OPTIONS, HASH - 1);
+		
+		System.out.println("GroupMessagePackage bytePacket composed");
+		System.out.println("length: " + bytePacket.length);
+		System.out.println("bytePacket string: " + new String(bytePacket));
+		
+		return bytePacket;
 	}
+	
+	public String makeHash() {
+		int hashCode = this.hashCode();
+		byte[] hash = new byte[]{
+				(byte) ((hashCode >> 24) & 0xFF),
+		        (byte) ((hashCode >> 16) & 0xFF),   
+		        (byte) ((hashCode >> 8) & 0xFF),  
+		        (byte) (hashCode & 0xFF)};
+		return new String(hash);
+	}
+
 	
 	public byte getType() {
 		return type;

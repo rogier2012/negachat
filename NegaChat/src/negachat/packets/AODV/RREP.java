@@ -53,6 +53,10 @@ public class RREP extends Packet {
 		this.setDestination(new String(temp));
 		
 	}
+	
+	public RREP(byte[]data){
+		super(data);
+	}
 
 	/*
 	 * Queries

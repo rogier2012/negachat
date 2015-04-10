@@ -1,7 +1,7 @@
 package adHocDistanceVectorRouting;
 
 import negachat.messages.ReceivingSocket;
-import negachat.messages.SendingSocket;
+import negachat.messages.SendingSingleSocket;
 
 public class RouteFinder implements Runnable {
 	
@@ -16,7 +16,7 @@ public class RouteFinder implements Runnable {
 	 */
 	
 	private ReceivingSocket reciever;
-	private SendingSocket sender;
+	private SendingSingleSocket sender;
 	
 	// Multicast sockets
 	

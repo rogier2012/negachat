@@ -6,17 +6,22 @@ public class IPNicknameTable {
 	
 //	Format Map<String NickName, String IP>
 	
-	private Map<String, String> table;
+	private static Map<String, String> table;
 	
-	public String getIP(String nickName) {
+	public static String getIP(String nickName) {
 		return table.get(nickName);
-	}
-	
-	public String getNickName(String IP) {
-		return null;
 	}
 
 	public boolean contains(String nickName) {
 		return table.containsKey(nickName);
 	}
+	
+	public Map<String, String> getTable() {
+		return table;
+	}
+	
+	public void add(String nickName, String IP) {
+		table.put(nickName, IP);
+	}
+	
 }
