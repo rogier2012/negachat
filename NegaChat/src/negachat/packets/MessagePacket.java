@@ -18,7 +18,7 @@ public class MessagePacket extends Packet {
 	public MessagePacket(String destination, String source) {
 		super(source);
 		this.source = source;
-		this.destination = destination;
+		this.destination = destination; 
 		setType(TYPE);
 	}
 	
