@@ -62,7 +62,7 @@ public class MessagePacket extends Packet {
 		type = new byte[]{TYPE};
 		dest = getDestination().getBytes();
 		src = getSource().getBytes();
-		msg = getMessage().getBytes();
+		msg = getMessage().getBytes(); 
 		
 //		TODO options
 		opt = new byte[8];
