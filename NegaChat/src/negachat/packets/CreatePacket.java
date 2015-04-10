@@ -7,6 +7,7 @@ import javax.swing.Action;
 
 import multicast.socketReceive;
 import multicast.socketSend;
+import negachat.client.IPNicknameTable;
 
 public class CreatePacket{
 	InetAddress group;
@@ -26,6 +27,7 @@ public class CreatePacket{
 
 	public MessagePacket composePacket() {
 		MessagePacket packet = null;
+		IPNicknameTable table;
 		String msg = getMessage();
 		
 		String dest = msg.split("/")[1].trim();
@@ -33,9 +35,6 @@ public class CreatePacket{
 		
 		System.out.println("dest: " + dest);
 		System.out.println("message: " + message);
-		
-		
-		
 		
 		
 		return packet;
