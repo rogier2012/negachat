@@ -1,17 +1,6 @@
 package negachat.packets;
 
-public class MessagePacket {
-	
-	/*
-	 * AODV PACKETS TYPE IDENTIFIER BYTES:
-	 * 
-	 * 00000000 - Normal
-	 * 00000001 - HELLO
-	 * 00000010 - RREQ
-	 * 00000011 - RREP
-	 * 00000100 - RERR
-	 * 00000101 - GroupMessage
-	 */
+public class MessagePacket extends Packet {
 	
 	public static final byte TYPE = 0;
 	
@@ -25,21 +14,14 @@ public class MessagePacket {
 	
 	private byte type, options;
 	private String source, destination, message, hash;
-
-//	Ron's speciale packet
-	public MessagePacket(String source) {
-		this.source = source;
-		setType(TYPE);
-	}
 	
-//	Normal packet
 	public MessagePacket(String destination, String source) {
 		this.source = source;
 		this.destination = destination;
 		setType(TYPE);
 	}
 	
-	public MessagePacket(byte[] packetArray){
+	public MessagePacket(byte[] packetArray)	{
 		setType(packetArray[0]);
 		byte[] destArray = null;
 		System.arraycopy(packetArray, PROTOCOL, destArray, 0, DESTINATION);
@@ -156,5 +138,11 @@ public class MessagePacket {
 	
 	public String getHash(){
 		return hash;
+	}
+
+	@Override
+	public Packet convertToPacket(byte[] byteArray) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
