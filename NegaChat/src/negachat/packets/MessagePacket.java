@@ -57,27 +57,38 @@ public class MessagePacket extends Packet {
 //	1 byte	16 bytes	16 bytes	128 bytes	1 byte		4 bytes
 
 	public byte[] toByteArray() {
-		byte[] type, dest, src, msg, opt, hash;
-		type = new byte[]{getType()};
+		
+		byte[] dest, src, msg, hash;
+		byte type, opt;
+		type = getType();
 		dest = getDestination().getBytes();
 		src = getSource().getBytes();
 		msg = getMessage().getBytes(); 
-		opt = new byte[8];		
+		opt = (byte) 0;	
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
+		bytePacket[0] = type;
+		System.out.println("1: " + new String(bytePacket));
 		
-		System.arraycopy(type, 0, bytePacket, 0, TYPELENGTH);
 		System.arraycopy(dest, 0, bytePacket, TYPELENGTH, DESTINATION);
-		System.arraycopy(src, 0, bytePacket, TYPELENGTH+DESTINATION, SOURCE);
-		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+DESTINATION+SOURCE, MESSAGE);
-		System.arraycopy(opt, 0, bytePacket, TYPELENGTH+DESTINATION+SOURCE+MESSAGE, OPTIONS);
-		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+DESTINATION+SOURCE+MESSAGE+OPTIONS, HASH);
+		System.out.println("2: " + new String(bytePacket));
+
+		System.arraycopy(src, 0, bytePacket, TYPELENGTH + DESTINATION, SOURCE - 1);
+		System.out.println("3: " + new String(bytePacket));
+
+		System.arraycopy(msg, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE, MESSAGE - 1);
+		System.out.println("4: " + new String(bytePacket));
+
+		bytePacket[TOTAL - HASH - 1] = opt;
 		
-		System.out.println("bytePacket composed");
+		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, HASH - 1);
+		System.out.println("5: " + new String(bytePacket));
+
+		
+		System.out.println("MessagePackage bytePacket composed");
 		System.out.println("length: " + bytePacket.length);
-		System.out.println("bytePacket string: " + new String(bytePacket));
-		
+		System.out.println("bytePacket string: " + new String(bytePacket));		
 		return bytePacket;
 	}
 	
