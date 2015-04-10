@@ -20,7 +20,7 @@ public class CreatePacket{
 			if (destination.equals("all")) {
 				GroupMessagePacket GroupPacket = new GroupMessagePacket(NegaView.getMyName());
 				GroupPacket.setMessage(message);
-				GroupPacket.setType((byte) 0x05);
+				GroupPacket.setType((byte) 5);
 				GroupPacket.setOptions((byte) 0);
 			} else {
 				packet = new MessagePacket(destination, NegaView.getMyName());
