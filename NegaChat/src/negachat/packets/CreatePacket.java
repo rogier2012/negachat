@@ -21,7 +21,7 @@ public class CreatePacket{
 	
 	public static final int MAX_MESSAGE_LENGTH = 128;
 
-	public MessagePacket composePacket() {
+	public Packet composePacket() {
 //		TODO IPNicknameTable moet gemaakt worden
 			if (destination.toLowerCase().equals("all")) {
 //				TODO maken GroupMessagePacket

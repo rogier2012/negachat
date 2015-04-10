@@ -5,7 +5,7 @@ public abstract class Packet {
 	/*
 	 * AODV PACKETS TYPE IDENTIFIER BYTES:
 	 * 
-	 * 00000000 - Normal
+	 * 00000000 - MessagePacket
 	 * 00000001 - HELLO
 	 * 00000010 - RREQ
 	 * 00000011 - RREP

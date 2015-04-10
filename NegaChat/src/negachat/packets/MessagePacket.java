@@ -50,10 +50,11 @@ public class MessagePacket extends Packet {
 //	}
 	
 	
-//	PACKET FORMAT:
+//	10/4 PACKET FORMAT:
 
-//		[type]	[destination]	[source]	[message]	[options]	[hash]
-//		1 byte		16 bytes	16 bytes	128 bytes	1 byte		4 bytes
+	
+//	[type]	[source] [destination]	[message]	[options]	[hash]
+//	1 byte	16 bytes	16 bytes	128 bytes	1 byte		4 bytes
 
 	public byte[] toByteArray() {
 		byte[] type, dest, src, msg, opt, hash;
