@@ -17,15 +17,10 @@ public class CreatePacket{
 				GroupPacket.setMessage(message);
 				GroupPacket.setType((byte) 5);
 				GroupPacket.setOptions((byte) 0);
+				checkLengths();
 				return GroupPacket;
 			} else {
 				MessagePacket packet= new MessagePacket(destination, NegaView.getMyName());
-				if(message.length() < MAX_MESSAGE_LENGTH) {
-					int length = message.length();
-					int todo = MAX_MESSAGE_LENGTH - length;
-					for (int i = todo; i > 0; i--) {
-						message += "0";
-					}					
 					((MessagePacket) packet).setMessage(message);
 					((MessagePacket) packet).setType((byte) 0);
 					((MessagePacket) packet).setOptions((byte) 0);
@@ -40,6 +35,19 @@ public class CreatePacket{
 			return null;
 	}
 	
+//	Checken van de lengtes van source, destination en message
+	
+	private void checkLengths() {
+		// TODO Auto-generated method stub
+						if(message.length() < MAX_MESSAGE_LENGTH) {
+					int length = message.length();
+					int todo = MAX_MESSAGE_LENGTH - length;
+					for (int i = todo; i > 0; i--) {
+						message += "0";
+					}					
+
+	}
+
 	public String getMessage() {
 		return message;
 	}
@@ -47,7 +55,7 @@ public class CreatePacket{
 		this.message = message;
 	}
 	public void setDestination(String destination) {
-		this.destination = destination;
+		this.destination = destination.toLowerCase();
 	}
 	public String getDestination() { 
 		return destination;

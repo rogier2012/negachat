@@ -6,8 +6,10 @@ import java.util.Observer;
 import negachat.messages.ReceivingSingleSocket;
 import negachat.messages.ReceivingSocket;
 import negachat.multicast.ReceivingMultiSocket;
+import negachat.packets.CreatePacket;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.MessagePacket;
+import negachat.packets.Packet;
 
 public class ChatFrameController implements Observer {
 	// main view of this Controller
@@ -41,6 +43,7 @@ public class ChatFrameController implements Observer {
 
 	public void update(Observable obs, Object arg) {
 		if (obs == mfController) {
+			sendPacket();
 			cbController.setMessage(mfController.getMessage());
 		} else if (obs instanceof ReceivingSingleSocket && socket.getRecvPacket().getSource().equals(chatName)) {
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((MessagePacket)socket.getRecvPacket()).getMessage() + "\n");
@@ -49,6 +52,14 @@ public class ChatFrameController implements Observer {
 		}
 	}
 	
+	private void sendPacket() {
+		CreatePacket creator = new CreatePacket();
+		creator.setDestination(chatName);
+		creator.setMessage(mfController.getMessage());
+		Packet toSend = creator.composePacket();
+		System.out.println(new String(toSend.toByteArray()));
+	}
+
 	public String getChatName(){
 		return chatName;
 	}

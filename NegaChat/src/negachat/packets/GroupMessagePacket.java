@@ -42,19 +42,19 @@ public class GroupMessagePacket extends Packet{
 	}
 
 	@Override
-	public byte[] toByteArray() {
-		byte[] type, dest, src, msg, opt, hash;
-		type = new byte[]{getType()};
+	public byte[] toByteArray() {		
+		byte[] src, msg, hash;
+		byte type, opt;
+		type = getType();
 		src = getSource().getBytes();
 		msg = getMessage().getBytes(); 
-		opt = new byte[8];		
+		opt = 0;	
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
-		
-		System.arraycopy(type, 0, bytePacket, 0, TYPELENGTH);
-		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE);
-		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+SOURCE, MESSAGE);
+		bytePacket[0] = type;
+		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE - 1);
+		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+SOURCE, MESSAGE - 1);
 		System.arraycopy(opt, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE, OPTIONS);
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+OPTIONS, HASH);
 		
