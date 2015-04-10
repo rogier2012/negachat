@@ -21,14 +21,6 @@ public abstract class Packet {
 	private String source;
 	
 	/*
-	 * Constructors
-	 */
-	
-	public Packet(String source)	{
-		this.source = source;
-	}
-	
-	/*
 	 * Queries
 	 */
 	

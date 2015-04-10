@@ -10,16 +10,15 @@ public class MessagePacket extends Packet {
 	public static final int SOURCE = 16;
 	public static final int MESSAGE = 128;
 	public static final int OPTIONS = 1;
-	public static final int HASH = 4; 
+	public static final int HASH = 4;
 	
 	private byte type, options;
 	private String source, destination, message, hash;
 	
 	public MessagePacket(String destination, String source) {
-		super(source);
 		this.source = source;
 		this.destination = destination;
-		setType(TYPE); 
+		setType(TYPE);
 	}
 	
 	public MessagePacket(byte[] packetArray)	{
@@ -139,5 +138,11 @@ public class MessagePacket extends Packet {
 	
 	public String getHash(){
 		return hash;
+	}
+
+	@Override
+	public Packet convertToPacket(byte[] byteArray) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
