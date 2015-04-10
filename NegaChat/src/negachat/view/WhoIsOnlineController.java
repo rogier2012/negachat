@@ -1,26 +1,40 @@
 package negachat.view;
 
 import negachat.client.OnlineClients;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
 
-public class WhoIsOnlineController implements Runnable {
+import negachat.client.ClientHandler;
+
+public class WhoIsOnlineController extends Observable implements ActionListener {
 	private WhoIsOnline online;
 	private OnlineClients clientList;
-	
-	public WhoIsOnlineController(WhoIsOnline online){
+	private ClientHandler handler;
+
+	public WhoIsOnlineController(WhoIsOnline online, ClientHandler handler) {
 		this.online = online;
 		clientList = new OnlineClients();
-		Thread thread = new Thread(this);
-		thread.start();
+		this.handler = handler;
 	}
 
-	@Override
-	public void run() {
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		clientList.getClients();
+	public void addClient(String name) {
+		online.addClient(name);
+		online.getButton(name).addActionListener(this);
 	}
+
+	public void actionPerformed(ActionEvent actionEvent) {
+		String name = actionEvent.getActionCommand();
+
+		handler.addChat(name, this);
+
+		this.setChanged();
+		this.notifyObservers(online);
+
+	}
+
+	public WhoIsOnline getOnline() {
+		return online;
+	}
+
 }

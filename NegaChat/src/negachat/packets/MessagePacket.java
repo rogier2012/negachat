@@ -14,6 +14,7 @@ public class MessagePacket {
 	 */
 	
 	public static final byte TYPE = 0;
+
 	
 	private byte type, options;
 	private String source, destination, message, hash;

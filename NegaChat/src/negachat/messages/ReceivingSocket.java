@@ -26,6 +26,7 @@ public class ReceivingSocket extends Observable implements Runnable {
 				byte[] buf = new byte[1000];
 				DatagramPacket recv = new DatagramPacket(buf, 146);
 				try {
+					clientsocket = new DatagramSocket(SERVER_PORT);
 					clientsocket.receive(recv);
 				} catch (IOException e) {
 					e.printStackTrace();
