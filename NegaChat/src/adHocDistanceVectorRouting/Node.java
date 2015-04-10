@@ -1,10 +1,10 @@
 package adHocDistanceVectorRouting;
 
 import negachat.packets.MessagePacket;
-import packets.AODV.HELLO;
-import packets.AODV.RERR;
-import packets.AODV.RREP;
-import packets.AODV.RREQ;
+import negachat.packets.AODV.HELLO;
+import negachat.packets.AODV.RERR;
+import negachat.packets.AODV.RREP;
+import negachat.packets.AODV.RREQ;
 
 public class Node {
 	

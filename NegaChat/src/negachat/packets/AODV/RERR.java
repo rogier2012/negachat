@@ -1,4 +1,4 @@
-package packets.AODV;
+package negachat.packets.AODV;
 
 import negachat.packets.MessagePacket;
 
