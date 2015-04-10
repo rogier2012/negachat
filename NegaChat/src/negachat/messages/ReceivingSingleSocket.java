@@ -1,19 +1,20 @@
 package negachat.messages;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 import negachat.packets.MessagePacket;
 import negachat.packets.Packet;
+import negachat.packets.AODV.RERR;
+import negachat.packets.AODV.RREP;
 
-public class ReceivingSingleSocket extends ReceivingSocket{
+public class ReceivingSingleSocket extends ReceivingSocket {
 	private DatagramSocket clientsocket;
-	public final int SERVER_PORT = 1488;
+	public final int UDP_PORT = 6113;
 	private String myName;
 	
-	
+
 	public ReceivingSingleSocket(String myName) {
 		this.myName = myName;
 	}
@@ -24,7 +25,7 @@ public class ReceivingSingleSocket extends ReceivingSocket{
 			byte[] buf = new byte[1000];
 			DatagramPacket recv = new DatagramPacket(buf, 146);
 			try {
-				clientsocket = new DatagramSocket(SERVER_PORT);
+				clientsocket = new DatagramSocket(UDP_PORT);
 				clientsocket.receive(recv);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -34,29 +35,37 @@ public class ReceivingSingleSocket extends ReceivingSocket{
 			if (recv.getData()[0] == 0) {
 				MessagePacket packet = new MessagePacket(recv.getData());
 				handlePacket(packet);
-			} else if (recv.getData()[0] == 1) {
-
+			} else if (recv.getData()[0] == 3) {
+				RREP packet = new RREP(recv.getData());
+				handlePacket(packet);
+			} else if (recv.getData()[0] == 4) {
+				RERR packet = new RERR(recv.getData());
+				handlePacket(packet);
 			}
 
 		} while (1 < 2);
 	}
 
 	public void handlePacket(Packet packet) {
-		if (packet instanceof MessagePacket && myName.equals(((MessagePacket)packet).getDestination())) {
-			// verwerk message plz
-			if (((MessagePacket)packet).makeHash() == ((MessagePacket)packet).getHash()) {
-				long timestamp = System.currentTimeMillis();
+		if (packet instanceof MessagePacket
+				&& myName.equals(((MessagePacket) packet).getDestination())) {
+			if (((MessagePacket) packet).makeHash() == ((MessagePacket) packet).getHash()) {
+				setTimestamp(System.currentTimeMillis());
 				recvPacket = packet;
 				setChanged();
 				notifyObservers();
 			}
+		} else if (packet instanceof RREP){
+			
+		} else if (packet instanceof RERR){
+			
 		}
 	}
-	
+
 	public void testrun() {
 		MessagePacket nPacket = new MessagePacket("All", "Henk");
 		nPacket.setMessage("Ik ben Rogier");
 		handlePacket(nPacket);
 	}
-	
+
 }

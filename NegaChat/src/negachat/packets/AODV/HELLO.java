@@ -23,7 +23,7 @@ public class HELLO extends Packet {
 	public static final int IDENTIFIERLENGTH = 1;
 	
 	// Index of data
-	public static final int HOPCOUNTINDEX = TYPELENGTH;
+	public static final int HOPCOUNTINDEX = SOURCEINDEX + SOURCELENGTH;
 	public static final int IDENTIFIERINDEX = HOPCOUNTINDEX + HOPCOUNTLENGTH;
 	
 	/*
@@ -47,6 +47,9 @@ public class HELLO extends Packet {
 	public HELLO(byte[] byteArray)	{
 		super(byteArray);
 		this.setType(TYPE);
+		byte[] temp = null;
+		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, HOPCOUNTINDEX);
+		this.setSource(new String(temp));
 		this.hopCount = byteArray[HOPCOUNTINDEX];
 		this.identifier = byteArray[IDENTIFIERINDEX];
 	}
