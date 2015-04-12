@@ -31,6 +31,11 @@ public class HELLOTest {
 		System.out.println(byteArray[0]);
 		System.out.println(byteArray[17]);
 		System.out.println(byteArray[18]);
+		System.out.println();
+		System.out.println(packetii.getSource());
+		System.out.println(packetii.getHopCount());
+		System.out.println(packetii.getIdentifier());
+		
 	}
 
 }
