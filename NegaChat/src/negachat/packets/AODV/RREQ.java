@@ -41,7 +41,7 @@ public class RREQ extends Packet {
 	 * Constructors
 	 */
 	
-	public RREQ(String destination, String source, byte lifeSpan, byte identifier) {
+	public RREQ(String source, String destination,  byte lifeSpan, byte identifier) {
 		super(source);
 		this.destination = destination;
 		this.lifeSpan = lifeSpan;

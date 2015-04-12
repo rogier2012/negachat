@@ -41,6 +41,12 @@ public class RREQTest {
 		System.out.println(new String(byteArray));
 		System.out.println(byteArray[RREQ.LIFESPANINDEX]);
 		System.out.println(byteArray[RREQ.IDENTIFIERINDEX]);
+		System.out.println();
+		System.out.println(packetii.getSource());
+		System.out.println(packetii.getDestination());
+		System.out.println(packetii.getLifeSpan());
+		System.out.println(packetii.getIdentifier());
+		
 	}
 
 }
