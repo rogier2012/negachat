@@ -43,13 +43,14 @@ public class RREP extends Packet implements DirectPacket {
 	
 	public RREP(byte[] byteArray)	{
 		super(byteArray);
-		byte[] temp = null;
-		
+
 		this.setType(byteArray[TYPEINDEX]);
+		
+		byte[] temp = new byte[SOURCELENGTH];
 		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, SOURCELENGTH);
 		this.setSource(new String(temp));
 		
-		temp = null; 
+		temp = new byte[DESTINATIONLENGTH]; 
 		System.arraycopy(byteArray, DESTINATIONINDEX, temp, 0, DESTINATIONLENGTH);
 		this.setDestination(new String(temp));
 		
@@ -61,11 +62,15 @@ public class RREP extends Packet implements DirectPacket {
 	
 	@Override
 	public byte[] toByteArray() {
-		byte[] result = new byte[]{this.getType()};
+		byte[] result = new byte[DESTINATIONINDEX + DESTINATIONLENGTH];
+		result[0] = this.getType();
+		
 		byte[] source = this.getSource().getBytes();
+		System.arraycopy(source, 0, result, SOURCEINDEX, SOURCELENGTH);
+		
 		byte[] destination = this.getDestination().getBytes();
-		System.arraycopy(source, 0, result, TYPEINDEX, TYPELENGTH);
 		System.arraycopy(destination, 0, result, DESTINATIONINDEX, DESTINATIONLENGTH);
+		
 		return result;
 	}
 	
