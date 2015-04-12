@@ -23,7 +23,7 @@ public class HELLOTest {
 		
 		packeti = new HELLO(source, identifier);
 		byteArray = packeti.toByteArray();
-//		packetii = new HELLO(byteArray);
+		packetii = new HELLO(byteArray);
 	}
 
 	@Test

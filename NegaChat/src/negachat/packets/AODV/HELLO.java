@@ -47,8 +47,8 @@ public class HELLO extends Packet {
 	public HELLO(byte[] byteArray)	{
 		super(byteArray);
 		this.setType(TYPE);
-		byte[] temp = null;
-		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, HOPCOUNTINDEX);
+		byte[] temp = new byte[SOURCELENGTH];
+		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, HOPCOUNTINDEX - 1);
 		this.setSource(new String(temp));
 		this.hopCount = byteArray[HOPCOUNTINDEX];
 		this.identifier = byteArray[IDENTIFIERINDEX];
@@ -60,7 +60,19 @@ public class HELLO extends Packet {
 	
 	@Override
 	public byte[] toByteArray() {
-		return new byte[]{this.getType(), this.hopCount, this.identifier};
+		byte[] result = new byte[19];
+		byte[] source = this.getSource().getBytes();
+		byte type = this.getType();
+		byte hopCount = this.hopCount;
+		byte identifier = this.identifier;
+		
+		result[0] = type;
+		result[HOPCOUNTINDEX] = hopCount;
+		result[IDENTIFIERINDEX] = identifier;
+		
+		System.arraycopy(source, 0, result, SOURCEINDEX, SOURCELENGTH);
+		
+		return result;
 	}
 
 	/*
