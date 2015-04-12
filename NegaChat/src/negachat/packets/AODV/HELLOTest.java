@@ -20,7 +20,6 @@ public class HELLOTest {
 	public void setUp() throws Exception {
 		source = "HENKHENKHENKHENK";
 		identifier = 15;
-		
 		packeti = new HELLO(source, identifier);
 		byteArray = packeti.toByteArray();
 		packetii = new HELLO(byteArray);
@@ -29,6 +28,9 @@ public class HELLOTest {
 	@Test
 	public void test() {
 		System.out.println(new String(byteArray));
+		System.out.println(byteArray[0]);
+		System.out.println(byteArray[17]);
+		System.out.println(byteArray[18]);
 	}
 
 }

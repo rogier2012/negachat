@@ -53,12 +53,12 @@ public class RREQ extends Packet {
 		super(byteArray);
 		this.setType(TYPE);
 		
-		byte[] temp = null;
-		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, DESTINATIONINDEX);
+		byte[] temp = new byte[SOURCELENGTH];
+		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, SOURCELENGTH);
 		this.setSource(new String(temp));
 		
-		temp = null;
-		System.arraycopy(byteArray, DESTINATIONINDEX, temp, 0, LIFESPANINDEX);
+		temp = new byte[DESTINATIONINDEX];
+		System.arraycopy(byteArray, DESTINATIONINDEX, temp, 0, DESTINATIONLENGTH);
 		this.setDestination(new String(temp));
 		
 		this.lifeSpan = byteArray[LIFESPANINDEX];
@@ -77,12 +77,15 @@ public class RREQ extends Packet {
 		byte[] lifeSpan = new byte[]{this.lifeSpan};
 		byte[] identifier = new byte[]{this.identifier};
 		
-		byte[] result = new byte[]{this.getType()};
+		byte[] result = new byte[IDENTIFIERINDEX + IDENTIFIERLENGTH];
+		result[TYPEINDEX] = this.getType();
+		result[IDENTIFIERINDEX] = this.getIdentifier();
+		result[LIFESPANINDEX] = this.getLifeSpan();
 		
-		System.arraycopy(source, 0, result, result.length, SOURCELENGTH);
-		System.arraycopy(destination, 0, result, result.length, DESTINATIONLENGTH);
-		System.arraycopy(lifeSpan, 0, result, result.length, LIFESPANLENGTH);
-		System.arraycopy(identifier, 0, result, result.length, IDENTIFIERLENGTH);
+		System.arraycopy(source, 0, result, SOURCEINDEX, SOURCELENGTH);
+		System.arraycopy(destination, 0, result, DESTINATIONINDEX, DESTINATIONLENGTH);
+		System.arraycopy(lifeSpan, 0, result, LIFESPANINDEX, LIFESPANLENGTH);
+		System.arraycopy(identifier, 0, result, IDENTIFIERINDEX, IDENTIFIERLENGTH);
 		
 		return result;
 	}
