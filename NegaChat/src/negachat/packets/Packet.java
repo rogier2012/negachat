@@ -5,12 +5,13 @@ public abstract class Packet {
 	/*
 	 * AODV PACKETS TYPE IDENTIFIER BYTES:
 	 * 
-	 * 00000000 - MessagePacket
-	 * 00000001 - HELLO
-	 * 00000010 - RREQ
-	 * 00000011 - RREP
-	 * 00000100 - RERR
-	 * 00000101 - GroupMessage
+	 * 00000000 - MessagePacket			0
+	 * 00000001 - HELLO					1
+	 * 00000010 - RREQ					2
+	 * 00000011 - RREP					3
+	 * 00000100 - RERR					4
+	 * 00000101 - GroupMessage			5
+	 * 00000110	- ACK-Packet			6
 	 */
 	
 	/*
@@ -41,6 +42,7 @@ public abstract class Packet {
 	}
 	
 	public Packet(byte[] byteArray){
+		
 	}
 	
 	/*
