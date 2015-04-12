@@ -18,10 +18,11 @@ public class ACK_Packet extends Packet{
 	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + OPTIONS + HASH;
 
 
-	public ACK_Packet(String source, int packetToAck) {
+	public ACK_Packet(String source, String destination, int packetToAck) {
 		super(source);
 		this.source = source;
 		this.packetToACK = packetToACK;
+		this.destination = destination;
 	}
 
 	
