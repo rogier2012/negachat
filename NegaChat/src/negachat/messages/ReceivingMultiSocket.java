@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 
 import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
@@ -15,10 +16,19 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;
 	private MulticastSocket multisocket;
 	
-	public static final int MULTICAST_PORT = 6112;
+	public static final int MULTICAST_PORT = 6111;
 	
 	public ReceivingMultiSocket(RoutingTable table){
 		super(table);
+		try {
+			multisocket = new MulticastSocket(MULTICAST_PORT);
+			group = InetAddress.getByName("228.5.6.7");
+			multisocket.joinGroup(group);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void run() {
@@ -26,10 +36,8 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			byte[] buf = new byte[1000];
 			DatagramPacket recv = new DatagramPacket(buf, 166);
 			try {
-				multisocket = new MulticastSocket(MULTICAST_PORT);
-				group = InetAddress.getByName("228.5.6.7");
-				multisocket.joinGroup(group);
 				multisocket.receive(recv);
+				System.out.println("Packet received?");
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Oops... Something went wrong receiving a packet.");
