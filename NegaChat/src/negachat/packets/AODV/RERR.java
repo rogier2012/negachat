@@ -43,37 +43,36 @@ public class RERR extends Packet implements DirectPacket{
 	
 	public RERR(byte[] byteArray)	{
 		super(byteArray);
-		this.setType(TYPE);
-		
-		byte[] temp = null;
-		
 		this.setType(byteArray[TYPEINDEX]);
+		
+		byte[] temp = new byte[SOURCELENGTH];
 		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, SOURCELENGTH);
 		this.setSource(new String(temp));
 		
-		temp = null; 
+		temp = new byte[DESTINATIONLENGTH]; 
 		System.arraycopy(byteArray, DESTINATIONINDEX, temp, 0, DESTINATIONLENGTH);
 		this.setDestination(new String(temp));
 		
-		temp = null;
+		temp = new byte[byteArray.length - DESTINATIONLENGTH - DESTINATIONINDEX];
 		System.arraycopy(byteArray, LOSTROUTESINDEX, temp, 0, byteArray.length - LOSTROUTESINDEX);
 		
-		this.lostRoutes = new String[]{};
+		this.lostRoutes = new String[temp.length/DESTINATIONLENGTH];
 		
-		int index = 1;
-		byte[] element = null;
+		int index = 0;
+		byte[] element = new byte[DESTINATIONLENGTH];
 		String nickname;
-		for (int counter = temp.length/DESTINATIONLENGTH; counter >= 0; counter--)	{
+		for (int counter = temp.length/DESTINATIONLENGTH; counter > 0; counter--)	{
 			// Get element
 			System.arraycopy(temp, 0, element, 0, DESTINATIONLENGTH);
 			// Convert it to nickname
 			nickname = new String(element);
 			// Add element to String array
-			System.arraycopy(nickname, 0, this.lostRoutes, lostRoutes.length - 1, DESTINATIONLENGTH);
+			lostRoutes[(index) / DESTINATIONLENGTH] = nickname;
 			// Remove element from temp
 			System.arraycopy(temp, DESTINATIONLENGTH, temp, 0, temp.length - DESTINATIONLENGTH);
 			// Raise index
 			index += DESTINATIONLENGTH;
+//			System.arraycopy(src, srcPos, dest, destPos, length);
 		}
 	}
 
@@ -83,13 +82,19 @@ public class RERR extends Packet implements DirectPacket{
 	
 	@Override
 	public byte[] toByteArray() {
-		byte[] result = new byte[]{this.getType()};
+		byte[] result = new byte[LOSTROUTESINDEX + this.getLostRoutes().length*SOURCELENGTH];
+		result[TYPEINDEX] = this.getType();
+		
 		byte[] source = this.getSource().getBytes();
+		System.arraycopy(source, 0, result, SOURCEINDEX, SOURCELENGTH);
+		
 		byte[] destination = this.getDestination().getBytes();
-		System.arraycopy(source, 0, result, TYPEINDEX, TYPELENGTH);
 		System.arraycopy(destination, 0, result, DESTINATIONINDEX, DESTINATIONLENGTH);
+		
+		int counter = 0;
 		for (String element : this.getLostRoutes())	{
-			System.arraycopy(element.getBytes(), 0, result, result.length, DESTINATIONLENGTH);
+			System.arraycopy(element.getBytes(), 0, result, DESTINATIONINDEX + ((counter + 1) * DESTINATIONLENGTH), DESTINATIONLENGTH);
+			counter++;
 		}
 		return result;
 	}
