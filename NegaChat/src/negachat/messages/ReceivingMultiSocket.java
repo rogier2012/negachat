@@ -6,15 +6,17 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 import negachat.client.RoutingTable;
+import negachat.packets.CreatePacket;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
 import negachat.packets.AODV.HELLO;
 import negachat.packets.AODV.RREQ;
+import negachat.view.NegaView;
 
 public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;
 	private MulticastSocket multisocket;
-
+	private CreatePacket creator;
 	
 	public static final int MULTICAST_PORT = 6112;
 	
@@ -28,6 +30,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		creator = new CreatePacket();
 		
 	}
 	
@@ -49,9 +52,12 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				RREQ packet = new RREQ(recv.getData());
 				handlePacket(packet);
 			} else if (recv.getData()[0] == GroupMessagePacket.TYPE) {
-				System.out.println("Groupie?");
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
+				if(packet.getSource().equals(NegaView.getMyName())){
+					
+				}
+				
 			}
 			
 		} while (1 < 2);
@@ -63,13 +69,15 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 		} else if (packet instanceof RREQ){
 			
 		} else if (packet instanceof GroupMessagePacket){
-			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
+			
+			
+//			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
 				setTimestamp(System.currentTimeMillis());
 				this.setRecvPacket(packet);
 				this.setChanged();
 				this.notifyObservers();
 				//stuur door naar neighbours
-			}
+//			}
 		}
 	}
 	
