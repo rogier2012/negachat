@@ -31,10 +31,16 @@ public class GroupMessagePacket extends Packet{
 			setType(data[0]);
 			byte[] sourceArray = new byte[16];
 			System.arraycopy(data, TYPELENGTH, sourceArray, 0, SOURCE);
-			setSource(new String(sourceArray));
+			String temp = new String(sourceArray);
+			String source = temp.split("=")[0];
+			setSource(source);
+			
 			byte[] messageArray = new byte[128];
 			System.arraycopy(data, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
-			setMessage(new String(messageArray));
+			String temp2 = new String(messageArray);
+			String message = temp2.split("=")[0];
+			setMessage(message);
+			
 			setOptions(data[TYPELENGTH + SOURCE + MESSAGE]);
 			byte[] hashArray = new byte[4];
 			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + OPTIONS, hashArray, 0, HASH);
@@ -56,7 +62,6 @@ public class GroupMessagePacket extends Packet{
 		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE - 1);
 		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+SOURCE, MESSAGE - 1);
 		bytePacket[TOTAL - HASH - 1] = opt;
-//		System.arraycopy(opt, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE, OPTIONS - 1);
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+OPTIONS, HASH - 1);
 		
 		System.out.println("GroupMessagePackage bytePacket composed");

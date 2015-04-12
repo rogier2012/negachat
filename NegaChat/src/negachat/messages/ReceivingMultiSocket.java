@@ -69,13 +69,12 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 		} else if (packet instanceof RREQ){
 			
 		} else if (packet instanceof GroupMessagePacket){
-			
-			
 //			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
 				setTimestamp(System.currentTimeMillis());
 				this.setRecvPacket(packet);
 				this.setChanged();
 				this.notifyObservers();
+
 				//stuur door naar neighbours
 //			}
 		}
