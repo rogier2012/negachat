@@ -5,13 +5,15 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import negachat.client.RoutingTable;
 import negachat.packets.Packet;
-import adHocDistanceVectorRouting.RoutingTable;
 
 public class SendingMultiSocket {
 
 	private DatagramSocket sendingSocket;
+	
 	private static final int MULTICAST_PORT = 6112;
+	
 	private InetAddress group;
 
 	public SendingMultiSocket(RoutingTable table) {

@@ -8,9 +8,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import negachat.client.ClientHandler;
+import negachat.client.OnlineClients;
+import negachat.client.RoutingTable;
 import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
-import adHocDistanceVectorRouting.RoutingTable;
 
 public class NegaView {
 
@@ -31,9 +32,13 @@ public class NegaView {
 			public void run() {
 				try {
 					NegaView window = new NegaView();
+					if (myName != null){
+						window.frame.setVisible(true);
+						window.frame.setResizable(false);
+					} else {
+						System.exit(0);
+					}
 					
-					window.frame.setVisible(true);
-					window.frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,10 +51,17 @@ public class NegaView {
 	 */
 	public NegaView() {
 		myName = JOptionPane.showInputDialog(frame,"What is your nickname? Max. 16 characters", null);
-		while (myName.length() > 16){
-			myName = JOptionPane.showInputDialog(frame,"Please don't use more than 16 characters", null);
+		if (myName != null){
+			while (myName.length() > 16|| myName.length() < 4){
+				if(myName.length() < 4){
+					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 16 characters", null);
+				}
+				myName = JOptionPane.showInputDialog(frame,"Please don't use more than 16 characters", null);
+			} 
+			
+			
+			initialize();
 		}
-		initialize();
 	}
 
 	/**
@@ -80,10 +92,9 @@ public class NegaView {
 		rmsocket.addObserver(cFrameControl1);
 		tabbedPane.add(GROUP_CHAT_NAME, cFrame1);
 		tabbedPane.add(WHO_IS_ONLINE, online);
-		
-		
-		wioController.addClient("Rogier");
-		wioController.addClient("Gijs");
+		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
+		routingTable.addObserver(clientlist);
+		routingTable.addDestination("Rogier", "Gijs");
 	}
 	
 	public static String getMyName(){

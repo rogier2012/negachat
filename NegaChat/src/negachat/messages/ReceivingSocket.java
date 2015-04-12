@@ -2,8 +2,8 @@ package negachat.messages;
 
 import java.util.Observable;
 
+import negachat.client.RoutingTable;
 import negachat.packets.Packet;
-import adHocDistanceVectorRouting.RoutingTable;
 
 public abstract class ReceivingSocket extends Observable implements Runnable {
 	protected Packet recvPacket;

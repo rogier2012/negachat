@@ -1,5 +1,6 @@
 package adHocDistanceVectorRouting;
 
+import negachat.client.RoutingTable;
 import negachat.packets.MessagePacket;
 import negachat.packets.Packet;
 import negachat.packets.AODV.HELLO;

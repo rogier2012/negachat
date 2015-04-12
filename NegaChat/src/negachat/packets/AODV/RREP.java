@@ -1,5 +1,6 @@
 package negachat.packets.AODV;
 
+import negachat.packets.DirectPacket;
 import negachat.packets.Packet;
 
 /*
@@ -9,7 +10,7 @@ import negachat.packets.Packet;
  * [Type][Source][Destination]
  */
 
-public class RREP extends Packet {
+public class RREP extends Packet implements DirectPacket {
 	
 	/*
 	 * Constants
