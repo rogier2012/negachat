@@ -54,12 +54,10 @@ public class NegaView {
 		if (myName != null){
 			while (myName.length() > 16|| myName.length() < 4){
 				if(myName.length() < 4){
-					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 16 characters", null);
+					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
 				}
 				myName = JOptionPane.showInputDialog(frame,"Please don't use more than 16 characters", null);
 			} 
-			
-			
 			initialize();
 		}
 	}
@@ -82,7 +80,7 @@ public class NegaView {
 		Thread threadrs = new Thread(rssocket);
 		Thread threadrm = new Thread(rmsocket);
 //		threadrs.start();
-//		threadrm.start();
+		threadrm.start();
 		online = new WhoIsOnline();
 		ClientHandler handler = new ClientHandler(tabbedPane, rssocket);
 		wioController = new WhoIsOnlineController(online, handler);
@@ -94,7 +92,6 @@ public class NegaView {
 		tabbedPane.add(WHO_IS_ONLINE, online);
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);
-		routingTable.addDestination("Rogier", "Gijs");
 	}
 	
 	public static String getMyName(){

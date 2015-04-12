@@ -6,6 +6,7 @@ import java.util.Observer;
 import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
 import negachat.messages.ReceivingSocket;
+import negachat.messages.SendingMultiSocket;
 import negachat.packets.CreatePacket;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.MessagePacket;
@@ -26,12 +27,15 @@ public class ChatFrameController implements Observer {
 	private String chatName;
 
 	private ReceivingSocket socket;
+	
+	private CreatePacket creator;
 
 	public ChatFrameController(ChatFrame cFrame, String chatName,ReceivingSocket socket) {
 		this.cFrame = cFrame;
 		this.chatName = chatName;
 		this.socket = socket;
 		initialize();
+		creator = new CreatePacket();
 	}
 
 	public void initialize() {
@@ -43,7 +47,7 @@ public class ChatFrameController implements Observer {
 
 	public void update(Observable obs, Object arg) {
 		if (obs == mfController) {
-			sendPacket();
+			this.sendPacket();
 			cbController.setMessage(mfController.getcbMessage());
 		} else if (obs instanceof ReceivingSingleSocket && socket.getRecvPacket().getSource().equals(chatName)) {
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((MessagePacket)socket.getRecvPacket()).getMessage() + "\n");
@@ -53,11 +57,12 @@ public class ChatFrameController implements Observer {
 	}
 	
 	private void sendPacket() {
-		CreatePacket creator = new CreatePacket();
 		creator.setDestination(chatName);
 		creator.setMessage(mfController.getMessage());
 		Packet toSend = creator.composePacket();
 		System.out.println(new String(toSend.toByteArray()));
+		SendingMultiSocket sendingsocket = new SendingMultiSocket();
+		sendingsocket.send(toSend);
 	}
 
 	public String getChatName(){
