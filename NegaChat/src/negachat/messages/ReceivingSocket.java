@@ -26,6 +26,10 @@ public abstract class ReceivingSocket extends Observable implements Runnable {
 
 	public abstract void handlePacket(Packet packet); 
 
+	public void setRecvPacket(Packet recvPacket) {
+		this.recvPacket = recvPacket;
+	}
+
 	public Packet getRecvPacket() {
 		return recvPacket;
 	}
