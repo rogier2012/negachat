@@ -68,7 +68,11 @@ public class RREP extends Packet implements DirectPacket {
 		System.arraycopy(destination, 0, result, DESTINATIONINDEX, DESTINATIONLENGTH);
 		return result;
 	}
-
+	
+	/*
+	 * Getters and Setters
+	 */
+	
 	public String getDestination() {
 		return destination;
 	}
