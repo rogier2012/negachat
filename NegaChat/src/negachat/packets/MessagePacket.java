@@ -2,7 +2,7 @@ package negachat.packets;
 
 public class MessagePacket extends Packet {
 	
-	public static final byte TYPE = 0;
+	public static final byte TYPE = 0X00;
 	
 //	Length of the headers in bytes
 	public static final int TYPELENGTH = 1;
@@ -13,14 +13,13 @@ public class MessagePacket extends Packet {
 	public static final int HASH = 4;
 	public static final int TOTAL = TYPELENGTH+DESTINATION+SOURCE+MESSAGE+OPTIONS+HASH;
 	
-	private byte type, options;
+	private byte options;
 	private String source, destination, message, hash;
 	
 	public MessagePacket(String destination, String source) {
 		super(source);
 		this.source = source;
 		this.destination = destination; 
-		setType(TYPE);
 	}
 	
 	public MessagePacket(byte[] packetArray)	{
@@ -110,14 +109,6 @@ public class MessagePacket extends Packet {
 		        (byte) ((hashCode >> 8) & 0xFF),  
 		        (byte) (hashCode & 0xFF)};
 		return new String(hash);
-	}
-
-	public byte getType() {
-		return type;
-	}
-
-	public void setType(byte type) {
-		this.type = type;
 	}
 
 	public byte getOptions() {

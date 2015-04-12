@@ -4,8 +4,8 @@ public class ACK_Packet extends Packet{
 	
 	private int packetToACK;
 	
-	private byte type, options;
-	private String source, destination, message, hash;
+	private byte options;
+	private String destination, message, hash;
 	
 	public static final byte TYPE = 0x06;
 	
@@ -18,11 +18,9 @@ public class ACK_Packet extends Packet{
 	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + OPTIONS + HASH;
 
 
-	public ACK_Packet(String source, String destination, int packetToACK) {
+	public ACK_Packet(String source, int packetToACK) {
 		super(source);
-		this.source = source;
 		this.packetToACK = packetToACK;
-		this.destination = destination;
 	}
 
 	
@@ -59,7 +57,7 @@ public class ACK_Packet extends Packet{
 		
 		byte[] dest, src, msg, hash;
 		byte type, opt;
-		type = getType();
+		type = TYPE;
 		dest = getDestination().getBytes();
 		src = getSource().getBytes();
 		msg = getMessage().getBytes(); 
@@ -119,17 +117,6 @@ public class ACK_Packet extends Packet{
 		this.packetToACK = packetToACK;
 	}
 
-
-	public byte getType() {
-		return type;
-	}
-
-
-	public void setType(byte type) {
-		this.type = type;
-	}
-
-
 	public byte getOptions() {
 		return options;
 	}
@@ -137,16 +124,6 @@ public class ACK_Packet extends Packet{
 
 	public void setOptions(byte options) {
 		this.options = options;
-	}
-
-
-	public String getSource() {
-		return source;
-	}
-
-
-	public void setSource(String source) {
-		this.source = source;
 	}
 
 

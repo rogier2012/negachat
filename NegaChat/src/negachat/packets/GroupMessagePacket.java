@@ -72,6 +72,7 @@ public class GroupMessagePacket extends Packet{
 	}
 	
 	public String makeHash() {
+		setHash("0x00");
 		int hashCode = this.hashCode();
 		byte[] hash = new byte[]{
 				(byte) ((hashCode >> 24) & 0xFF),
