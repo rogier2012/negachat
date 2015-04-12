@@ -31,10 +31,16 @@ public class GroupMessagePacket extends Packet{
 			setType(data[0]);
 			byte[] sourceArray = new byte[16];
 			System.arraycopy(data, TYPELENGTH, sourceArray, 0, SOURCE);
-			setSource(new String(sourceArray));
+			String temp = new String(sourceArray);
+			String source = temp.split("=")[0];
+			setSource(source);
+			
 			byte[] messageArray = new byte[128];
 			System.arraycopy(data, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
-			setMessage(new String(messageArray));
+			String temp2 = new String(messageArray);
+			String message = temp2.split("=")[0];
+			setMessage(message);
+			
 			setOptions(data[TYPELENGTH + SOURCE + MESSAGE]);
 			byte[] hashArray = new byte[4];
 			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + OPTIONS, hashArray, 0, HASH);

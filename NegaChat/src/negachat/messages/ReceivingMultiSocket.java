@@ -49,7 +49,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				RREQ packet = new RREQ(recv.getData());
 				handlePacket(packet);
 			} else if (recv.getData()[0] == GroupMessagePacket.TYPE) {
-				System.out.println("Groupie?");
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
 			}
@@ -63,13 +62,14 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 		} else if (packet instanceof RREQ){
 			
 		} else if (packet instanceof GroupMessagePacket){
-			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
+//			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
 				setTimestamp(System.currentTimeMillis());
 				this.setRecvPacket(packet);
 				this.setChanged();
 				this.notifyObservers();
+
 				//stuur door naar neighbours
-			}
+//			}
 		}
 	}
 	

@@ -2,7 +2,7 @@ package negachat.packets;
 
 public class ACK_Packet extends Packet{
 	
-	private String packetToACK;
+	private int packetToACK;
 	
 	private byte type, options;
 	private String source, destination, message, hash;
@@ -18,27 +18,28 @@ public class ACK_Packet extends Packet{
 	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + OPTIONS + HASH;
 
 
-	public ACK_Packet(String source, int packetToAck) {
+	public ACK_Packet(String source, String destination, int packetToAck) {
 		super(source);
 		this.source = source;
 		this.packetToACK = packetToACK;
+		this.destination = destination;
 	}
 
 	
 	public ACK_Packet(byte[] packetArray)	{
 		super(packetArray);
 		setType(packetArray[0]);
-		byte[] sourceArray = null;
+		byte[] sourceArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH, sourceArray, 0, SOURCE);
 		setSource(new String(sourceArray));
-		byte[] destArray = null;
+		byte[] destArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH+SOURCE, destArray, 0, DESTINATION);
 		setDestination(new String(destArray));
-		byte[] messageArray = null;
+		byte[] messageArray = new byte[128];
 		System.arraycopy(packetArray, TYPELENGTH+DESTINATION+SOURCE, messageArray, 0, MESSAGE);
 		setMessage(new String(messageArray));
 		setOptions(packetArray[140]);
-		byte[] hashArray = null;
+		byte[] hashArray = new byte[4];
 		System.arraycopy(packetArray, TYPELENGTH+DESTINATION+SOURCE+MESSAGE, hashArray, 0, HASH);
 		setHash(new String(hashArray));
 	}
@@ -53,7 +54,7 @@ public class ACK_Packet extends Packet{
 		dest = getDestination().getBytes();
 		src = getSource().getBytes();
 		msg = getMessage().getBytes(); 
-		opt = (byte) 0;	
+		opt = (byte) packetToACK;	
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
@@ -100,12 +101,12 @@ public class ACK_Packet extends Packet{
 	
 	
 
-	public String getPacketToACK() {
+	public int getPacketToACK() {
 		return packetToACK;
 	}
 
 
-	public void setPacketToACK(String packetToACK) {
+	public void setPacketToACK(int packetToACK) {
 		this.packetToACK = packetToACK;
 	}
 
