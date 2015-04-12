@@ -10,6 +10,7 @@ import java.security.PublicKey;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 public class AssymetricEncrypter {
 	Cipher RSACipher;
@@ -39,11 +40,12 @@ public class AssymetricEncrypter {
 
 	public void createCipher() {
 
-		try {
-			RSACipher = Cipher.getInstance(ALGORITHM);
+			try {
+				RSACipher = Cipher.getInstance(ALGORITHM);
+			} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+				e.printStackTrace();
+			}
 
-		} catch (Exception e) {
-		}
 
 	}
 
@@ -63,14 +65,23 @@ public class AssymetricEncrypter {
 
 	public byte[] Decrypt(byte[] message) {
 		byte[] DecryptedMessage = null;
-		try {
-			RSACipher.init(Cipher.DECRYPT_MODE, privateKey);
-			DecryptedMessage = RSACipher.doFinal(message);
-			return DecryptedMessage;
-		} catch (Exception e) {
-			return "could not decrypt".getBytes();
+			try {
+				RSACipher.init(Cipher.DECRYPT_MODE, privateKey);
+			} catch (InvalidKeyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				DecryptedMessage = RSACipher.doFinal(message);
+				return DecryptedMessage;
+				
+			} catch (IllegalBlockSizeException | BadPaddingException e) {
+				// TODO Auto-generated catch block
+				return "could not decrypt".getBytes();
+			}
+			
 		}
-	}
+	
 
 	public byte[] Encrypt(byte[] message, PublicKey pubKey) {
 		byte[] EncryptedMessage = null;

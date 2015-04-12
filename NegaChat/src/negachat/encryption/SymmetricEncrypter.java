@@ -1,6 +1,12 @@
 package negachat.encryption;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -9,7 +15,7 @@ public class SymmetricEncrypter {
 	private final String ENCRYPTIONALGORITHM = "AES";
 	Cipher AESCipher;
 	private final String PASS = "donthackusplease";
-	
+
 	public SymmetricEncrypter() {
 		createCipher();
 		this.setKey(PASS.getBytes());
@@ -19,49 +25,54 @@ public class SymmetricEncrypter {
 
 		try {
 			AESCipher = Cipher.getInstance(ENCRYPTIONALGORITHM);
-			
-		} catch (Exception e) {
-			}	
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+			e.printStackTrace();
+		}
 
 	}
-	
-	public byte[] Encrypt(byte[] message){
+
+	public byte[] Encrypt(byte[] message) {
 		byte[] EncryptedMessage = null;
-		try{
+
+		try {
 			AESCipher.init(Cipher.ENCRYPT_MODE, SecKey);
 			EncryptedMessage = AESCipher.doFinal(message);
 			return EncryptedMessage;
-		} catch(Exception e){
-			
+		} catch (InvalidKeyException | IllegalBlockSizeException
+				| BadPaddingException e) {
+			e.printStackTrace();
 		}
+
 		return EncryptedMessage;
-		
-		
+
 	}
-	
-	public byte[] Decrypt(byte[] message){
+
+	public byte[] Decrypt(byte[] message) {
 		byte[] DecryptedMessage = null;
-		try{
+		try {
 			AESCipher.init(Cipher.DECRYPT_MODE, SecKey);
 			DecryptedMessage = AESCipher.doFinal(message);
 			return DecryptedMessage;
-		} catch(Exception e){
-			
+
+		} catch (InvalidKeyException | IllegalBlockSizeException
+				| BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 		return DecryptedMessage;
-		
-		
+
 	}
-	
-	public SecretKey getKey(){
+
+	public SecretKey getKey() {
 		return SecKey;
 	}
-	
-	public byte[] secretKeyToByte(){
+
+	public byte[] secretKeyToByte() {
 		return SecKey.getEncoded();
 	}
-	
-	public void setKey(byte[] key){
+
+	public void setKey(byte[] key) {
 		SecKey = new SecretKeySpec(key, 0, key.length, "AES");
 	}
 }
