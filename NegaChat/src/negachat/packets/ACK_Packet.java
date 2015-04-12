@@ -18,7 +18,7 @@ public class ACK_Packet extends Packet{
 	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + OPTIONS + HASH;
 
 
-	public ACK_Packet(String source, String destination, int packetToAck) {
+	public ACK_Packet(String source, String destination, int packetToACK) {
 		super(source);
 		this.source = source;
 		this.packetToACK = packetToACK;
@@ -31,16 +31,25 @@ public class ACK_Packet extends Packet{
 		setType(packetArray[0]);
 		byte[] sourceArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH, sourceArray, 0, SOURCE);
-		setSource(new String(sourceArray));
+		String temp = new String(sourceArray);
+		String source = temp.split("=")[0];
+		setSource(source);
+		
 		byte[] destArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH+SOURCE, destArray, 0, DESTINATION);
-		setDestination(new String(destArray));
+		String temp2 = new String(destArray);
+		String destination = temp2.split("=")[0];
+		setDestination(destination);
+		
 		byte[] messageArray = new byte[128];
-		System.arraycopy(packetArray, TYPELENGTH+DESTINATION+SOURCE, messageArray, 0, MESSAGE);
-		setMessage(new String(messageArray));
-		setOptions(packetArray[140]);
+		System.arraycopy(packetArray, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
+		String temp3 = new String(messageArray);
+		String message = temp3.split("=")[0];
+		setMessage(message);
+		
+		setOptions(packetArray[TYPELENGTH + SOURCE + MESSAGE]);
 		byte[] hashArray = new byte[4];
-		System.arraycopy(packetArray, TYPELENGTH+DESTINATION+SOURCE+MESSAGE, hashArray, 0, HASH);
+		System.arraycopy(packetArray, TYPELENGTH + SOURCE + MESSAGE + OPTIONS, hashArray, 0, HASH);
 		setHash(new String(hashArray));
 	}
 	
@@ -54,7 +63,7 @@ public class ACK_Packet extends Packet{
 		dest = getDestination().getBytes();
 		src = getSource().getBytes();
 		msg = getMessage().getBytes(); 
-		opt = (byte) packetToACK;	
+		opt = (byte) packetToACK;
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];

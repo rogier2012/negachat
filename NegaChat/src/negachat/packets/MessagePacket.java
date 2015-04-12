@@ -26,18 +26,27 @@ public class MessagePacket extends Packet {
 	public MessagePacket(byte[] packetArray)	{
 		super(packetArray);
 		setType(packetArray[0]);
-		byte[] sourceArray = null;
+		byte[] sourceArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH, sourceArray, 0, SOURCE);
-		setSource(new String(sourceArray));
-		byte[] destArray = null;
+		String temp = new String(sourceArray);
+		String source = temp.split("=")[0];
+		setSource(source);
+		
+		byte[] destArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH+SOURCE, destArray, 0, DESTINATION);
-		setDestination(new String(destArray));
-		byte[] messageArray = null;
-		System.arraycopy(packetArray, TYPELENGTH+DESTINATION+SOURCE, messageArray, 0, MESSAGE);
-		setMessage(new String(messageArray));
-		setOptions(packetArray[140]);
-		byte[] hashArray = null;
-		System.arraycopy(packetArray, TYPELENGTH+DESTINATION+SOURCE+MESSAGE, hashArray, 0, HASH);
+		String temp2 = new String(destArray);
+		String destination = temp2.split("=")[0];
+		setDestination(destination);
+		
+		byte[] messageArray = new byte[128];
+		System.arraycopy(packetArray, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
+		String temp3 = new String(messageArray);
+		String message = temp3.split("=")[0];
+		setMessage(message);
+		
+		setOptions(packetArray[TYPELENGTH + SOURCE + MESSAGE]);
+		byte[] hashArray = new byte[4];
+		System.arraycopy(packetArray, TYPELENGTH + SOURCE + MESSAGE + OPTIONS, hashArray, 0, HASH);
 		setHash(new String(hashArray));
 	}
 	
@@ -49,7 +58,7 @@ public class MessagePacket extends Packet {
 //		this.setOptions(options);
 //	}
 	
-	
+
 //	10/4 PACKET FORMAT:
 
 	
