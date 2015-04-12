@@ -29,14 +29,14 @@ public class GroupMessagePacket extends Packet{
 	public GroupMessagePacket(byte[] data){
 			super(data);
 			setType(data[0]);
-			byte[] sourceArray = null;
+			byte[] sourceArray = new byte[16];
 			System.arraycopy(data, TYPELENGTH, sourceArray, 0, SOURCE);
 			setSource(new String(sourceArray));
-			byte[] messageArray = null;
+			byte[] messageArray = new byte[128];
 			System.arraycopy(data, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
 			setMessage(new String(messageArray));
 			setOptions(data[TYPELENGTH + SOURCE + MESSAGE]);
-			byte[] hashArray = null;
+			byte[] hashArray = new byte[4];
 			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + OPTIONS, hashArray, 0, HASH);
 			setHash(new String(hashArray));
 	}

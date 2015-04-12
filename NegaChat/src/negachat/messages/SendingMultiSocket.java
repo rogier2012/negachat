@@ -37,6 +37,7 @@ public class SendingMultiSocket {
 			System.out.println("Oops... Something went wrong sending this packet.");
 
 		}
+		System.out.println("Packet sent!");
 	}
 
 }

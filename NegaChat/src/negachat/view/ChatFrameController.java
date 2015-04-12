@@ -47,11 +47,12 @@ public class ChatFrameController implements Observer {
 
 	public void update(Observable obs, Object arg) {
 		if (obs == mfController) {
-			this.sendPacket();
 			cbController.setMessage(mfController.getcbMessage());
+			this.sendPacket();
 		} else if (obs instanceof ReceivingSingleSocket && socket.getRecvPacket().getSource().equals(chatName)) {
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((MessagePacket)socket.getRecvPacket()).getMessage() + "\n");
-		} else if (obs instanceof ReceivingMultiSocket && socket.getRecvPacket().getType() == 5){
+		} else if (obs instanceof ReceivingMultiSocket){
+			System.out.println("iets zeggen, got message. maa rmaakt niet uit");
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((GroupMessagePacket)socket.getRecvPacket()).getMessage() + "\n" );
 		}
 	}

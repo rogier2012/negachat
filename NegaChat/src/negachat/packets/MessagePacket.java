@@ -26,17 +26,17 @@ public class MessagePacket extends Packet {
 	public MessagePacket(byte[] packetArray)	{
 		super(packetArray);
 		setType(packetArray[0]);
-		byte[] destArray = null;
+		byte[] destArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH, destArray, 0, DESTINATION);
 		setDestination(new String(destArray));
-		byte[] sourceArray = null;
+		byte[] sourceArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH+DESTINATION, sourceArray, 0, SOURCE);
 		setSource(new String(sourceArray));
-		byte[] messageArray = null;
+		byte[] messageArray = new byte[128];
 		System.arraycopy(packetArray, TYPELENGTH+DESTINATION+SOURCE, messageArray, 0, MESSAGE);
 		setMessage(new String(messageArray));
 		setOptions(packetArray[140]);
-		byte[] hashArray = null;
+		byte[] hashArray = new byte[4];
 		System.arraycopy(packetArray, TYPELENGTH+DESTINATION+SOURCE+MESSAGE, hashArray, 0, HASH);
 		setHash(new String(hashArray));
 	}

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.UnknownHostException;
 
 import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
@@ -15,8 +14,10 @@ import negachat.packets.AODV.RREQ;
 public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;
 	private MulticastSocket multisocket;
+	private Packet recvPacket;
+
 	
-	public static final int MULTICAST_PORT = 6111;
+	public static final int MULTICAST_PORT = 6112;
 	
 	public ReceivingMultiSocket(RoutingTable table){
 		super(table);
