@@ -8,17 +8,27 @@ import org.junit.Test;
 public class HELLOTest {
 
 	private String source;
-	private String destination;
 	
-	private HELLO packet;
+	private byte identifier;
+	
+	private HELLO packeti;
+	private HELLO packetii;
+	
+	private byte[] byteArray;
 	
 	@Before
 	public void setUp() throws Exception {
+		source = "HENKHENKHENKHENK";
+		identifier = 15;
+		
+		packeti = new HELLO(source, identifier);
+		byteArray = packeti.toByteArray();
+//		packetii = new HELLO(byteArray);
 	}
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		System.out.println(new String(byteArray));
 	}
 
 }
