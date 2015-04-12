@@ -71,10 +71,10 @@ public class MessagePacket extends Packet {
 		bytePacket[0] = type;
 		System.out.println("1: " + new String(bytePacket));
 		
-		System.arraycopy(dest, 0, bytePacket, TYPELENGTH, DESTINATION);
+		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE - 1);
 		System.out.println("2: " + new String(bytePacket));
 
-		System.arraycopy(src, 0, bytePacket, TYPELENGTH + DESTINATION, SOURCE - 1);
+		System.arraycopy(dest, 0, bytePacket, TYPELENGTH + DESTINATION, DESTINATION - 1);
 		System.out.println("3: " + new String(bytePacket));
 
 		System.arraycopy(msg, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE, MESSAGE - 1);
