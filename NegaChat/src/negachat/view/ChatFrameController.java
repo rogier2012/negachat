@@ -58,7 +58,7 @@ public class ChatFrameController implements Observer {
 	
 	private void sendPacket() {
 		Packet toSend;
-		if (chatName.equals("All")) {
+		if (chatName.toLowerCase().equals("all")) {
 			GroupMessagePacket groupMessage = new GroupMessagePacket();
 			groupMessage.setMessage(mfController.getMessage());
 			groupMessage.setSeqNum((byte) counter);
