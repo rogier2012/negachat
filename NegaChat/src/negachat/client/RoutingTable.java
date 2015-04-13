@@ -75,6 +75,7 @@ public class RoutingTable extends Observable {
 	
 	public  void decrementTTL(String destination){
 		int TTL = (int) this.table.get(destination).get(2);
+		TTL--;
 		this.table.get(destination).set(2, TTL);
 	}
 	
