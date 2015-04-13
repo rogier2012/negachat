@@ -41,6 +41,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			try {
 				multisocket.receive(recv);
 				System.out.println("Packet received?");
+				System.out.println("packet type: " + recv.getData()[0]);
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Oops... Something went wrong receiving a packet.");
