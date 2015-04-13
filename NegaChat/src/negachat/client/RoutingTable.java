@@ -8,7 +8,6 @@ public class RoutingTable extends Observable {
 	// Destination  - Next Hop
 	private Map<String, String> table;
 	private String removedDestination;
-	
 	private String addedDestination;
 	
 	public RoutingTable(){
