@@ -1,13 +1,16 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 
 public class Test {
@@ -19,6 +22,18 @@ public class Test {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		NetworkInterface in;
+		try {
+			in = NetworkInterface.getByName("wlan0");
+			Enumeration<InetAddress> hallo = in.getInetAddresses();
+			System.out.println(hallo.nextElement());
+			System.out.println(hallo.nextElement());
+
+
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
