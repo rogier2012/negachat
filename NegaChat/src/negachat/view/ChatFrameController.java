@@ -53,7 +53,8 @@ public class ChatFrameController implements Observer {
 	}
 	
 	private void sendPacket() {
-//		Packet toSend = new MessagePacket();
+		Packet toSend = new Packet();
+		
 		
 		
 		
