@@ -77,7 +77,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			String source = pakket.getSource();
 			
 			if (!table.getTable().containsKey(source))	{
-				// moet nog aangepast worden
+				// TODO moet nog aangepast worden
 				table.addDestination(source, source, 0);
 				try {
 					table.add(source, InetAddress.getByAddress(((HELLO)packet).getMyIP()));
@@ -90,6 +90,8 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			} else {
 				table.getTable().get(source).set(2, table.MAXTTL);
 			}
+			
+			// TODO -- forward HELLO!
 			
 		} else if (packet instanceof RREQ){
 			// Cast to RREQ
