@@ -77,6 +77,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			
 			if (!table.getTable().containsKey(source))	{
 				table.addDestination(source, null, 0);
+				
 			} else {
 				table.getTable().get(source).set(2, table.MAXTTL);
 			}
