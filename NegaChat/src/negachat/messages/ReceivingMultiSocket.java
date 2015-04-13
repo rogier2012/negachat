@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 
 import negachat.client.IPNicknameTable;
@@ -79,7 +80,13 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			if (!table.getTable().containsKey(source))	{
 				// moet nog aangepast worden
 				table.addDestination(source, source, 0);
-//				IPNicknameTable.add(source, ((HELLO)packet));
+				try {
+					IPNicknameTable.add(source, InetAddress.getByAddress(((HELLO)packet).getMyIP()));
+				} catch (UnknownHostException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			} else {
 				table.getTable().get(source).set(2, table.MAXTTL);
 			}

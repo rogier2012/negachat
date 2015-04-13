@@ -63,4 +63,12 @@ public class HELLO extends Packet {
 		SendingMultiSocket sock = new SendingMultiSocket();
 		sock.send(toSend);
 	}
+
+	public byte[] getMyIP() {
+		return myIP;
+	}
+
+	public void setMyIP(byte[] myIP) {
+		this.myIP = myIP;
+	}
 }
