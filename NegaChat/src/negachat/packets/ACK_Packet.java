@@ -1,11 +1,13 @@
 package negachat.packets;
 
+import negachat.view.NegaView;
+
 public class ACK_Packet extends Packet{
 	
 	private int packetToACK;
 	
 	private byte options;
-	private String destination, message, hash;
+	private String source, destination, message, hash;
 	
 	public static final byte TYPE = 0x06;
 	
@@ -18,8 +20,9 @@ public class ACK_Packet extends Packet{
 	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + OPTIONS + HASH;
 
 
-	public ACK_Packet(String source, int packetToACK) {
-		super(source);
+	public ACK_Packet(int packetToACK) {
+		super();
+		source = NegaView.getMyName();
 		this.packetToACK = packetToACK;
 	}
 
@@ -103,13 +106,6 @@ public class ACK_Packet extends Packet{
 		return new String(hash);
 	}
 	
-	
-	
-	
-	
-	
-	
-
 	public int getPacketToACK() {
 		return packetToACK;
 	}

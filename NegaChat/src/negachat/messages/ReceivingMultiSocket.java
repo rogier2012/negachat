@@ -6,7 +6,6 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 import negachat.client.RoutingTable;
-import negachat.packets.CreatePacket;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
 import negachat.packets.AODV.HELLO;
@@ -16,7 +15,6 @@ import negachat.view.NegaView;
 public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;
 	private MulticastSocket multisocket;
-	private CreatePacket creator;
 	
 	public static final int MULTICAST_PORT = 6112;
 	
@@ -30,8 +28,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		creator = new CreatePacket();
-		
 	}
 	
 	public void run() {

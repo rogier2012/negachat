@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import negachat.packets.CreatePacket;
-
 public class MessageFieldController extends Observable implements ActionListener {
 	private MessageField mField;
 	private String cbmessage;
@@ -30,8 +28,6 @@ public class MessageFieldController extends Observable implements ActionListener
 		message = mField.getText();
 		if (!message.equals("")){
 			cbmessage = NegaView.getMyName() + ": " + message + "\n";
-			CreatePacket creator = new CreatePacket();
-			creator.setMessage(mField.getText());
 			setChanged();
 		    notifyObservers();
 		}

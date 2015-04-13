@@ -28,7 +28,7 @@ public class RREQTest {
 		identifier = 29;
 		lifespan = 100;
 		
-		packeti = new RREQ(source, destination, lifespan, identifier);
+		packeti = new RREQ(destination, lifespan, identifier);
 		byteArray = packeti.toByteArray();
 		packetii = new RREQ(byteArray);
 	}

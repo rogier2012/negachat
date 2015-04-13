@@ -43,7 +43,7 @@ public class RREP extends Packet implements DirectPacket {
 	 */
 	
 	public RREP(String destination, String source) {
-		super(source);
+		super();
 		this.setType(TYPE);
 		this.destination = destination;
 		hopcount = 0;
