@@ -79,7 +79,10 @@ public class NegaView {
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		PresenceFlooder flooder = new PresenceFlooder();
 		TableDecay tabledecay = new TableDecay();
-		
+		Thread threadf = new Thread(flooder);
+		threadf.start();
+		Thread threadt = new Thread(tabledecay);
+		threadt.start();
 		
 		RoutingTable routingTable = new RoutingTable();
 		new IPNicknameTable();
@@ -101,7 +104,6 @@ public class NegaView {
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);
 		
-		wioController.addClient("Rogier");
 	}
 	
 	public static String getMyName(){
