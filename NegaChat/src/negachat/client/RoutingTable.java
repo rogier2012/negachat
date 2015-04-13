@@ -8,6 +8,8 @@ import java.util.Observable;
 
 public class RoutingTable extends Observable { 
 
+	public static final int MAXTTL = 50;
+	
 	// nextHop - hopCount
 	// List<Object> hops;
 	// destination - hops
@@ -29,6 +31,7 @@ public class RoutingTable extends Observable {
 		table.put(destination, new ArrayList<Object>());
 		table.get(destination).add(nexthop);
 		table.get(destination).add(hopCount);
+		table.get(destination).add(MAXTTL);	
 		this.setChanged();
 		this.notifyObservers(1);
 	}
