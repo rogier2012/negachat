@@ -51,13 +51,14 @@ public class ChatFrameController implements Observer {
 		} else if (obs instanceof ReceivingSingleSocket && socket.getRecvPacket().getSource().equals(chatName)) {
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((MessagePacket)socket.getRecvPacket()).getMessage() + "\n");
 		} else if (obs instanceof ReceivingMultiSocket){
-			System.out.println("iets zeggen, got message. maa rmaakt niet uit");
+			System.out.println("receivingMultiSocket");
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((GroupMessagePacket)socket.getRecvPacket()).getMessage() + "\n" );
 		}
 	}
 	
 	private void sendPacket() {
 		Packet toSend;
+		System.out.println(chatName);
 		if (chatName.toLowerCase().equals("all")) {
 			GroupMessagePacket groupMessage = new GroupMessagePacket();
 			groupMessage.setMessage(mfController.getMessage());

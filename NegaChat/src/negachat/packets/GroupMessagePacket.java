@@ -48,7 +48,7 @@ public class GroupMessagePacket extends Packet{
 	public byte[] toByteArray() {		
 		byte[] src, msg, hash;
 		byte type, opt;
-		type = getType();
+		type = TYPE;
 		src = this.fillNickname(this.getSource());
 		msg = this.fillMessage(this.getMessage());
 		opt = this.getSeqNum();	
