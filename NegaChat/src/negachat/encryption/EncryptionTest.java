@@ -35,10 +35,7 @@ public class EncryptionTest {
 		
 		System.out.println("Decrypting message 2 with AES implementation");
 		System.out.println(new String(aes.Decrypt(encryptedMessage2)));
+		String hash;
 		
-		
-		
-		
-	
 	}
 }
