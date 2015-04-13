@@ -5,23 +5,25 @@ public class MessagePacket extends Packet implements DirectPacket {
 	public static final byte TYPE = 0;
 
 	// Length of the headers in bytes
+
 	public static final int TYPELENGTH = 1;
 	public static final int DESTINATION = 16;
 	public static final int SOURCE = 16;
 	public static final int MESSAGE = 128;
 	public static final int OPTIONS = 1;
 	public static final int HASH = 4;
-	public static final int TOTAL = TYPELENGTH + DESTINATION + SOURCE + MESSAGE
+
+	public static final int TOTAL = TYPELENGTH + SOURCE + DESTINATION + MESSAGE
 			+ OPTIONS + HASH;
 
-	private byte type, options;
+	private byte options;
 	private String source, destination, message, hash;
 
 	public MessagePacket(String destination, String source) {
 		super(source);
 		this.source = source;
 		this.destination = destination;
-		setType(TYPE);
+		this.destination = destination;
 	}
 
 	public MessagePacket(byte[] packetArray) {
@@ -112,14 +114,6 @@ public class MessagePacket extends Packet implements DirectPacket {
 				(byte) ((hashCode >> 16) & 0xFF),
 				(byte) ((hashCode >> 8) & 0xFF), (byte) (hashCode & 0xFF) };
 		return new String(hash);
-	}
-
-	public byte getType() {
-		return type;
-	}
-
-	public void setType(byte type) {
-		this.type = type;
 	}
 
 	public byte getOptions() {

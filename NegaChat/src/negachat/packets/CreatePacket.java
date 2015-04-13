@@ -9,28 +9,41 @@ import negachat.view.NegaView;
 public class CreatePacket{
 	private String message;
 	private String destination;
-	private String myName = NegaView.getMyName();
+	private String myName;
+	private int seqNumber;
 	
 	public static final int MAX_MESSAGE_LENGTH = 128;
 	public static final int MAX_NAME_LENGTH = 16;
+	
+	public CreatePacket() {
+		seqNumber = 300;
+		myName = NegaView.getMyName(); 
+	}
 
 	public Packet composePacket() {
 		checkLengths();
-		if (destination.equals("all")) {
-			GroupMessagePacket GroupPacket = new GroupMessagePacket(myName);
-			GroupPacket.setMessage(message);
-			GroupPacket.setType((byte) 5);
-			GroupPacket.setOptions((byte) 0);
-			checkLengths();
-			return GroupPacket;
+		if (seqNumber == 300) {
+			ACK_Packet ACK = new ACK_Packet(myName, seqNumber);
+			ACK.setDestination(destination);
+			ACK.setOptions((byte) seqNumber);
+			ACK.setSource(myName);
+			return ACK;
 		} else {
-			MessagePacket MessagePacket = new MessagePacket(destination, myName);
-			MessagePacket.setMessage(message);
-			MessagePacket.setType((byte) 0);
-			MessagePacket.setOptions((byte) 0);
-			return MessagePacket;
+			if (destination.equals("all")) {
+				GroupMessagePacket GroupPacket = new GroupMessagePacket(myName);
+				GroupPacket.setMessage(message);
+				GroupPacket.setOptions((byte) seqNumber);
+				checkLengths();
+				return GroupPacket;
+			} else {
+				MessagePacket MessagePacket = new MessagePacket(destination, myName);
+				MessagePacket.setMessage(message);
+				MessagePacket.setOptions((byte) seqNumber);
+				return MessagePacket;
 			}
+
 		}
+	}
 	
 //	Checken van de lengtes van source, destination en message
 	
@@ -73,5 +86,13 @@ public class CreatePacket{
 	}
 	public String getDestination() { 
 		return destination;
+	}
+
+	public int getSeqNumber() {
+		return seqNumber;
+	}
+
+	public void setSeqNumber(int seqNumber) {
+		this.seqNumber = seqNumber;
 	}
 }
