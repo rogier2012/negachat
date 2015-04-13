@@ -63,7 +63,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 							sendingsocket.send(packet);
 						}
 					} else {
-						lastSeqNumber.put(packet.getSource(), packet.getSeqNum());
+						lastSeqNumber.put(packet.getSource(), (byte) 0);
 						SendingMultiSocket sendingsocket = new SendingMultiSocket();
 						sendingsocket.send(packet);
 					}
