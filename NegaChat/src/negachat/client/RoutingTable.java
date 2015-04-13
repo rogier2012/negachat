@@ -1,26 +1,37 @@
 package negachat.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-public class RoutingTable extends Observable {
-	// Destination  - Next Hop
-	private Map<String, String> table;
-	private String removedDestination;
-	private String addedDestination;
+public class RoutingTable extends Observable { 
+
+	public static final int MAXTTL = 50;
 	
+	// nextHop - hopCount
+	// List<Object> hops;
+	// destination - hops
+	private static Map<String, List<Object>> table;
+	
+	private static String removedDestination;
+	private static String addedDestination;
+
 	public RoutingTable(){
-		table = new HashMap<String, String>();
+		table = new HashMap<String, List<Object>>();
 	}
 	
 	public String getNextHop(String destination){
-		return table.get(destination); 
+		return (String) table.get(destination).get(1); 
 	}
 	
-	public void addDestination(String destination, String nexthop){
+	public void addDestination(String destination, String nexthop, int hopCount){
 		addedDestination = destination;
-		table.put(destination, nexthop);
+		table.put(destination, new ArrayList<Object>());
+		table.get(destination).add(nexthop);
+		table.get(destination).add(hopCount);
+		table.get(destination).add(MAXTTL);	
 		this.setChanged();
 		this.notifyObservers(1);
 	}
@@ -38,6 +49,14 @@ public class RoutingTable extends Observable {
 	
 	public String getRemovedDestination() {
 		return removedDestination;
+	}
+
+	public Map<String, List<Object>> getTable() {
+		return table;
+	}
+
+	public void setTable(Map<String, List<Object>> table) {
+		this.table = table;
 	}
 	
 }

@@ -36,10 +36,6 @@ public abstract class Packet {
 	
 	private byte type;
 	private String source;
-	private String message;
-	private String destination;
-	private String myName;
-	private int seqNumber;
 	
 	/*
 	 * Constructors
@@ -59,7 +55,6 @@ public abstract class Packet {
 	
 	public abstract byte[] toByteArray();
 	
-	@SuppressWarnings("unused")
 	public byte[] fillNickname(String nickname) {
 		String myName = nickname;
 		if (myName.length() < MAX_NAME_LENGTH) {
@@ -72,7 +67,6 @@ public abstract class Packet {
 		return myName.getBytes();
 	}
 	
-	@SuppressWarnings("unused")
 	public byte[] fillMessage(String message) {
 		if (message.length() < MAX_MESSAGE_LENGTH) {
 			int length = message.length();
