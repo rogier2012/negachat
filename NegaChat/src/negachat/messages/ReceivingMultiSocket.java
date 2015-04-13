@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.HashMap;
 
+import negachat.client.IPNicknameTable;
 import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
@@ -76,7 +77,9 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			String source = pakket.getSource();
 			
 			if (!table.getTable().containsKey(source))	{
-				table.addDestination(source, null, 0);
+				// moet nog aangepast worden
+				table.addDestination(source, source, 0);
+//				IPNicknameTable.add(source, ((HELLO)packet));
 			} else {
 				table.getTable().get(source).set(2, table.MAXTTL);
 			}
