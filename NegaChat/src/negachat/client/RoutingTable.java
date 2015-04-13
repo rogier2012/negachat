@@ -33,7 +33,7 @@ public class RoutingTable extends Observable {
 	}
 	
 	public String getNextHop(String destination){
-		return (String) table.get(destination).get(1); 
+		return (String) table.get(destination).get(0); 
 	}
 	
 	public void addDestination(String destination, String nexthop, int hopCount){
