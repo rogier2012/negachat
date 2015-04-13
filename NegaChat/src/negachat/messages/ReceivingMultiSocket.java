@@ -82,8 +82,9 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				try {
 					table.add(source, InetAddress.getByAddress(((HELLO)packet).getMyIP()));
 				} catch (UnknownHostException e) {
+
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+//					e.printStackTrace();
 				}
 				
 			} else {
