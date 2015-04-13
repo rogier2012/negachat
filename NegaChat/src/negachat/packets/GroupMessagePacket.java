@@ -4,12 +4,12 @@ import negachat.view.NegaView;
 
 //10/4 PACKET FORMAT:
 
-//	[type]	[source] 	[message]	[options]	[hash]
-//	1 byte	16 bytes	128 bytes	1 byte		4 bytes
+//	[type]	[source] 	[message]	[sequence number]	[hash]
+//	1 byte	16 bytes	128 bytes	1 byte				4 bytes
 
 public class GroupMessagePacket extends Packet{
 	
-	private byte type, options;
+	private byte seqNum;
 	private String source, message, hash;
 
 
@@ -18,14 +18,13 @@ public class GroupMessagePacket extends Packet{
 	public static final int TYPELENGTH = 1;
 	public static final int SOURCE = 16;
 	public static final int MESSAGE = 128;
-	public static final int OPTIONS = 1;
+	public static final int SEQNUM = 1;
 	public static final int HASH = 4;
-	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + OPTIONS + HASH;
+	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + SEQNUM + HASH;
 	
 	public GroupMessagePacket(){
 		super();
 		source = NegaView.getMyName();
-		type = TYPE;
 	}
 	
 	public GroupMessagePacket(byte[] data) {
@@ -39,9 +38,9 @@ public class GroupMessagePacket extends Packet{
 			System.arraycopy(data, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
 			this.setMessage(this.removePadding(new String(messageArray)));
 			
-			this.setOptions(data[TYPELENGTH + SOURCE + MESSAGE]);
+			this.setSeqNum(data[TYPELENGTH + SOURCE + MESSAGE]);
 			byte[] hashArray = new byte[4];
-			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + OPTIONS, hashArray, 0, HASH);
+			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + SEQNUM, hashArray, 0, HASH);
 			setHash(new String(hashArray));
 	}
 
@@ -52,7 +51,7 @@ public class GroupMessagePacket extends Packet{
 		type = getType();
 		src = this.fillNickname(this.getSource());
 		msg = this.fillMessage(this.getMessage());
-		opt = (byte) 0;	
+		opt = this.getSeqNum();	
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
@@ -60,7 +59,7 @@ public class GroupMessagePacket extends Packet{
 		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE - 1);
 		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+SOURCE, MESSAGE - 1);
 		bytePacket[TOTAL - HASH - 1] = opt;
-		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+OPTIONS, HASH - 1);
+		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+SEQNUM, HASH - 1);
 		
 		System.out.println("GroupMessagePackage bytePacket composed");
 		System.out.println("length: " + bytePacket.length);
@@ -81,21 +80,12 @@ public class GroupMessagePacket extends Packet{
 		return new String(hash);
 	}
 
-	
-	public byte getType() {
-		return type;
+	public byte getSeqNum() {
+		return seqNum;
 	}
 
-	public void setType(byte type) {
-		this.type = type;
-	}
-
-	public byte getOptions() {
-		return options;
-	}
-
-	public void setOptions(byte options) {
-		this.options = options;
+	public void setSeqNum(byte seqnum) {
+		this.seqNum = seqnum;
 	}
 
 	public String getSource() {
