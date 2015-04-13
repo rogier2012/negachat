@@ -62,13 +62,21 @@ public class ChatFrameController implements Observer {
 			GroupMessagePacket groupMessage = new GroupMessagePacket();
 			groupMessage.setMessage(mfController.getMessage());
 			groupMessage.setOptions((byte) counter);
-			counter++;
+			if (counter > 254) {
+				counter = 1;
+			} else {
+				counter++;
+			}
 			toSend = groupMessage;
 		} else {
 			MessagePacket message = new MessagePacket(chatName);
 			message.setMessage(mfController.getMessage());
 			message.setOptions((byte) counter);
-			counter++;
+			if (counter > 254) {
+				counter = 1;
+			} else {
+				counter++;
+			}
 			toSend = message;
 		}
 		SendingMultiSocket sendingsocket = new SendingMultiSocket();
