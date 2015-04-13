@@ -16,7 +16,6 @@ import negachat.view.NegaView;
 public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;
 	private MulticastSocket multisocket;
-	private int receivedSeq;
 	
 	private HashMap<String, Byte> lastSeqNumber = new HashMap<String, Byte>();
 	
@@ -24,7 +23,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	
 	public ReceivingMultiSocket(RoutingTable table){
 		super(table);
-		receivedSeq = 0;
 		try {
 			multisocket = new MulticastSocket(MULTICAST_PORT);
 			group = InetAddress.getByName("228.5.6.7");
