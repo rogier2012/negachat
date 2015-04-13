@@ -55,11 +55,11 @@ public class RREQ extends Packet {
 		
 		byte[] temp = new byte[SOURCELENGTH];
 		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, SOURCELENGTH);
-		this.setSource(new String(temp));
+		this.setSource(this.removePadding(new String(temp)));
 		
 		temp = new byte[DESTINATIONINDEX];
 		System.arraycopy(byteArray, DESTINATIONINDEX, temp, 0, DESTINATIONLENGTH);
-		this.setDestination(new String(temp));
+		this.setDestination(this.removePadding(new String(temp)));
 		
 		this.lifeSpan = byteArray[LIFESPANINDEX];
 		this.identifier = byteArray[IDENTIFIERINDEX];
