@@ -80,7 +80,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 		dest = getDestination().getBytes();
 		src = getSource().getBytes();
 		msg = getMessage().getBytes();
-		opt = (byte) 0;
+		opt = getOptions();
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];

@@ -6,6 +6,7 @@ import java.util.Observer;
 import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
 import negachat.messages.ReceivingSocket;
+import negachat.messages.SendingMultiSocket;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.MessagePacket;
 import negachat.packets.Packet;
@@ -26,10 +27,13 @@ public class ChatFrameController implements Observer {
 
 	private ReceivingSocket socket;
 	
+	private int counter;
+	
 	public ChatFrameController(ChatFrame cFrame, String chatName,ReceivingSocket socket) {
 		this.cFrame = cFrame;
 		this.chatName = chatName;
 		this.socket = socket;
+		counter = 1;
 		initialize();
 	}
 
@@ -53,17 +57,24 @@ public class ChatFrameController implements Observer {
 	}
 	
 	private void sendPacket() {
-		Packet toSend = new Packet();
-		
-		
-		
-		
-//		creator.setDestination(chatName);
-//		creator.setMessage(mfController.getMessage());
-//		Packet toSend = new Packet();
-//		System.out.println(new String(toSend.toByteArray()));
-//		SendingMultiSocket sendingsocket = new SendingMultiSocket();
-//		sendingsocket.send(toSend);
+		Packet toSend;
+		if (chatName.equals("All")) {
+			GroupMessagePacket groupMessage = new GroupMessagePacket();
+			groupMessage.setMessage(mfController.getMessage());
+			groupMessage.setOptions((byte) counter);
+			counter++;
+			toSend = groupMessage;
+		} else {
+			MessagePacket message = new MessagePacket(chatName);
+			message.setMessage(mfController.getMessage());
+			message.setOptions((byte) counter);
+			counter++;
+			toSend = message;
+		}
+		SendingMultiSocket sendingsocket = new SendingMultiSocket();
+		sendingsocket.send(toSend);
+		System.out.println(new String(toSend.toByteArray()));
+
 	}
 
 	public String getChatName(){

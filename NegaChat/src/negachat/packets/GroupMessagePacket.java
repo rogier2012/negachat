@@ -25,7 +25,7 @@ public class GroupMessagePacket extends Packet{
 	public GroupMessagePacket(){
 		super();
 		source = NegaView.getMyName();
-		setType(TYPE);
+		type = TYPE;
 	}
 	
 	public GroupMessagePacket(byte[] data) {
@@ -56,7 +56,7 @@ public class GroupMessagePacket extends Packet{
 		type = getType();
 		src = getSource().getBytes();
 		msg = getMessage().getBytes(); 
-		opt = (byte) 0;	
+		opt = getOptions();
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
