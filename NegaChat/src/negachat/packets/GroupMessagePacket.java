@@ -30,20 +30,16 @@ public class GroupMessagePacket extends Packet{
 	
 	public GroupMessagePacket(byte[] data) {
 			super(data);
-			setType(data[0]);
+			this.setType(data[0]);
 			byte[] sourceArray = new byte[16];
 			System.arraycopy(data, TYPELENGTH, sourceArray, 0, SOURCE);
-			String temp = new String(sourceArray);
-			String source = temp.split("=")[0];
-			setSource(source);
+			this.setSource(this.removePadding(new String(sourceArray)));
 			
 			byte[] messageArray = new byte[128];
 			System.arraycopy(data, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
-			String temp2 = new String(messageArray);
-			String message = temp2.split("=")[0];
-			setMessage(message);
+			this.setMessage(this.removePadding(new String(messageArray)));
 			
-			setOptions(data[TYPELENGTH + SOURCE + MESSAGE]);
+			this.setOptions(data[TYPELENGTH + SOURCE + MESSAGE]);
 			byte[] hashArray = new byte[4];
 			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + OPTIONS, hashArray, 0, HASH);
 			setHash(new String(hashArray));

@@ -77,6 +77,11 @@ public abstract class Packet {
 		}
 		return message.getBytes();
 	}
+	
+	
+	public String removePadding(String paddedString){
+		return (paddedString.split("==")[0]);
+	}
 		
 //		if (message.length() < MAX_MESSAGE_LENGTH) {
 //			int length = message.length();

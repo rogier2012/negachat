@@ -28,7 +28,7 @@ public class MessageField extends JPanel {
 		setLayout(gridBagLayout);
 		
 		textField = new JTextField();
-		textField.setDocument(new MyTextFieldLimit(128));
+		textField.setDocument(new MyTextFieldLimit(126));
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.BOTH;
 		gbc_textField.insets = new Insets(0, 0, 0, 5);

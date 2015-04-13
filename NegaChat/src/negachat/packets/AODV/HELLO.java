@@ -30,7 +30,7 @@ public class HELLO extends Packet {
 		this.setType(TYPE);
 		byte[] temp = new byte[SOURCELENGTH];
 		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, SOURCELENGTH);
-		this.setSource(new String(temp));
+		this.setSource(this.removePadding(new String(temp)));
 	}
 	
 	/*

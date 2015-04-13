@@ -53,11 +53,13 @@ public class NegaView {
 	public NegaView() {
 		myName = JOptionPane.showInputDialog(frame,"What is your nickname? Max. 16 characters", null);
 		if (myName != null){
-			while (myName.length() > 16|| myName.length() < 4){
+			while (myName.length() > 14|| myName.length() < 4){
 				if(myName.length() < 4){
 					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
+				} else{
+					myName = JOptionPane.showInputDialog(frame,"Please don't use more than 14 characters", null);
 				}
-				myName = JOptionPane.showInputDialog(frame,"Please don't use more than 16 characters", null);
+				
 			} 
 			initialize();
 		}

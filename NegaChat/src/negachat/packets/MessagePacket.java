@@ -30,28 +30,22 @@ public class MessagePacket extends Packet implements DirectPacket {
 
 	public MessagePacket(byte[] packetArray) {
 		super(packetArray);
-		setType(packetArray[0]);
+		this.setType(packetArray[0]);
 		byte[] sourceArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH, sourceArray, 0, SOURCE);
-		String temp = new String(sourceArray);
-		String source = temp.split("=")[0];
-		setSource(source);
+		this.setSource(this.removePadding(new String(sourceArray)));
 
 		byte[] destArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH + SOURCE, destArray, 0,
 				DESTINATION);
-		String temp2 = new String(destArray);
-		String destination = temp2.split("=")[0];
-		setDestination(destination);
+		this.setDestination(this.removePadding(new String(destArray)));
 
 		byte[] messageArray = new byte[128];
 		System.arraycopy(packetArray, TYPELENGTH + SOURCE, messageArray, 0,
 				MESSAGE);
-		String temp3 = new String(messageArray);
-		String message = temp3.split("=")[0];
-		setMessage(message);
+		this.setMessage(this.removePadding(new String(messageArray)));
 
-		setOptions(packetArray[TYPELENGTH + SOURCE + MESSAGE]);
+		this.setOptions(packetArray[TYPELENGTH + + DESTINATION +SOURCE + MESSAGE]);
 		byte[] hashArray = new byte[4];
 		System.arraycopy(packetArray, TYPELENGTH + SOURCE + MESSAGE + OPTIONS,
 				hashArray, 0, HASH);
