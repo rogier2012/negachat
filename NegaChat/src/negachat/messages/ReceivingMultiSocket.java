@@ -15,6 +15,7 @@ import negachat.view.NegaView;
 public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;
 	private MulticastSocket multisocket;
+	private int receivedSeq;
 	
 	public static final int MULTICAST_PORT = 6112;
 	
@@ -51,6 +52,12 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
 				if(!packet.getSource().equals(NegaView.getMyName())) {
+					
+					int seq = (int) packet.getOptions();
+					
+					
+					
+					
 					SendingMultiSocket sendingsocket = new SendingMultiSocket();
 					sendingsocket.send(packet);
 				}
