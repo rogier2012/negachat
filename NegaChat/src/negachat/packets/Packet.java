@@ -60,7 +60,7 @@ public abstract class Packet {
 	public abstract byte[] toByteArray();
 	
 	@SuppressWarnings("unused")
-	private byte[] fillNickname(String nickname) {
+	public byte[] fillNickname(String nickname) {
 		String myName = nickname;
 		if (myName.length() < MAX_NAME_LENGTH) {
 			int length = myName.length();
@@ -73,7 +73,7 @@ public abstract class Packet {
 	}
 	
 	@SuppressWarnings("unused")
-	private byte[] fillMessage(String message) {
+	public byte[] fillMessage(String message) {
 		if (message.length() < MAX_MESSAGE_LENGTH) {
 			int length = message.length();
 			int todo = MAX_MESSAGE_LENGTH - length;
