@@ -71,7 +71,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	}
 
 	public void handlePacket(Packet packet) {
-		RoutingTable table = new RoutingTable();
 		if (packet instanceof HELLO){
 			HELLO pakket = (HELLO) packet;
 			String source = pakket.getSource();
@@ -93,7 +92,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			
 			if (NegaView.getMyName() == destination)	{
 				if (table.getTable().containsKey(destination) && table.getTable().get(destination).get(0) != null)	{
-					SendingSingleSocket sendSocket = new SendingSingleSocket(new RoutingTable());
+					SendingSingleSocket sendSocket = new SendingSingleSocket(table);
 					sendSocket.sendPacket(new RREP(source, destination));
 				}
 			} else {
