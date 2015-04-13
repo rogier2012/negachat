@@ -58,15 +58,15 @@ public class RREP extends Packet implements DirectPacket {
 		
 		byte[] temp = new byte[SOURCELENGTH];
 		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, SOURCELENGTH);
-		this.setSource(new String(temp));
+		this.setSource(this.removePadding(new String(temp)));
 		
 		temp = new byte[DESTINATIONLENGTH]; 
 		System.arraycopy(byteArray, DESTINATIONINDEX, temp, 0, DESTINATIONLENGTH);
-		this.setDestination(new String(temp));
+		this.setDestination(this.removePadding(new String(temp)));
 		this.setHopcount(byteArray[HOPCOUNTINDEX]);
 		temp = new byte[LASTSOURCELENGTH]; 
 		System.arraycopy(byteArray, LASTSOURCEINDEX, temp, 0, LASTSOURCELENGTH);
-		this.setLastSource(new String(temp));
+		this.setLastSource(this.removePadding(new String(temp)));
 	}
 	
 	/*
