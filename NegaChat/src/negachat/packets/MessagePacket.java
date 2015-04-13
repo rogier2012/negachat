@@ -18,7 +18,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 	public static final int TOTAL = TYPELENGTH + SOURCE + DESTINATION + MESSAGE
 			+ OPTIONS + HASH;
 
-	private byte options;
+	private byte seqnum;
 	private String source, destination, message, hash;
 
 	public MessagePacket(String destination) {
@@ -45,7 +45,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 				MESSAGE);
 		this.setMessage(this.removePadding(new String(messageArray)));
 
-		this.setOptions(packetArray[TYPELENGTH + + DESTINATION +SOURCE + MESSAGE]);
+		this.setSeqNum(packetArray[TYPELENGTH + + DESTINATION +SOURCE + MESSAGE]);
 		byte[] hashArray = new byte[4];
 		System.arraycopy(packetArray, TYPELENGTH + SOURCE + MESSAGE + OPTIONS,
 				hashArray, 0, HASH);
@@ -74,7 +74,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 		dest = this.fillNickname(getDestination());
 		src = this.fillNickname(this.getSource());
 		msg = this.fillMessage(this.getMessage());
-		opt = this.getOptions();
+		opt = this.getSeqNum();
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
@@ -106,12 +106,12 @@ public class MessagePacket extends Packet implements DirectPacket {
 		return new String(hash);
 	}
 
-	public byte getOptions() {
-		return options;
+	public byte getSeqNum() {
+		return seqnum;
 	}
 
-	public void setOptions(byte options) {
-		this.options = options;
+	public void setSeqNum(byte seqnum) {
+		this.seqnum = seqnum;
 	}
 
 	public String getSource() {

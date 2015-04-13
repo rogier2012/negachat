@@ -78,7 +78,7 @@ public class NegaView {
 		
 		RoutingTable routingTable = new RoutingTable();
 		new IPNicknameTable();
-		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(myName, routingTable);
+		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(routingTable);
 		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket(routingTable);
 		Thread threadrs = new Thread(rssocket);
 		Thread threadrm = new Thread(rmsocket);
