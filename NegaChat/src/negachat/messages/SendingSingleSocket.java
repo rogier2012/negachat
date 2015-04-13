@@ -5,7 +5,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import negachat.client.IPNicknameTable;
 import negachat.client.RoutingTable;
 import negachat.packets.DirectPacket;
 import negachat.packets.AODV.RREQ;
@@ -42,7 +41,7 @@ public class SendingSingleSocket {
 				}
 			}
 			
-			address = IPNicknameTable.getIP(table.getNextHop(packet.getDestination()));
+			address = table.getIP(table.getNextHop(packet.getDestination()));
 			sendingSocket = new DatagramSocket(UDP_PORT);
 		} catch (IOException e) {
 			System.out.println("Couldn't connect to port " + UDP_PORT);

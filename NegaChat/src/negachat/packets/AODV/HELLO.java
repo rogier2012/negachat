@@ -1,8 +1,6 @@
 package negachat.packets.AODV;
 
-import java.net.UnknownHostException;
-
-import negachat.client.IPNicknameTable;
+import negachat.client.RoutingTable;
 import negachat.messages.SendingMultiSocket;
 import negachat.packets.Packet;
 
@@ -25,8 +23,8 @@ public class HELLO extends Packet {
 	
 	private byte[] myIP;
 	
-	public HELLO(String source) {
-		this.myIP = IPNicknameTable.getMyIP();
+	public HELLO(String source, RoutingTable table) {
+		this.myIP = table.getMyIP();
 		this.setType(TYPE);
 	}
 	

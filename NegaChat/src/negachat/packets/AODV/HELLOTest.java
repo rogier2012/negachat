@@ -15,7 +15,7 @@ public class HELLOTest {
 	
 	@Before
 	public void setUp() throws Exception { 
-		packeti = new HELLO(source);
+//		packeti = new HELLO(source);
 		packeti.setSource("HENKHENKHENK");
 		byteArray = packeti.toByteArray();
 		packetii = new HELLO(byteArray);

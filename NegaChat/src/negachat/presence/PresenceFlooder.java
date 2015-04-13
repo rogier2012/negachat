@@ -1,14 +1,15 @@
 package negachat.presence;
 
+import negachat.client.RoutingTable;
 import negachat.packets.AODV.HELLO;
 import negachat.view.NegaView;
 
 public class PresenceFlooder implements Runnable {
-	
+	private RoutingTable table;
 	public static final int DELAY = 5000;
 
-	public PresenceFlooder(){
-		
+	public PresenceFlooder(RoutingTable table){
+		this.table = table;
 	}
 	
 	@Override
@@ -20,7 +21,7 @@ public class PresenceFlooder implements Runnable {
 				e.printStackTrace();
 			}
 			
-			HELLO hello = new HELLO(NegaView.getMyName());
+			HELLO hello = new HELLO(NegaView.getMyName(),table);
 			hello.send(hello);
 			System.out.println("\nHELLO sent!");
 		} while (true);

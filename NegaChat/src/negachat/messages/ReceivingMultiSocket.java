@@ -7,11 +7,10 @@ import java.net.MulticastSocket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
-import negachat.client.IPNicknameTable;
 import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
-import negachat.packets.AODV.HELLO; 
+import negachat.packets.AODV.HELLO;
 import negachat.packets.AODV.RREP;
 import negachat.packets.AODV.RREQ;
 import negachat.view.NegaView;
@@ -81,10 +80,11 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				// moet nog aangepast worden
 				table.addDestination(source, source, 0);
 				try {
-					IPNicknameTable.add(source, InetAddress.getByAddress(((HELLO)packet).getMyIP()));
+					table.add(source, InetAddress.getByAddress(((HELLO)packet).getMyIP()));
 				} catch (UnknownHostException e) {
+
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+//					e.printStackTrace();
 				}
 				
 			} else {
