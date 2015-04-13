@@ -34,7 +34,7 @@ public class SendingSingleSocket {
 					sendSocket.send(new RREQ(packet.getDestination(), lifeSpan, identifier));
 					
 					lifeSpan++;
-					try {
+					try { 
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
 						e.printStackTrace();

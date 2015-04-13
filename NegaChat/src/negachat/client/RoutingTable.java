@@ -12,7 +12,7 @@ public class RoutingTable extends Observable {
 	public static final int MAXTTL = 20;
 	
 	// nextHop - hopCount
-	// List<Object> hops;
+	// List<Object> hops; 
 	// destination - hops
 	private static Map<String, List<Object>> table;
 	
