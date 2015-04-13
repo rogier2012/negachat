@@ -80,7 +80,7 @@ public class NegaView {
 		new IPNicknameTable();
 		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(routingTable);
 		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket(routingTable);
-		Thread threadrs = new Thread(rssocket);
+//		Thread threadrs = new Thread(rssocket);
 		Thread threadrm = new Thread(rmsocket);
 //		threadrs.start();
 		threadrm.start();
@@ -95,6 +95,8 @@ public class NegaView {
 		tabbedPane.add(WHO_IS_ONLINE, online);
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);
+		
+		wioController.addClient("Rogier");
 	}
 	
 	public static String getMyName(){
