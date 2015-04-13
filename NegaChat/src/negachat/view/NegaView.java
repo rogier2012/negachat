@@ -87,9 +87,9 @@ public class NegaView {
 		
 		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(routingTable);
 		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket(routingTable);
-//		Thread threadrs = new Thread(rssocket);
+		Thread threadrs = new Thread(rssocket);
 		Thread threadrm = new Thread(rmsocket);
-//		threadrs.start();
+		threadrs.start();
 		threadrm.start();
 		online = new WhoIsOnline();
 		ClientHandler handler = new ClientHandler(tabbedPane, rssocket, routingTable);

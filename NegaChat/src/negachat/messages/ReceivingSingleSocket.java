@@ -25,7 +25,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 		super(table);
 		this.myName = NegaView.getMyName();
 		try {
-			clientsocket = new DatagramSocket(UDP_PORT, InetAddress.getLocalHost());
+			clientsocket = new DatagramSocket(UDP_PORT, InetAddress.getByAddress(table.getMyIP()));
 		} catch (SocketException | UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,6 +47,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			if (recv.getData()[0] == MessagePacket.TYPE) {
 				MessagePacket packet = new MessagePacket(recv.getData());
 				handlePacket(packet);
+				System.out.println("receive");
 			} else if (recv.getData()[0] == RREP.TYPE) {
 				RREP packet = new RREP(recv.getData());
 				if (packet.getDestination().equals(NegaView.getMyName())){
@@ -68,12 +69,12 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 	public void handlePacket(Packet packet) {
 		if (packet instanceof MessagePacket) {
 			if (myName.equals(((MessagePacket) packet).getDestination())){
-				if (((MessagePacket) packet).makeHash() == ((MessagePacket) packet).getHash()) {
+//				if (((MessagePacket) packet).makeHash() == ((MessagePacket) packet).getHash()) {
 					setTimestamp(System.currentTimeMillis());
 					recvPacket = packet;
 					setChanged();
 					notifyObservers();
-				}
+//				}
 			} else if (true){
 				
 			}
