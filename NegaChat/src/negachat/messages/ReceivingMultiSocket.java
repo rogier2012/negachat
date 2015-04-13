@@ -53,7 +53,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				handlePacket(packet);
 				if(!packet.getSource().equals(NegaView.getMyName())) {
 					
-					int seq = (int) packet.getOptions();
+					int seq = (int) packet.getSeqNum();
 					
 					
 					
