@@ -67,7 +67,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				}
 			}
 			
-		} while (true);
+		} while (1 < 2);
 	}
 
 	public void handlePacket(Packet packet) {
