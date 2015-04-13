@@ -13,13 +13,16 @@ public class PresenceFlooder implements Runnable {
 	
 	@Override
 	public void run() {
-		try {
-			Thread.sleep(DELAY);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		HELLO hello = new HELLO(NegaView.getMyName());
-		hello.send(hello);
+		do {
+			try {
+				Thread.sleep(DELAY);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			HELLO hello = new HELLO(NegaView.getMyName());
+			hello.send(hello);
+			System.out.println("\nHELLO sent!");
+		} while (true);
 	}
 }
