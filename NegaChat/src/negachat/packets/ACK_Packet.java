@@ -92,6 +92,8 @@ public class ACK_Packet extends Packet{
 	
 	
 	public String makeHash() {
+		hash = "";
+		
 		int hashCode = this.hashCode();
 		byte[] hash = new byte[]{
 				(byte) ((hashCode >> 24) & 0xFF),

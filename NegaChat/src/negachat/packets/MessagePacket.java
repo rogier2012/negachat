@@ -109,6 +109,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 	}
 
 	public String makeHash() {
+		hash = "";
 		int hashCode = this.hashCode();
 		byte[] hash = new byte[] { (byte) ((hashCode >> 24) & 0xFF),
 				(byte) ((hashCode >> 16) & 0xFF),
