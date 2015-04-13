@@ -54,8 +54,9 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			} else if (recv.getData()[0] == GroupMessagePacket.TYPE) {
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
-				if(packet.getSource().equals(NegaView.getMyName())){
-					
+				if(!packet.getSource().equals(NegaView.getMyName())){
+					SendingMultiSocket sendingsocket = new SendingMultiSocket();
+					sendingsocket.send(packet);
 				}
 				
 			}
@@ -75,7 +76,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				this.setChanged();
 				this.notifyObservers();
 
-				//stuur door naar neighbours
 //			}
 		}
 	}
