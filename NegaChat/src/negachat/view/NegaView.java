@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import negachat.client.ClientHandler;
-import negachat.client.IPNicknameTable;
 import negachat.client.OnlineClients;
 import negachat.client.RoutingTable;
 import negachat.messages.ReceivingMultiSocket;
@@ -78,7 +77,7 @@ public class NegaView {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		RoutingTable routingTable = new RoutingTable();
-		PresenceFlooder flooder = new PresenceFlooder();
+		PresenceFlooder flooder = new PresenceFlooder(routingTable);
 		TableDecay tabledecay = new TableDecay(routingTable);
 		Thread threadf = new Thread(flooder);
 		threadf.start();
@@ -86,7 +85,6 @@ public class NegaView {
 		threadt.start();
 		
 		
-		new IPNicknameTable();
 		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(routingTable);
 		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket(routingTable);
 //		Thread threadrs = new Thread(rssocket);

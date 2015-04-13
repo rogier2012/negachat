@@ -1,6 +1,10 @@
 package negachat.client;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +19,7 @@ public class RoutingTable extends Observable {
 	// List<Object> hops; 
 	// destination - hops
 	private  Map<String, List<Object>> table;
+	private Map<String, InetAddress> iptable;
 	
 	private  String removedDestination;
 	private  String addedDestination;
@@ -90,6 +95,37 @@ public class RoutingTable extends Observable {
 
 	public void setRequestedDestinations(List<String> requestedDestinations) {
 		this.requestedDestinations = requestedDestinations;
+	}
+	
+	public  byte[] getMyIP()	{
+		NetworkInterface in;
+		Enumeration<InetAddress> hallo = null;
+		try {
+			in = NetworkInterface.getByName("wlan0");
+			hallo = in.getInetAddresses();
+			hallo.nextElement();
+		} catch	(SocketException e){
+			e.printStackTrace();
+		}
+		return hallo.nextElement().getAddress();
+	}
+	
+	
+	
+	public  InetAddress getIP(String nickName) {
+		return iptable.get(nickName);
+	}
+
+	public boolean contains(String nickName) {
+		return iptable.containsKey(nickName);
+	}
+	
+	public Map<String, InetAddress> getIPTable() {
+		return iptable;
+	}
+	
+	public void add(String nickName, InetAddress IP) {
+		iptable.put(nickName, IP);
 	}
 	
 }
