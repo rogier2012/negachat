@@ -9,6 +9,7 @@ import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
 import negachat.packets.AODV.HELLO;
+import negachat.packets.AODV.RREP;
 import negachat.packets.AODV.RREQ;
 import negachat.view.NegaView;
 
@@ -70,19 +71,11 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				table.addDestination(source, null, 0);
 			} else {
 				table.getTable().get(source).set(2, RoutingTable.MAXTTL);
-				
 			}
-			
-			
-			
-			
 			
 		} else if (packet instanceof RREQ){
 			// Cast to RREQ
 			RREQ pakket = (RREQ) packet;
-			
-			byte lifeSpan = pakket.getLifeSpan();
-			byte identifier = pakket.getIdentifier();
 			
 			String source = pakket.getSource();
 			String destination = pakket.getDestination();
@@ -91,10 +84,12 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			
 			if (NegaView.getMyName() == destination)	{
 				if (table.getTable().containsKey(destination) && table.getTable().get(destination).get(0) != null)	{
-					// TODO -- send RREP
+					SendingSingleSocket sendSocket = new SendingSingleSocket(new RoutingTable());
+					sendSocket.sendPacket(new RREP(source, destination));
 				}
 			} else {
-				// TODO -- forward RREQ
+				SendingMultiSocket sendSocket = new SendingMultiSocket();
+				sendSocket.send(new RREQ(destination, (byte)(pakket.getLifeSpan() - 1), pakket.getIdentifier()));
 			}
 			
 			 

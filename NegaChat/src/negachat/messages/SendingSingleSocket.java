@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import negachat.client.IPNicknameTable;
 import negachat.client.RoutingTable;
 import negachat.packets.DirectPacket;
+import negachat.packets.AODV.RREQ;
 
 public class SendingSingleSocket {
 	private DatagramSocket sendingSocket;
@@ -23,6 +24,24 @@ public class SendingSingleSocket {
 
 	public void sendPacket(DirectPacket packet) {
 		try {
+			
+			if (!table.getTable().containsKey(packet.getDestination()) || table.getTable().get(packet.getDestination()).get(0) == null)	{
+				byte identifier = (byte) RoutingTable.randInt(0, 127);
+				table.getRequestedDestinations().add(packet.getDestination());
+				byte lifeSpan = 50;
+				while (!table.getTable().containsKey(packet.getDestination()) || table.getTable().get(packet.getDestination()).get(0) == null){
+					SendingMultiSocket sendSocket = new SendingMultiSocket();
+					sendSocket.send(new RREQ(packet.getDestination(), lifeSpan, identifier));
+					
+					lifeSpan++;
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
 			address = InetAddress.getByName(IPNicknameTable.getIP(table.getNextHop(packet.getDestination())));
 			sendingSocket = new DatagramSocket(UDP_PORT, address);
 		} catch (IOException e) {
