@@ -70,7 +70,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 
 		byte[] dest, src, msg, hash;
 		byte type, opt;
-		type = getType();
+		type = TYPE;
 		dest = this.fillNickname(getDestination());
 		src = this.fillNickname(this.getSource());
 		msg = this.fillMessage(this.getMessage());
