@@ -77,34 +77,27 @@ public class MessagePacket extends Packet implements DirectPacket {
 		byte[] dest, src, msg, hash;
 		byte type, opt;
 		type = getType();
-		dest = getDestination().getBytes();
-		src = getSource().getBytes();
-		msg = getMessage().getBytes();
-		opt = (byte) 0;
+		dest = this.fillNickname(getDestination());
+		src = this.fillNickname(this.getSource());
+		msg = this.fillMessage(this.getMessage());
+		opt = this.getOptions();
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
 		bytePacket[0] = type;
-		System.out.println("1: " + new String(bytePacket));
 
-		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE - 1);
-		System.out.println("2: " + new String(bytePacket));
+		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE);
 
-		System.arraycopy(dest, 0, bytePacket, TYPELENGTH + DESTINATION,
-				DESTINATION - 1);
-		System.out.println("3: " + new String(bytePacket));
+		System.arraycopy(dest, 0, bytePacket, TYPELENGTH + SOURCE, DESTINATION);
 
 		System.arraycopy(msg, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE,
-				MESSAGE - 1);
-		System.out.println("4: " + new String(bytePacket));
+				MESSAGE);
 
-		bytePacket[TOTAL - HASH - 1] = opt;
+		bytePacket[TYPELENGTH + DESTINATION + SOURCE + MESSAGE] = opt;
 
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE
-				+ MESSAGE + OPTIONS, HASH - 1);
-		System.out.println("5: " + new String(bytePacket));
+				+ MESSAGE + OPTIONS, HASH);
 
-		System.out.println("MessagePackage bytePacket composed");
 		System.out.println("length: " + bytePacket.length);
 		System.out.println("bytePacket string: " + new String(bytePacket));
 		return bytePacket;
