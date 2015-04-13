@@ -9,7 +9,6 @@ public class HELLOTest {
 
 	private String source;
 	
-	private byte identifier;
 	
 	private HELLO packeti;
 	private HELLO packetii;
@@ -18,9 +17,8 @@ public class HELLOTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		source = "HENKHENKHENKHENK";
-		identifier = 15;
-		packeti = new HELLO(source, identifier);
+		source = "HENKHENKHENKHENK & RON!";
+		packeti = new HELLO(source);
 		byteArray = packeti.toByteArray();
 		packetii = new HELLO(byteArray);
 	}
@@ -30,11 +28,7 @@ public class HELLOTest {
 		System.out.println(new String(byteArray));
 		System.out.println(byteArray[0]);
 		System.out.println(byteArray[17]);
-		System.out.println(byteArray[18]);
-		System.out.println();
 		System.out.println(packetii.getSource());
-		System.out.println(packetii.getHopCount());
-		System.out.println(packetii.getIdentifier());
 		
 	}
 
