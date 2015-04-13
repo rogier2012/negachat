@@ -63,7 +63,15 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			
 		} else if (packet instanceof RREP){
 			
+			
+			
+			
 		} else if (packet instanceof RERR){
+			
+			
+			
+			
+			
 			
 		}
 	}

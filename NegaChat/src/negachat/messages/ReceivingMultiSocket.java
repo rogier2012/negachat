@@ -10,6 +10,7 @@ import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
 import negachat.packets.AODV.HELLO;
 import negachat.packets.AODV.RREQ;
+import negachat.view.NegaView;
 
 public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;
@@ -57,9 +58,40 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	}
 
 	public void handlePacket(Packet packet) {
+		RoutingTable table = new RoutingTable();
 		if (packet instanceof HELLO){
+			HELLO pakket = (HELLO) packet;
+			String source = pakket.getSource();
+			
+			if (!table.getTable().containsKey(source))	{
+				table.addDestination(source, null, 0);
+			}
+			
+			
+			
+			
 			
 		} else if (packet instanceof RREQ){
+			// Cast to RREQ
+			RREQ pakket = (RREQ) packet;
+			
+			byte lifeSpan = pakket.getLifeSpan();
+			byte identifier = pakket.getIdentifier();
+			
+			String source = pakket.getSource();
+			String destination = pakket.getDestination();
+			
+			// TODO -- UPDATE ROUTES
+			
+			if (NegaView.getMyName() == destination)	{
+				if (table.getTable().containsKey(destination) && table.getTable().get(destination).get(0) != null)	{
+					// TODO -- send RREP
+				}
+			} else {
+				// TODO -- forward RREQ
+			}
+			
+			
 			
 		} else if (packet instanceof GroupMessagePacket){
 //			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
@@ -67,7 +99,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				this.setRecvPacket(packet);
 				this.setChanged();
 				this.notifyObservers();
-
 				//stuur door naar neighbours
 //			}
 		}
