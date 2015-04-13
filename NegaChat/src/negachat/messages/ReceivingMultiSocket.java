@@ -70,12 +70,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				table.addDestination(source, null, 0);
 			} else {
 				table.getTable().get(source).set(2, RoutingTable.MAXTTL);
-				
-			}
-			
-			
-			
-			
+			}	
 			
 		} else if (packet instanceof RREQ){
 			// Cast to RREQ
