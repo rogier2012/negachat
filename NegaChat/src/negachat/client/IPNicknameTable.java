@@ -11,7 +11,7 @@ public class IPNicknameTable {
 	
 //	Format Map<String NickName, String IP>
 	
-	private static Map<String, String> table;
+	private static Map<String, InetAddress> table;
 	
 
 	
@@ -30,7 +30,7 @@ public class IPNicknameTable {
 	
 	
 	
-	public static String getIP(String nickName) {
+	public static InetAddress getIP(String nickName) {
 		return table.get(nickName);
 	}
 
@@ -38,11 +38,11 @@ public class IPNicknameTable {
 		return table.containsKey(nickName);
 	}
 	
-	public Map<String, String> getTable() {
+	public Map<String, InetAddress> getTable() {
 		return table;
 	}
 	
-	public static void add(String nickName, String IP) {
+	public static void add(String nickName, InetAddress IP) {
 		table.put(nickName, IP);
 	}
 	
