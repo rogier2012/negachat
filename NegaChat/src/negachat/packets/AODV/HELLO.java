@@ -40,7 +40,7 @@ public class HELLO extends Packet {
 	@Override
 	public byte[] toByteArray() {
 		byte[] result = new byte[17];
-		byte[] source = this.getSource().getBytes();
+		byte[] source = this.fillNickname(this.getSource());
 		byte type = this.getType();
 		
 		result[0] = type;

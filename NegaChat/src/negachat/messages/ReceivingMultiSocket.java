@@ -61,9 +61,43 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	}
 
 	public void handlePacket(Packet packet) {
+		RoutingTable table = new RoutingTable();
 		if (packet instanceof HELLO){
+			HELLO pakket = (HELLO) packet;
+			String source = pakket.getSource();
+			
+			if (!table.getTable().containsKey(source))	{
+				table.addDestination(source, null, 0);
+			} else {
+				table.getTable().get(source).set(2, RoutingTable.MAXTTL);
+				
+			}
+			
+			
+			
+			
 			
 		} else if (packet instanceof RREQ){
+			// Cast to RREQ
+			RREQ pakket = (RREQ) packet;
+			
+			byte lifeSpan = pakket.getLifeSpan();
+			byte identifier = pakket.getIdentifier();
+			
+			String source = pakket.getSource();
+			String destination = pakket.getDestination();
+			
+			// TODO -- UPDATE ROUTES
+			
+			if (NegaView.getMyName() == destination)	{
+				if (table.getTable().containsKey(destination) && table.getTable().get(destination).get(0) != null)	{
+					// TODO -- send RREP
+				}
+			} else {
+				// TODO -- forward RREQ
+			}
+			
+			 
 			
 		} else if (packet instanceof GroupMessagePacket){
 //			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
@@ -72,7 +106,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				this.setChanged();
 				this.notifyObservers();
 
-//			}
 		}
 	}
 	

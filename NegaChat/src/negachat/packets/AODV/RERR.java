@@ -85,10 +85,10 @@ public class RERR extends Packet implements DirectPacket{
 		byte[] result = new byte[LOSTROUTESINDEX + this.getLostRoutes().length*SOURCELENGTH];
 		result[TYPEINDEX] = this.getType();
 		
-		byte[] source = this.getSource().getBytes();
+		byte[] source = this.fillNickname(this.getSource());
 		System.arraycopy(source, 0, result, SOURCEINDEX, SOURCELENGTH);
 		
-		byte[] destination = this.getDestination().getBytes();
+		byte[] destination = this.fillNickname(this.getDestination());
 		System.arraycopy(destination, 0, result, DESTINATIONINDEX, DESTINATIONLENGTH);
 		
 		int counter = 0;

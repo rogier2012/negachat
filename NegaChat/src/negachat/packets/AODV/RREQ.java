@@ -72,8 +72,8 @@ public class RREQ extends Packet {
 	
 	@Override
 	public byte[] toByteArray() {
-		byte[] source = this.getSource().getBytes();
-		byte[] destination = this.destination.getBytes();
+		byte[] source = this.fillNickname(this.getSource());
+		byte[] destination = this.fillNickname(this.getDestination());
 		byte[] lifeSpan = new byte[]{this.lifeSpan};
 		byte[] identifier = new byte[]{this.identifier};
 		

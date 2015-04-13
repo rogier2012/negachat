@@ -54,9 +54,9 @@ public class GroupMessagePacket extends Packet{
 		byte[] src, msg, hash;
 		byte type, opt;
 		type = getType();
-		src = getSource().getBytes();
-		msg = getMessage().getBytes(); 
-		opt = getOptions();
+		src = this.fillNickname(this.getSource());
+		msg = this.fillMessage(this.getMessage());
+		opt = (byte) 0;	
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
