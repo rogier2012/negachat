@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Observable;
 
 public class RoutingTable extends Observable {
+
 	// nextHop - hopCount
 	// List<Object> hops;
 	// destination - hops
@@ -14,7 +15,7 @@ public class RoutingTable extends Observable {
 	
 	private static String removedDestination;
 	private static String addedDestination;
-	
+
 	public RoutingTable(){
 		table = new HashMap<String, List<Object>>();
 	}

@@ -7,7 +7,7 @@ import negachat.packets.Packet;
  * Route replies are sent back to the node that requested the route.
  * 
  * Lay-Out:
- * [Type][Source][Destination]
+ * [Type][Source][Destination][Hopcount]
  */
 
 public class RREP extends Packet implements DirectPacket {
@@ -21,24 +21,29 @@ public class RREP extends Packet implements DirectPacket {
 	
 	// How many Bytes are reserved for this data
 	public static final int DESTINATIONLENGTH = 16;
+	public static final int HOPCOUNT = 1;
 	
 	// Index of data
 	public static final int DESTINATIONINDEX = SOURCEINDEX + SOURCELENGTH;
+	public static final int HOPCOUNTINDEX = DESTINATIONINDEX + DESTINATIONLENGTH;
 	
 	/*
 	 * Instance Variables
 	 */
 	
 	private String destination;
+	private byte hopcount;
 	
 	/*
 	 * Constructors
 	 */
 	
 	public RREP(String destination, String source) {
-		super(source);
+		super();
 		this.setType(TYPE);
 		this.destination = destination;
+		hopcount = 0;
+		
 	}
 	
 	public RREP(byte[] byteArray)	{
@@ -53,7 +58,7 @@ public class RREP extends Packet implements DirectPacket {
 		temp = new byte[DESTINATIONLENGTH]; 
 		System.arraycopy(byteArray, DESTINATIONINDEX, temp, 0, DESTINATIONLENGTH);
 		this.setDestination(new String(temp));
-		
+		this.setHopcount(byteArray[HOPCOUNTINDEX]);
 	}
 	
 	/*
@@ -62,7 +67,7 @@ public class RREP extends Packet implements DirectPacket {
 	
 	@Override
 	public byte[] toByteArray() {
-		byte[] result = new byte[DESTINATIONINDEX + DESTINATIONLENGTH];
+		byte[] result = new byte[DESTINATIONINDEX + DESTINATIONLENGTH + HOPCOUNT];
 		result[0] = this.getType();
 		
 		byte[] source = this.getSource().getBytes();
@@ -70,7 +75,7 @@ public class RREP extends Packet implements DirectPacket {
 		
 		byte[] destination = this.getDestination().getBytes();
 		System.arraycopy(destination, 0, result, DESTINATIONINDEX, DESTINATIONLENGTH);
-		
+		result[HOPCOUNTINDEX] = this.getHopcount();
 		return result;
 	}
 	
@@ -84,6 +89,14 @@ public class RREP extends Packet implements DirectPacket {
 
 	public void setDestination(String destination) {
 		this.destination = destination;
+	}
+
+	public byte getHopcount() {
+		return hopcount;
+	}
+
+	public void setHopcount(byte hopcount) {
+		this.hopcount = hopcount;
 	}
 	
 }

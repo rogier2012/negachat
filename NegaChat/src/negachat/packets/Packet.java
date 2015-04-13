@@ -1,5 +1,7 @@
 package negachat.packets;
 
+import negachat.view.NegaView;
+
 public abstract class Packet {
 	
 	/*
@@ -21,6 +23,8 @@ public abstract class Packet {
 	// How many bytes are reserved for the source header
 	public static final int TYPELENGTH = 1;
 	public static final int SOURCELENGTH = 16;
+	public static final int MAX_MESSAGE_LENGTH = 128;
+	public static final int MAX_NAME_LENGTH = 16;
 	
 	// Index of data
 	public static final int TYPEINDEX = 0;
@@ -32,13 +36,17 @@ public abstract class Packet {
 	
 	private byte type;
 	private String source;
+	private String message;
+	private String destination;
+	private String myName;
+	private int seqNumber;
 	
 	/*
 	 * Constructors
 	 */
 	
-	public Packet(String source)	{
-		this.source = source;
+	public Packet()	{
+		this.source = NegaView.getMyName();
 	}
 	
 	public Packet(byte[] byteArray){
@@ -50,6 +58,51 @@ public abstract class Packet {
 	 */
 	
 	public abstract byte[] toByteArray();
+	
+	@SuppressWarnings("unused")
+	public byte[] fillNickname(String nickname) {
+		String myName = nickname;
+		if (myName.length() < MAX_NAME_LENGTH) {
+			int length = myName.length();
+			int todo = MAX_NAME_LENGTH - length;
+			for (int i = todo; i > 0; i--) {
+				myName += "=";
+			}
+		}
+		return myName.getBytes();
+	}
+	
+	@SuppressWarnings("unused")
+	public byte[] fillMessage(String message) {
+		if (message.length() < MAX_MESSAGE_LENGTH) {
+			int length = message.length();
+			int todo = MAX_MESSAGE_LENGTH - length;
+			for (int i = todo; i > 0; i--) {
+				message += "=";
+			}
+		}
+		return message.getBytes();
+	}
+		
+//		if (message.length() < MAX_MESSAGE_LENGTH) {
+//			int length = message.length();
+//			int todo = MAX_MESSAGE_LENGTH - length;
+//			for (int i = todo; i > 0; i--) {
+//				message += "=";
+//			}
+//		}
+//		
+//		if (!destination.equals("all")) {
+//			if (destination.length() < MAX_NAME_LENGTH) { 
+//				int length = destination.length();
+//				int todo = MAX_MESSAGE_LENGTH - length;
+//				for (int i = todo; i > 0; i--) {
+//					destination += "=";
+//				}
+//			}
+//		}
+//	}
+
 
 	/*
 	 * Getters and Setters

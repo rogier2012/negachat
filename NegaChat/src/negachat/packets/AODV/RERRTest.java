@@ -26,7 +26,7 @@ public class RERRTest {
 		destination = "BERTBERTBERTBERT";
 		lostRoutes = new String[]{"KEESKEESKEESKEES", "KAASKAASKAASKAAS", "JOOPJOOPJOOPJOOP", "GIJSGIJSGIJSGIJS"};
 		
-		packeti = new RERR(source, destination, lostRoutes);
+		packeti = new RERR(destination, lostRoutes);
 		byteArray = packeti.toByteArray();
 		packetii = new RERR(byteArray);
 	}

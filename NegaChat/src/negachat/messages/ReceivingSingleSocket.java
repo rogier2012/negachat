@@ -3,12 +3,14 @@ package negachat.messages;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketException;
 
 import negachat.client.RoutingTable;
 import negachat.packets.MessagePacket;
 import negachat.packets.Packet;
 import negachat.packets.AODV.RERR;
 import negachat.packets.AODV.RREP;
+import negachat.view.NegaView;
 
 public class ReceivingSingleSocket extends ReceivingSocket {
 	private DatagramSocket clientsocket;
@@ -19,6 +21,12 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 	public ReceivingSingleSocket(String myName, RoutingTable table) {
 		super(table);
 		this.myName = myName;
+		try {
+			clientsocket = new DatagramSocket(UDP_PORT);
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -27,7 +35,6 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			byte[] buf = new byte[1000];
 			DatagramPacket recv = new DatagramPacket(buf, 166);
 			try {
-				clientsocket = new DatagramSocket(UDP_PORT);
 				clientsocket.receive(recv);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -39,7 +46,14 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 				handlePacket(packet);
 			} else if (recv.getData()[0] == RREP.TYPE) {
 				RREP packet = new RREP(recv.getData());
-				handlePacket(packet);
+				if (packet.getDestination().equals(NegaView.getMyName())){
+					handlePacket(packet);
+				} else {
+					packet.setHopcount((byte)(packet.getHopcount()+1));
+					SendingSingleSocket sendingsocket = new SendingSingleSocket(table);
+					sendingsocket.sendPacket(packet);
+				}
+				
 			} else if (recv.getData()[0] == RERR.TYPE) {
 				RERR packet = new RERR(recv.getData());
 				handlePacket(packet);
@@ -77,7 +91,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 	}
 
 	public void testrun() {
-		MessagePacket nPacket = new MessagePacket("All", "Henk");
+		MessagePacket nPacket = new MessagePacket("All");
 		nPacket.setMessage("Ik ben Rogier");
 		handlePacket(nPacket);
 	}

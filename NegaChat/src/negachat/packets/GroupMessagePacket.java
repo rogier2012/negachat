@@ -1,5 +1,7 @@
 package negachat.packets;
 
+import negachat.view.NegaView;
+
 //10/4 PACKET FORMAT:
 
 //	[type]	[source] 	[message]	[options]	[hash]
@@ -20,13 +22,13 @@ public class GroupMessagePacket extends Packet{
 	public static final int HASH = 4;
 	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + OPTIONS + HASH;
 	
-	public GroupMessagePacket(String source){
-		super(source);
-		setSource(source);
+	public GroupMessagePacket(){
+		super();
+		source = NegaView.getMyName();
 		setType(TYPE);
 	}
 	
-	public GroupMessagePacket(byte[] data){
+	public GroupMessagePacket(byte[] data) {
 			super(data);
 			setType(data[0]);
 			byte[] sourceArray = new byte[16];
@@ -72,6 +74,8 @@ public class GroupMessagePacket extends Packet{
 	}
 	
 	public String makeHash() {
+		hash =  "";
+		setHash("0x00");
 		int hashCode = this.hashCode();
 		byte[] hash = new byte[]{
 				(byte) ((hashCode >> 24) & 0xFF),

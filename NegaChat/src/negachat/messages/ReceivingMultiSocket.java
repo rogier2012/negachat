@@ -15,7 +15,6 @@ import negachat.view.NegaView;
 public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;
 	private MulticastSocket multisocket;
-
 	
 	public static final int MULTICAST_PORT = 6112;
 	
@@ -29,7 +28,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void run() {
@@ -52,6 +50,11 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			} else if (recv.getData()[0] == GroupMessagePacket.TYPE) {
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
+				if(!packet.getSource().equals(NegaView.getMyName())){
+					SendingMultiSocket sendingsocket = new SendingMultiSocket();
+					sendingsocket.send(packet);
+				}
+				
 			}
 			
 		} while (1 < 2);
@@ -99,8 +102,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				this.setRecvPacket(packet);
 				this.setChanged();
 				this.notifyObservers();
-				//stuur door naar neighbours
-//			}
+
 		}
 	}
 	

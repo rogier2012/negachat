@@ -35,8 +35,8 @@ public class RERR extends Packet implements DirectPacket{
 	 * Constructors
 	 */
 	
-	public RERR(String source, String destination, String[] lostRoutes)	{
-		super(source);
+	public RERR(String destination, String[] lostRoutes)	{
+		super();
 		this.setDestination(destination);
 		this.lostRoutes = lostRoutes;
 	}

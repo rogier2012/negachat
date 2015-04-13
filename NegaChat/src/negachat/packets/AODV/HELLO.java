@@ -1,12 +1,13 @@
 package negachat.packets.AODV;
 
+import negachat.messages.SendingMultiSocket;
 import negachat.packets.Packet;
 
 /*
  * HELLO packets are broadcasted over the network to notify other nodes of its existence in the network.
  * 
  * Lay-Out:
- * [Type][Source][Hop count][Identifier]
+ * [Type][Source]
  * 
  */
 public class HELLO extends Packet {
@@ -17,41 +18,19 @@ public class HELLO extends Packet {
 	
 	// Type ID of packet
 	public static final byte TYPE = 1;
+	public static final int SOURCELENGTH = 16;
 	
-	// How many Bytes are reserved for this data
-	public static final int HOPCOUNTLENGTH = 1;
-	public static final int IDENTIFIERLENGTH = 1;
-	
-	// Index of data
-	public static final int HOPCOUNTINDEX = SOURCEINDEX + SOURCELENGTH;
-	public static final int IDENTIFIERINDEX = HOPCOUNTINDEX + HOPCOUNTLENGTH;
-	
-	/*
-	 * Instance Variables
-	 */
-	
-	private byte hopCount;
-	private byte identifier;
-	
-	/*
-	 * Constructors
-	 */
-	
-	public HELLO(String source, byte identifier) {
-		super(source);
+	public HELLO(String source) {
+		super();
 		this.setType(TYPE);
-		this.hopCount = 0;
-		this.identifier = identifier;
 	}
 	
 	public HELLO(byte[] byteArray)	{
 		super(byteArray);
 		this.setType(TYPE);
 		byte[] temp = new byte[SOURCELENGTH];
-		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, HOPCOUNTINDEX - 1);
+		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, SOURCELENGTH);
 		this.setSource(new String(temp));
-		this.hopCount = byteArray[HOPCOUNTINDEX];
-		this.identifier = byteArray[IDENTIFIERINDEX];
 	}
 	
 	/*
@@ -60,39 +39,19 @@ public class HELLO extends Packet {
 	
 	@Override
 	public byte[] toByteArray() {
-		byte[] result = new byte[19];
+		byte[] result = new byte[17];
 		byte[] source = this.getSource().getBytes();
 		byte type = this.getType();
-		byte hopCount = this.hopCount;
-		byte identifier = this.identifier;
 		
 		result[0] = type;
-		result[HOPCOUNTINDEX] = hopCount;
-		result[IDENTIFIERINDEX] = identifier;
 		
 		System.arraycopy(source, 0, result, SOURCEINDEX, SOURCELENGTH);
 		
 		return result;
 	}
-
-	/*
-	 * Getters and Setters
-	 */
 	
-	public byte getHopCount() {
-		return hopCount;
+	public void send(Packet toSend) {
+		SendingMultiSocket sock = new SendingMultiSocket();
+		sock.send(toSend);
 	}
-
-	public void setHopCount(byte hopCount) {
-		this.hopCount = hopCount;
-	}
-
-	public byte getIdentifier() {
-		return identifier;
-	}
-
-	public void setIdentifier(byte identifier) {
-		this.identifier = identifier;
-	}
-	
 }

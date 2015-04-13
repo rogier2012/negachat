@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-import negachat.packets.CreatePacket;
+//import negachat.packets.CreatePacket;
 import negachat.packets.MessagePacket;
 
 public class SocketController {
@@ -15,13 +15,13 @@ public class SocketController {
 	socketReceive socketReceive;
 	socketSend socketSend;
 	BufferedReader reader;
-	CreatePacket creator;
+//	CreatePacket creator;
 
-	public SocketController(CreatePacket creator) {
-		SocketGekloot sock = new SocketGekloot();
-		this.creator = creator;
-		sock.run();
-	}
+//	public SocketController(CreatePacket creator) {
+//		SocketGekloot sock = new SocketGekloot();
+//		this.creator = creator;
+//		sock.run();
+//	}
 
 	public void run() {
 		try {
