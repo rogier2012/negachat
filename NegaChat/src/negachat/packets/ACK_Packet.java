@@ -7,51 +7,40 @@ public class ACK_Packet extends Packet{
 	private int packetToACK;
 	
 	private byte options;
-	private String source, destination, message, hash;
+	private String  destination, message, hash;
 	
 	public static final byte TYPE = 0x06;
 	
 	public static final int TYPELENGTH = 1;
 	public static final int SOURCE = 16;
 	public static final int DESTINATION = 16;
-	public static final int MESSAGE = 128;
 	public static final int OPTIONS = 1;
 	public static final int HASH = 4;
-	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + OPTIONS + HASH;
+	public static final int TOTAL = TYPELENGTH + SOURCE + OPTIONS + HASH;
 
 
 	public ACK_Packet(int packetToACK) {
 		super();
-		source = NegaView.getMyName();
+		this.setSource(NegaView.getMyName());
 		this.packetToACK = packetToACK;
 	}
 
 	
 	public ACK_Packet(byte[] packetArray)	{
 		super(packetArray);
-		setType(packetArray[0]);
+		this.setType(packetArray[0]);
 		byte[] sourceArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH, sourceArray, 0, SOURCE);
-		String temp = new String(sourceArray);
-		String source = temp.split("=")[0];
-		setSource(source);
+		this.setSource(this.removePadding(new String(sourceArray)));
 		
 		byte[] destArray = new byte[16];
 		System.arraycopy(packetArray, TYPELENGTH+SOURCE, destArray, 0, DESTINATION);
-		String temp2 = new String(destArray);
-		String destination = temp2.split("=")[0];
-		setDestination(destination);
+		this.setDestination(this.removePadding(new String(destArray)));
 		
-		byte[] messageArray = new byte[128];
-		System.arraycopy(packetArray, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
-		String temp3 = new String(messageArray);
-		String message = temp3.split("=")[0];
-		setMessage(message);
-		
-		setOptions(packetArray[TYPELENGTH + SOURCE + MESSAGE]);
+		this.setOptions(packetArray[TYPELENGTH + SOURCE]);
 		byte[] hashArray = new byte[4];
-		System.arraycopy(packetArray, TYPELENGTH + SOURCE + MESSAGE + OPTIONS, hashArray, 0, HASH);
-		setHash(new String(hashArray));
+		System.arraycopy(packetArray, TYPELENGTH + SOURCE + OPTIONS, hashArray, 0, HASH);
+		this.setHash(new String(hashArray));
 	}
 	
 

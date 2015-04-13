@@ -3,7 +3,9 @@ package negachat.messages;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import negachat.client.RoutingTable;
 import negachat.packets.DirectPacket;
@@ -19,12 +21,12 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 	private String myName;
 	
 
-	public ReceivingSingleSocket(String myName, RoutingTable table) {
+	public ReceivingSingleSocket(RoutingTable table) {
 		super(table);
-		this.myName = myName;
+		this.myName = NegaView.getMyName();
 		try {
-			clientsocket = new DatagramSocket(UDP_PORT);
-		} catch (SocketException e) {
+			clientsocket = new DatagramSocket(UDP_PORT, InetAddress.getLocalHost());
+		} catch (SocketException | UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

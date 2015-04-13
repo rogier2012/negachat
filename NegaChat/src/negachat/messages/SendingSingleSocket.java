@@ -43,7 +43,7 @@ public class SendingSingleSocket {
 			}
 			
 			address = InetAddress.getByName(IPNicknameTable.getIP(table.getNextHop(packet.getDestination())));
-			sendingSocket = new DatagramSocket(UDP_PORT, address);
+			sendingSocket = new DatagramSocket(UDP_PORT);
 		} catch (IOException e) {
 			System.out.println("Couldn't connect to port " + UDP_PORT);
 		}

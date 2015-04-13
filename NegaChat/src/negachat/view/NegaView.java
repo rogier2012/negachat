@@ -51,13 +51,15 @@ public class NegaView {
 	 * Create the application.
 	 */
 	public NegaView() {
-		myName = JOptionPane.showInputDialog(frame,"What is your nickname? Max. 16 characters", null);
+		myName = JOptionPane.showInputDialog(frame,"Please enter a nickname between 3 and 14 characters", null);
 		if (myName != null){
-			while (myName.length() > 16|| myName.length() < 4){
+			while (myName.length() > 14|| myName.length() < 4){
 				if(myName.length() < 4){
 					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
+				} else{
+					myName = JOptionPane.showInputDialog(frame,"Please don't use more than 14 characters", null);
 				}
-				myName = JOptionPane.showInputDialog(frame,"Please don't use more than 16 characters", null);
+				
 			} 
 			initialize();
 		}
@@ -76,7 +78,7 @@ public class NegaView {
 		
 		RoutingTable routingTable = new RoutingTable();
 		new IPNicknameTable();
-		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(myName, routingTable);
+		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(routingTable);
 		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket(routingTable);
 		Thread threadrs = new Thread(rssocket);
 		Thread threadrm = new Thread(rmsocket);

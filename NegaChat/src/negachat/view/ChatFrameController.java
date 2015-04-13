@@ -6,6 +6,7 @@ import java.util.Observer;
 import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
 import negachat.messages.ReceivingSocket;
+import negachat.messages.SendingMultiSocket;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.MessagePacket;
 import negachat.packets.Packet;
@@ -26,10 +27,13 @@ public class ChatFrameController implements Observer {
 
 	private ReceivingSocket socket;
 	
+	private int counter;
+	
 	public ChatFrameController(ChatFrame cFrame, String chatName,ReceivingSocket socket) {
 		this.cFrame = cFrame;
 		this.chatName = chatName;
 		this.socket = socket;
+		counter = 1;
 		initialize();
 	}
 
@@ -47,23 +51,39 @@ public class ChatFrameController implements Observer {
 		} else if (obs instanceof ReceivingSingleSocket && socket.getRecvPacket().getSource().equals(chatName)) {
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((MessagePacket)socket.getRecvPacket()).getMessage() + "\n");
 		} else if (obs instanceof ReceivingMultiSocket){
-			System.out.println("iets zeggen, got message. maa rmaakt niet uit");
+			System.out.println("receivingMultiSocket");
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((GroupMessagePacket)socket.getRecvPacket()).getMessage() + "\n" );
 		}
 	}
 	
 	private void sendPacket() {
-		Packet toSend = new Packet();
-		
-		
-		
-		
-//		creator.setDestination(chatName);
-//		creator.setMessage(mfController.getMessage());
-//		Packet toSend = new Packet();
-//		System.out.println(new String(toSend.toByteArray()));
-//		SendingMultiSocket sendingsocket = new SendingMultiSocket();
-//		sendingsocket.send(toSend);
+		Packet toSend;
+		System.out.println(chatName);
+		if (chatName.toLowerCase().equals("all")) {
+			GroupMessagePacket groupMessage = new GroupMessagePacket();
+			groupMessage.setMessage(mfController.getMessage());
+			groupMessage.setSeqNum((byte) counter);
+			if (counter > 254) {
+				counter = 1;
+			} else {
+				counter++;
+			}
+			toSend = groupMessage;
+		} else {
+			MessagePacket message = new MessagePacket(chatName);
+			message.setMessage(mfController.getMessage());
+			message.setSeqNum((byte) counter);
+			if (counter > 254) {
+				counter = 1;
+			} else {
+				counter++;
+			}
+			toSend = message;
+		}
+		SendingMultiSocket sendingsocket = new SendingMultiSocket();
+		sendingsocket.send(toSend);
+		System.out.println(new String(toSend.toByteArray()));
+
 	}
 
 	public String getChatName(){
