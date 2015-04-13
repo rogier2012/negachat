@@ -64,8 +64,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 						}
 					} else {
 						lastSeqNumber.put(packet.getSource(), (byte) 0);
-						SendingMultiSocket sendingsocket = new SendingMultiSocket();
-						sendingsocket.send(packet);
 					}
 				}
 			}
