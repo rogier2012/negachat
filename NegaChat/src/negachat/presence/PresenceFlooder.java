@@ -1,5 +1,6 @@
-package negachat.packets.AODV;
+package negachat.presence;
 
+import negachat.packets.AODV.HELLO;
 import negachat.view.NegaView;
 
 public class PresenceFlooder implements Runnable {

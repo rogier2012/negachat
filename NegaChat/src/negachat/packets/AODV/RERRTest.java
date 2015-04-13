@@ -1,16 +1,12 @@
 package negachat.packets.AODV;
 
-import static org.junit.Assert.*;
+import negachat.packets.Packet;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import negachat.packets.*;
-import negachat.packets.AODV.*;
-
 public class RERRTest {
 	
-	private String source;
 	private String destination;
 	
 	private String[] lostRoutes;
@@ -22,7 +18,6 @@ public class RERRTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		source = "HENKHENKHENKHENK";
 		destination = "BERTBERTBERTBERT";
 		lostRoutes = new String[]{"KEESKEESKEESKEES", "KAASKAASKAASKAAS", "JOOPJOOPJOOPJOOP", "GIJSGIJSGIJSGIJS"};
 		

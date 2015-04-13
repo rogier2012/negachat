@@ -1,4 +1,4 @@
-package presence;
+package negachat.presence;
 
 import negachat.client.RoutingTable;
 

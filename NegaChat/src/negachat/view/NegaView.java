@@ -13,6 +13,8 @@ import negachat.client.OnlineClients;
 import negachat.client.RoutingTable;
 import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
+import negachat.presence.PresenceFlooder;
+import negachat.presence.TableDecay;
 
 public class NegaView {
 
@@ -75,12 +77,15 @@ public class NegaView {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		PresenceFlooder flooder = new PresenceFlooder();
+		TableDecay tabledecay = new TableDecay();
+		
 		
 		RoutingTable routingTable = new RoutingTable();
 		new IPNicknameTable();
 		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(routingTable);
 		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket(routingTable);
-		Thread threadrs = new Thread(rssocket);
+//		Thread threadrs = new Thread(rssocket);
 		Thread threadrm = new Thread(rmsocket);
 //		threadrs.start();
 		threadrm.start();
@@ -95,6 +100,8 @@ public class NegaView {
 		tabbedPane.add(WHO_IS_ONLINE, online);
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);
+		
+		wioController.addClient("Rogier");
 	}
 	
 	public static String getMyName(){
