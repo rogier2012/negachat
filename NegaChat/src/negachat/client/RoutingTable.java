@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-public class RoutingTable extends Observable {
+public class RoutingTable extends Observable { 
 
 	// nextHop - hopCount
 	// List<Object> hops;

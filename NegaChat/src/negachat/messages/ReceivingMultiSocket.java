@@ -94,7 +94,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				// TODO -- forward RREQ
 			}
 			
-			
+			 
 			
 		} else if (packet instanceof GroupMessagePacket){
 //			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
