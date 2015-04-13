@@ -20,7 +20,7 @@ public class IPNicknameTable {
 		return table;
 	}
 	
-	public void add(String nickName, String IP) {
+	public static void add(String nickName, String IP) {
 		table.put(nickName, IP);
 	}
 	
