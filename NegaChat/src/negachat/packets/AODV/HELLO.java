@@ -21,7 +21,7 @@ public class HELLO extends Packet {
 	public static final int SOURCELENGTH = 16;
 	
 	public HELLO(String source) {
-		super(source);
+		super();
 		this.setType(TYPE);
 	}
 	

@@ -1,5 +1,7 @@
 package negachat.packets;
 
+import negachat.view.NegaView;
+
 public class MessagePacket extends Packet implements DirectPacket {
 
 	public static final byte TYPE = 0;
@@ -19,9 +21,9 @@ public class MessagePacket extends Packet implements DirectPacket {
 	private byte options;
 	private String source, destination, message, hash;
 
-	public MessagePacket(String destination, String source) {
-		super(source);
-		this.source = source;
+	public MessagePacket(String destination) {
+		super();
+		this.source = NegaView.getMyName();
 		this.destination = destination;
 		this.destination = destination;
 	}
