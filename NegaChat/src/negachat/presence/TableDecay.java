@@ -14,7 +14,7 @@ public class TableDecay implements Runnable {
 		while (treu)	{
 			for (String destination : table.getTable().keySet())	{
 				if ((int) table.getTable().get(destination).get(2) <= 0)	{
-					table.getTable().remove(destination);
+					table.removeDestination(destination);
 				} else	{
 					table.decrementTTL(destination);
 				}
