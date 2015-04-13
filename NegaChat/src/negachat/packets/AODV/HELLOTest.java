@@ -27,7 +27,6 @@ public class HELLOTest {
 		System.out.println(byteArray[0]);
 		System.out.println(byteArray[17]);
 		System.out.println(packetii.getSource());
-		
 	}
 
 }
