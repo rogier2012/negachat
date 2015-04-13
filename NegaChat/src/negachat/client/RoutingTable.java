@@ -28,6 +28,7 @@ public class RoutingTable extends Observable {
 
 	public RoutingTable(){
 		table = new HashMap<String, List<Object>>();
+		iptable = new HashMap<String, InetAddress>();
 		requestedDestinations = new ArrayList<String>();
 	}
 	
