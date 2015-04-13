@@ -59,6 +59,7 @@ public abstract class Packet {
 	
 	public abstract byte[] toByteArray();
 	
+	@SuppressWarnings("unused")
 	private byte[] fillNickname(String nickname) {
 		String myName = nickname;
 		if (myName.length() < MAX_NAME_LENGTH) {
@@ -69,6 +70,18 @@ public abstract class Packet {
 			}
 		}
 		return myName.getBytes();
+	}
+	
+	@SuppressWarnings("unused")
+	private byte[] fillMessage(String message) {
+		if (message.length() < MAX_MESSAGE_LENGTH) {
+			int length = message.length();
+			int todo = MAX_MESSAGE_LENGTH - length;
+			for (int i = todo; i > 0; i--) {
+				message += "=";
+			}
+		}
+		return message.getBytes();
 	}
 		
 //		if (message.length() < MAX_MESSAGE_LENGTH) {
