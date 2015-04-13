@@ -26,7 +26,7 @@ public class SendingSingleSocket {
 		try {
 			
 			if (!table.getTable().containsKey(packet.getDestination()) || table.getTable().get(packet.getDestination()).get(0) == null)	{
-				byte identifier = (byte) RoutingTable.randInt(0, 127);
+				byte identifier = (byte) table.randInt(0, 127);
 				table.getRequestedDestinations().add(packet.getDestination());
 				byte lifeSpan = 50;
 				while (!table.getTable().containsKey(packet.getDestination()) || table.getTable().get(packet.getDestination()).get(0) == null){

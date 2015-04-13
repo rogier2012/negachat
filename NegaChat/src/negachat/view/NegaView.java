@@ -77,14 +77,15 @@ public class NegaView {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		RoutingTable routingTable = new RoutingTable();
 		PresenceFlooder flooder = new PresenceFlooder();
-		TableDecay tabledecay = new TableDecay();
+		TableDecay tabledecay = new TableDecay(routingTable);
 		Thread threadf = new Thread(flooder);
 		threadf.start();
 		Thread threadt = new Thread(tabledecay);
 		threadt.start();
 		
-		RoutingTable routingTable = new RoutingTable();
+		
 		new IPNicknameTable();
 		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(routingTable);
 		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket(routingTable);
@@ -103,7 +104,7 @@ public class NegaView {
 		tabbedPane.add(WHO_IS_ONLINE, online);
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);
-		
+		routingTable.addDestination("Gijsie", null, 0);
 	}
 	
 	public static String getMyName(){

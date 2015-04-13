@@ -79,7 +79,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			if (!table.getTable().containsKey(source))	{
 				table.addDestination(source, null, 0);
 			} else {
-				table.getTable().get(source).set(2, RoutingTable.MAXTTL);
+				table.getTable().get(source).set(2, table.MAXTTL);
 			}
 			
 		} else if (packet instanceof RREQ){

@@ -9,17 +9,17 @@ import java.util.Random;
 
 public class RoutingTable extends Observable { 
 
-	public static final int MAXTTL = 20;
+	public final int MAXTTL = 20;
 	
 	// nextHop - hopCount
 	// List<Object> hops; 
 	// destination - hops
-	private static Map<String, List<Object>> table;
+	private  Map<String, List<Object>> table;
 	
-	private static String removedDestination;
-	private static String addedDestination;
+	private  String removedDestination;
+	private  String addedDestination;
 	
-	private static List<String> requestedDestinations;
+	private  List<String> requestedDestinations;
 
 	public RoutingTable(){
 		table = new HashMap<String, List<Object>>();
@@ -36,8 +36,12 @@ public class RoutingTable extends Observable {
 		table.get(destination).add(nexthop);
 		table.get(destination).add(hopCount);
 		table.get(destination).add(MAXTTL);	
+		System.out.println("Destination added to table enzo :)");
 		this.setChanged();
 		this.notifyObservers(1);
+		for (String namen : table.keySet() ){
+			System.out.println(namen);
+		}
 	}
 	
 	public void removeDestination(String destination){
@@ -48,7 +52,7 @@ public class RoutingTable extends Observable {
 	}
 	
 	public String getAddedDestination(){
-		return  RoutingTable.addedDestination;
+		return  this.addedDestination;
 	}
 	
 	public String getRemovedDestination() {
@@ -60,15 +64,15 @@ public class RoutingTable extends Observable {
 	}
 
 	public void setTable(Map<String, List<Object>> table) {
-		RoutingTable.table = table;
+		this.table = table;
 	}
 	
-	public  static void decrementTTL(String destination){
-		int TTL = (int) RoutingTable.table.get(destination).get(2);
-		RoutingTable.table.get(destination).set(2, TTL);
+	public  void decrementTTL(String destination){
+		int TTL = (int) this.table.get(destination).get(2);
+		this.table.get(destination).set(2, TTL);
 	}
 	
-	public static int randInt(int min, int max) {
+	public int randInt(int min, int max) {
 
 	    // Usually this can be a field rather than a method variable
 	    Random rand = new Random();
@@ -80,12 +84,12 @@ public class RoutingTable extends Observable {
 	    return randomNum;
 	}
 
-	public static List<String> getRequestedDestinations() {
+	public List<String> getRequestedDestinations() {
 		return requestedDestinations;
 	}
 
-	public static void setRequestedDestinations(List<String> requestedDestinations) {
-		RoutingTable.requestedDestinations = requestedDestinations;
+	public void setRequestedDestinations(List<String> requestedDestinations) {
+		this.requestedDestinations = requestedDestinations;
 	}
 	
 }
