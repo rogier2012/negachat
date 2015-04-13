@@ -8,6 +8,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import negachat.client.RoutingTable;
+import negachat.packets.DirectPacket;
 import negachat.packets.MessagePacket;
 import negachat.packets.Packet;
 import negachat.packets.AODV.RERR;
@@ -65,6 +66,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 	}
 
 	public void handlePacket(Packet packet) {
+		RoutingTable table = new RoutingTable();
 		if (packet instanceof MessagePacket) {
 			if (myName.equals(((MessagePacket) packet).getDestination())){
 				if (((MessagePacket) packet).makeHash() == ((MessagePacket) packet).getHash()) {
@@ -78,18 +80,38 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			}
 			
 		} else if (packet instanceof RREP){
+			RREP pakket = (RREP) packet;
+			String source = pakket.getSource();
+			String destination = pakket.getDestination();
+			byte hopCount = pakket.getHopcount();
+			String lastSource = pakket.getLastSource();
 			
+			table.addDestination(source, lastSource, hopCount);
 			
-			
+			if (table.getRequestedDestinations().contains(source))	{
+				table.getRequestedDestinations().remove(source);
+			} else	{
+				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
+				((RREP) packet).setLastSource(NegaView.getMyName());
+				sendSocket.sendPacket((DirectPacket)packet);
+			}
 			
 		} else if (packet instanceof RERR){
+			RERR pakket = (RERR) packet;
+			int initialsize = table.getTable().keySet().size();
+			
+			for (String element : pakket.getLostRoutes())	{
+				table.getTable().get(element).set(0, null);
+				table.getTable().get(element).set(1, 0);
+				table.getTable().get(element).set(0, 0);
+			}
+			
+			if (initialsize > table.getTable().keySet().size())	{
+				// Forward RERR
+			}
 			
 			
-			
-			
-			
-			
-		}
+		} 
 	}
 
 	public void testrun() {
