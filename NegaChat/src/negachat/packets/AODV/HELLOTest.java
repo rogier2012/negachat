@@ -14,9 +14,9 @@ public class HELLOTest {
 	private byte[] byteArray;
 	
 	@Before
-	public void setUp() throws Exception {
-		source = "HENKHENKHENKHENK & RON!";
+	public void setUp() throws Exception { 
 		packeti = new HELLO(source);
+		packeti.setSource("HENKHENKHENK");
 		byteArray = packeti.toByteArray();
 		packetii = new HELLO(byteArray);
 	}
