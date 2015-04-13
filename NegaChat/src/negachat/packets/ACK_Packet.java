@@ -57,38 +57,8 @@ public class ACK_Packet extends Packet{
 
 	@Override
 	public byte[] toByteArray() {
-		
-		byte[] dest, src, msg, hash;
-		byte type, opt;
-		type = TYPE;
-		dest = getDestination().getBytes();
-		src = getSource().getBytes();
-		msg = getMessage().getBytes(); 
-		opt = (byte) packetToACK;
-		hash = makeHash().getBytes();
-
 		byte[] bytePacket = new byte[TOTAL];
-		bytePacket[0] = type;
-		System.out.println("1: " + new String(bytePacket));
-		
-		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE - 1);
-		System.out.println("2: " + new String(bytePacket));
-
-		System.arraycopy(dest, 0, bytePacket, TYPELENGTH + DESTINATION, DESTINATION - 1);
-		System.out.println("3: " + new String(bytePacket));
-
-		System.arraycopy(msg, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE, MESSAGE - 1);
-		System.out.println("4: " + new String(bytePacket));
-
-		bytePacket[TOTAL - HASH - 1] = opt;
-		
-		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, HASH - 1);
-		System.out.println("5: " + new String(bytePacket));
-
-		
-		System.out.println("MessagePackage bytePacket composed");
-		System.out.println("length: " + bytePacket.length);
-		System.out.println("bytePacket string: " + new String(bytePacket));		
+			
 		return bytePacket;
 	}
 
