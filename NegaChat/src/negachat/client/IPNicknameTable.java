@@ -13,8 +13,6 @@ public class IPNicknameTable {
 	
 	private static Map<String, InetAddress> table;
 	
-
-	
 	public static byte[] getMyIP()	{
 		NetworkInterface in;
 		Enumeration<InetAddress> hallo = null;
