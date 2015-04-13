@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.HashMap;
 
 import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
@@ -17,27 +18,30 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	private MulticastSocket multisocket;
 	private int receivedSeq;
 	
+	private HashMap<String, Byte> lastSeqNumber = new HashMap<String, Byte>();
+	
 	public static final int MULTICAST_PORT = 6112;
 	
 	public ReceivingMultiSocket(RoutingTable table){
 		super(table);
+		receivedSeq = 0;
 		try {
 			multisocket = new MulticastSocket(MULTICAST_PORT);
 			group = InetAddress.getByName("228.5.6.7");
 			multisocket.joinGroup(group);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	public void run() {
-		do{
+		do {
 			byte[] buf = new byte[1000];
 			DatagramPacket recv = new DatagramPacket(buf, 166);
 			try {
 				multisocket.receive(recv);
 				System.out.println("Packet received?");
+				System.out.println("packet type: " + recv.getData()[0]);
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Oops... Something went wrong receiving a packet.");
@@ -52,19 +56,21 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
 				if(!packet.getSource().equals(NegaView.getMyName())) {
-					
-					int seq = (int) packet.getSeqNum();
-					
-					
-					
-					
-					SendingMultiSocket sendingsocket = new SendingMultiSocket();
-					sendingsocket.send(packet);
+					if (lastSeqNumber.containsKey(packet.getSource())) {
+						byte seq = lastSeqNumber.get(packet.getSource());
+						if (seq > packet.getSeqNum()) {
+							SendingMultiSocket sendingsocket = new SendingMultiSocket();
+							sendingsocket.send(packet);
+						}
+					} else {
+						lastSeqNumber.put(packet.getSource(), packet.getSeqNum());
+						SendingMultiSocket sendingsocket = new SendingMultiSocket();
+						sendingsocket.send(packet);
+					}
 				}
-				
 			}
 			
-		} while (1 < 2);
+		} while (true);
 	}
 
 	public void handlePacket(Packet packet) {
