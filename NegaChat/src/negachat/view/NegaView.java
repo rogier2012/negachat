@@ -13,6 +13,8 @@ import negachat.client.OnlineClients;
 import negachat.client.RoutingTable;
 import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
+import negachat.presence.PresenceFlooder;
+import negachat.presence.TableDecay;
 
 public class NegaView {
 
@@ -75,6 +77,9 @@ public class NegaView {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		PresenceFlooder flooder = new PresenceFlooder();
+		TableDecay tabledecay = new TableDecay();
+		
 		
 		RoutingTable routingTable = new RoutingTable();
 		new IPNicknameTable();
