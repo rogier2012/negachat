@@ -17,8 +17,8 @@ public class SendingMultiSocket {
 
 	public SendingMultiSocket() {
 		try {
-			group = InetAddress.getByName("228.5.6.7");
-			sendingSocket = new MulticastSocket(6112);
+			group = InetAddress.getByName("228.6.7.9");
+			sendingSocket = new MulticastSocket(MULTICAST_PORT);
 			sendingSocket.joinGroup(group);
 		} catch (IOException e) {
 			System.out.println("Couldn't connect to port " + MULTICAST_PORT);
