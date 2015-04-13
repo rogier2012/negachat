@@ -3,10 +3,12 @@ package negachat.view;
 import java.util.Observable;
 import java.util.Observer;
 
+import negachat.client.RoutingTable;
 import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
 import negachat.messages.ReceivingSocket;
 import negachat.messages.SendingMultiSocket;
+import negachat.messages.SendingSingleSocket;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.MessagePacket;
 import negachat.packets.Packet;
@@ -26,14 +28,16 @@ public class ChatFrameController implements Observer {
 	private String chatName;
 
 	private ReceivingSocket socket;
+	private RoutingTable table;
 	
 	private int counter;
 	
-	public ChatFrameController(ChatFrame cFrame, String chatName,ReceivingSocket socket) {
+	public ChatFrameController(ChatFrame cFrame, String chatName,ReceivingSocket socket, RoutingTable table) {
 		this.cFrame = cFrame;
 		this.chatName = chatName;
 		this.socket = socket;
 		counter = 1;
+		this.table = table;
 		initialize();
 	}
 
@@ -57,7 +61,6 @@ public class ChatFrameController implements Observer {
 	}
 	
 	private void sendPacket() {
-		Packet toSend;
 		System.out.println(chatName);
 		if (chatName.toLowerCase().equals("all")) {
 			GroupMessagePacket groupMessage = new GroupMessagePacket();
@@ -68,7 +71,8 @@ public class ChatFrameController implements Observer {
 			} else {
 				counter++;
 			}
-			toSend = groupMessage;
+			SendingMultiSocket sock = new SendingMultiSocket();
+			sock.send(groupMessage);			
 		} else {
 			MessagePacket message = new MessagePacket(chatName);
 			message.setMessage(mfController.getMessage());
@@ -78,12 +82,9 @@ public class ChatFrameController implements Observer {
 			} else {
 				counter++;
 			}
-			toSend = message;
+			SendingSingleSocket sendingsocket = new SendingSingleSocket(table);
+			sendingsocket.sendPacket(message);
 		}
-		SendingMultiSocket sendingsocket = new SendingMultiSocket();
-		sendingsocket.send(toSend);
-		System.out.println(new String(toSend.toByteArray()));
-
 	}
 
 	public String getChatName(){

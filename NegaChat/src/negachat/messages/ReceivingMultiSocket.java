@@ -80,12 +80,12 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			if (!table.getTable().containsKey(source))	{
 				// moet nog aangepast worden
 				table.addDestination(source, source, 0);
-				try {
-					IPNicknameTable.add(source, InetAddress.getByAddress(((HELLO)packet).getMyIP()));
-				} catch (UnknownHostException e) {
+//				try {
+//					IPNicknameTable.add(source, InetAddress.getByAddress(((HELLO)packet).getMyIP()));
+//				} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+//					e.printStackTrace();
+//				}
 				
 			} else {
 				table.getTable().get(source).set(2, table.MAXTTL);

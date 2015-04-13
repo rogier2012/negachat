@@ -2,7 +2,9 @@ package negachat.client;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.swing.JTabbedPane;
+
 import negachat.messages.ReceivingSocket;
 import negachat.view.ChatFrame;
 import negachat.view.ChatFrameController;
@@ -12,19 +14,21 @@ public class ClientHandler {
 	private JTabbedPane tabbedPane;
 	private ReceivingSocket rsocket;
 	private Set<String> tabs;
+	private RoutingTable table;
 
 	
-	public ClientHandler(JTabbedPane tabbedPane, ReceivingSocket rsocket){
+	public ClientHandler(JTabbedPane tabbedPane, ReceivingSocket rsocket, RoutingTable table){
 		this.tabbedPane = tabbedPane;
 		this.rsocket = rsocket;
 		tabs = new HashSet<String>();
+		this.table = table;
 	}
 	
 	public void addChat(String name, WhoIsOnlineController onlineController){
 		if(!(tabs.contains(name))){
 			tabs.add(name);
 			ChatFrame cFrame1 = new ChatFrame();
-			ChatFrameController cFrameControl = new ChatFrameController(cFrame1, name, rsocket);
+			ChatFrameController cFrameControl = new ChatFrameController(cFrame1, name, rsocket, table);
 			rsocket.addObserver(cFrameControl);
 			tabbedPane.add(name, cFrame1);
 			tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(name));

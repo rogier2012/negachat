@@ -11,13 +11,13 @@ public class SendingMultiSocket {
 
 	private MulticastSocket sendingSocket;
 	
-	private static final int MULTICAST_PORT = 6112;
+	public static final int MULTICAST_PORT = 6114;
 	
 	private InetAddress group;
 
 	public SendingMultiSocket() {
 		try {
-			group = InetAddress.getByName("228.6.7.9");
+			group = InetAddress.getByName("228.5.6.7");
 			sendingSocket = new MulticastSocket(MULTICAST_PORT);
 			sendingSocket.joinGroup(group);
 		} catch (IOException e) {
@@ -28,7 +28,7 @@ public class SendingMultiSocket {
 	public void send(Packet packet) {
 		byte[] bytePacket = packet.toByteArray();
 		DatagramPacket dPacket = new DatagramPacket(bytePacket, bytePacket.length,
-				group, MULTICAST_PORT);
+				group, ReceivingMultiSocket.MULTICAST_PORT);
 		try {
 			sendingSocket.send(dPacket);
 			System.out.println("Packet sent!");

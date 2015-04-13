@@ -94,10 +94,10 @@ public class NegaView {
 //		threadrs.start();
 		threadrm.start();
 		online = new WhoIsOnline();
-		ClientHandler handler = new ClientHandler(tabbedPane, rssocket);
+		ClientHandler handler = new ClientHandler(tabbedPane, rssocket, routingTable);
 		wioController = new WhoIsOnlineController(online, handler);
 		ChatFrame cFrame1 = new ChatFrame();
-		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, GROUP_CHAT_NAME, rmsocket);
+		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, GROUP_CHAT_NAME, rmsocket, routingTable);
 		wioController.addObserver(cFrameControl1);
 		rmsocket.addObserver(cFrameControl1);
 		tabbedPane.add(GROUP_CHAT_NAME, cFrame1);
