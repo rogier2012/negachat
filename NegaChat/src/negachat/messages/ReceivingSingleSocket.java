@@ -66,7 +66,6 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 	}
 
 	public void handlePacket(Packet packet) {
-		RoutingTable table = new RoutingTable();
 		if (packet instanceof MessagePacket) {
 			if (myName.equals(((MessagePacket) packet).getDestination())){
 				if (((MessagePacket) packet).makeHash() == ((MessagePacket) packet).getHash()) {
