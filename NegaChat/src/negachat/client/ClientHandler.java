@@ -33,7 +33,7 @@ public class ClientHandler {
 			rsocket.addObserver(cFrameControl);
 			tabbedPane.add(name, cFrame1);
 			new CloseTabButton(tabbedPane, tabbedPane.indexOfTab(name));
-//			tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(name));
+			tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(name));
 		} else {
 			tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(name));
 		}
