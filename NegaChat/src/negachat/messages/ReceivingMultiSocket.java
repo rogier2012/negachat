@@ -121,7 +121,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				}
 				
 			}
-			
+			 
 		} else if (packet instanceof RREQ){
 			// Cast to RREQ
 			RREQ pakket = (RREQ) packet;
