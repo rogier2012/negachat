@@ -80,23 +80,28 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			}
 			
 		} else if (packet instanceof RREP){
+			// Cast to RREP
 			RREP pakket = (RREP) packet;
 			String source = pakket.getSource();
-			String destination = pakket.getDestination();
 			byte hopCount = pakket.getHopcount();
 			String lastSource = pakket.getLastSource();
 			
+			// Update Table
 			table.addDestination(source, lastSource, hopCount);
 			
+			// Did I send the request for this RREP?
 			if (table.getRequestedDestinations().contains(source))	{
+				// Remove from destinations that are still in request
 				table.getRequestedDestinations().remove(source);
-			} else	{
+			} else	{ // (I did not send the RREQ for this RREP)
+				// Forward RREP to destination
 				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
 				((RREP) packet).setLastSource(NegaView.getMyName());
 				sendSocket.sendPacket((DirectPacket)packet);
 			}
 			
 		} else if (packet instanceof RERR){
+			// Cast to RERR
 			RERR pakket = (RERR) packet;
 			int initialsize = table.getTable().keySet().size();
 			
