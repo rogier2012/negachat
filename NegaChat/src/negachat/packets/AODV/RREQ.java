@@ -52,7 +52,7 @@ public class RREQ extends Packet {
 	public RREQ(byte[] byteArray)	{
 		super(byteArray);
 		this.setType(TYPE);
-		
+		System.out.println("RREQ made");
 		byte[] temp = new byte[SOURCELENGTH];
 		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, SOURCELENGTH);
 		this.setSource(this.removePadding(new String(temp)));

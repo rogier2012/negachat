@@ -97,8 +97,8 @@ public class MessagePacket extends Packet implements DirectPacket {
 		hash = makeHash(bytePacket);
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE
 				+ MESSAGE + OPTIONS, HASH);
+		System.out.println("Group message has been sent! \n");
 
-		System.out.println("length: " + bytePacket.length);
 		return bytePacket;
 	}
 	

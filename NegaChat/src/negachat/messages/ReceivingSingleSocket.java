@@ -75,13 +75,12 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 					setChanged();
 					notifyObservers();
 //				}
-			} else if (true){
-				
 			}
 			
 		} else if (packet instanceof RREP){
 			// Cast to RREP
 			RREP pakket = (RREP) packet;
+			System.out.println("RREP arrived!");
 			String source = pakket.getSource();
 			byte hopCount = pakket.getHopcount();
 			String lastSource = pakket.getLastSource();
