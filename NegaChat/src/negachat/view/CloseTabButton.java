@@ -11,8 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 @SuppressWarnings("serial")
-class CloseTabButton extends JPanel implements ActionListener {
+public class CloseTabButton extends JPanel implements ActionListener {
 	  private JTabbedPane pane;
+	  
+	  
 	  public CloseTabButton(JTabbedPane pane, int index) {
 	    this.pane = pane;
 	    setOpaque(false);

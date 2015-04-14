@@ -9,6 +9,7 @@ import negachat.messages.ReceivingSocket;
 import negachat.view.ChatFrame;
 import negachat.view.ChatFrameController;
 import negachat.view.WhoIsOnlineController;
+import negachat.view.CloseTabButton;
 
 public class ClientHandler {
 	private JTabbedPane tabbedPane;
@@ -31,6 +32,7 @@ public class ClientHandler {
 			ChatFrameController cFrameControl = new ChatFrameController(cFrame1, name, rsocket, table);
 			rsocket.addObserver(cFrameControl);
 			tabbedPane.add(name, cFrame1);
+			new CloseTabButton(tabbedPane, tabbedPane.indexOfTab(name));
 			tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(name));
 		} else {
 			tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(name));
