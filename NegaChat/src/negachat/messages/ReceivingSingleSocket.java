@@ -28,7 +28,6 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 		try {
 			clientsocket = new DatagramSocket(UDP_PORT, InetAddress.getByAddress(table.getMyIP()));
 		} catch (SocketException | UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -124,9 +123,8 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 				}
 			}
 			
-			
 			if (initialsize > table.getTable().keySet().size())	{
-				// Forward RERR
+				// Forward RERR TODO
 			}
 			
 			
