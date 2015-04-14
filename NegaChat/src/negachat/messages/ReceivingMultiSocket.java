@@ -73,9 +73,10 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 
 	public void handlePacket(Packet packet) {
 		if (packet instanceof HELLO){
+			// Cast to HELLO
 			HELLO pakket = (HELLO) packet;
 			String source = pakket.getSource();
-			
+			// Do I not know this node?
 			if (!table.getTable().containsKey(source))	{
 				// TODO moet nog aangepast worden
 				table.addDestination(source, source, 0);
