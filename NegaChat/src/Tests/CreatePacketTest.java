@@ -6,10 +6,9 @@ public class CreatePacketTest {
 	public static void main(String[] args) {
 		MessagePacket packet = new MessagePacket("tekst");
 		packet.setMessage("ditiseentest!");
-		MessagePacket received = new MessagePacket(packet.toByteArray());
-		System.out.println(received.getHash());
-		System.out.println(received.makeHash());
-		System.out.println(received.getHash().equals(received.makeHash()));
+		MessagePacket received = new MessagePacket(packet.toByteArray(), true);
+
+		System.out.println(new String(received.getHash()).equals(new String(received.makeHash())));
 	}
 }
 
