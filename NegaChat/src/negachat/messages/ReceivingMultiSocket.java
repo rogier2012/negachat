@@ -109,12 +109,12 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			if (hopCount >= HELLO.MAXHOPS || pakket.getSource() == NegaView.getMyName())	{
 				// Do nothing!
 			} else	{ // (Packet should be forwarded)
-				SendingMultiSocket sendSocket = new SendingMultiSocket();
-				HELLO forward = new HELLO(pakket.toByteArray());
-				// Increment hopCount
-				forward.setHopCount((byte)(pakket.getHopCount() + 1));
-				// Send HELLO!
-				sendSocket.send(forward);
+//				SendingMultiSocket sendSocket = new SendingMultiSocket();
+//				HELLO forward = new HELLO(pakket.toByteArray());
+//				// Increment hopCount
+//				forward.setHopCount((byte)(pakket.getHopCount() + 1));
+//				// Send HELLO!
+//				sendSocket.send(forward);
 			}
 			
 		} else if (packet instanceof RREQ){
