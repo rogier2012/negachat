@@ -15,7 +15,7 @@ public class HashTest {
 		
 		System.out.println(hash.length);
 		System.out.println(packet2.length);
-		
+
 //		System.out.println(new String(hash).equals(new String(received.makeHash(packet2))));
 	}
 }
