@@ -5,6 +5,8 @@ import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 
 @SuppressWarnings("serial")
 public class WhoIsOnline extends JPanel {
@@ -16,6 +18,7 @@ public class WhoIsOnline extends JPanel {
 	 */
 	public WhoIsOnline() {
 		this.setBorder(BorderFactory.createTitledBorder("Online"));
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		buttons = new HashMap<String, JButton>();
 	}
 
