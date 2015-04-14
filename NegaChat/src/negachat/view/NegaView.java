@@ -42,6 +42,7 @@ public class NegaView {
 						window.frame.setVisible(true);
 						window.frame.setResizable(false);
 					} else {
+						System.out.println("FATAL ERROR: exiting program!");
 						System.exit(0);
 					}
 					
