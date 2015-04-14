@@ -3,6 +3,7 @@ package negachat.messages;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
@@ -19,7 +20,7 @@ public class SendingMultiSocket {
 
 	public SendingMultiSocket() {
 		try {
-			group = (Inet4Address)Inet4Address.getByName("228.5.6.7");
+			group = (Inet4Address)InetAddress.getByName("228.5.6.7");
 			sendingSocket = new MulticastSocket(MULTICAST_PORT);
 			sendingSocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), NetworkInterface.getByName("wlan0"));
 		} catch (IOException e) {

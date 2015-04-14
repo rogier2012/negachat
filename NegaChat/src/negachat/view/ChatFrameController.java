@@ -47,6 +47,7 @@ public class ChatFrameController implements Observer {
 		mfController = new MessageFieldController(mField, this);
 	}
 
+	@Override
 	public void update(Observable obs, Object arg) {
 		if (obs == mfController) {
 			cbController.setMessage(mfController.getcbMessage());

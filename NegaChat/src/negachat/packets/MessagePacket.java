@@ -70,6 +70,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 	// [type] [source] [destination] [message] [options] [hash]
 	// 1 byte 16 bytes 16 bytes 128 bytes 1 byte 4 bytes
 
+	@Override
 	public byte[] toByteArray() {
 
 		byte[] dest, src, msg;
@@ -131,10 +132,12 @@ public class MessagePacket extends Packet implements DirectPacket {
 		this.seqnum = seqnum;
 	}
 
+	@Override
 	public String getSource() {
 		return source;
 	}
 
+	@Override
 	public void setSource(String source) {
 		this.source = source;
 	}
@@ -147,6 +150,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 		this.destination = destination;
 	}
 
+	@Override
 	public String getDestination() {
 		return destination;
 	}

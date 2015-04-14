@@ -5,8 +5,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 import negachat.client.ClientHandler;
 import negachat.client.OnlineClients;
@@ -32,6 +32,7 @@ public class NegaView {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					NegaView window = new NegaView();
@@ -78,7 +79,7 @@ public class NegaView {
 		frame.setBounds(100, 100, 550, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		WhoIsOnline online = new WhoIsOnline();
 		frame.getContentPane().add(online, BorderLayout.EAST);

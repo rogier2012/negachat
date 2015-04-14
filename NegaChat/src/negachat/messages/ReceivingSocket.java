@@ -22,6 +22,7 @@ public abstract class ReceivingSocket extends Observable implements Runnable {
 		this.timestamp = timestamp;
 	}
 
+	@Override
 	public abstract void run();
 
 	public abstract void handlePacket(Packet packet); 

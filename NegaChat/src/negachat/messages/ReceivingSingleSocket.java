@@ -67,6 +67,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 		} while (true);
 	}
 
+	@Override
 	public void handlePacket(Packet packet) {
 		if (packet instanceof MessagePacket) {
 			if (myName.equals(((MessagePacket) packet).getDestination())){

@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class CloseTabButton extends JPanel implements ActionListener {
@@ -21,7 +22,7 @@ public class CloseTabButton extends JPanel implements ActionListener {
 	    add(new JLabel(
 	        pane.getTitleAt(index),
 	        pane.getIconAt(index),
-	        JLabel.LEFT));
+	        SwingConstants.LEFT));
 	    Icon closeIcon = new CloseIcon();
 	    JButton btClose = new JButton(closeIcon);
 	    btClose.setPreferredSize(new Dimension(
@@ -30,7 +31,8 @@ public class CloseTabButton extends JPanel implements ActionListener {
 	    btClose.addActionListener(this);
 	    pane.setTabComponentAt(index, this);
 	  }
-	  public void actionPerformed(ActionEvent e) {
+	  @Override
+	public void actionPerformed(ActionEvent e) {
 	    int i = pane.indexOfTabComponent(this);
 	    if (i != -1) {
 	      pane.remove(i);

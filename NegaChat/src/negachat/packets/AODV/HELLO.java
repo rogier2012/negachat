@@ -1,7 +1,6 @@
 package negachat.packets.AODV;
 
 import negachat.client.RoutingTable;
-import negachat.messages.SendingMultiSocket;
 import negachat.packets.Packet;
 
 /*

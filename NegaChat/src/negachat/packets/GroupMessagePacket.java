@@ -87,10 +87,12 @@ public class GroupMessagePacket extends Packet{
 		this.seqNum = seqnum;
 	}
 
+	@Override
 	public String getSource() {
 		return source;
 	}
 
+	@Override
 	public void setSource(String source) {
 		this.source = source;
 	}
@@ -112,6 +114,7 @@ public class GroupMessagePacket extends Packet{
 		return hash;
 	}
 	
+	@Override
 	public byte[] fillMessage(String message) {
 		SymmetricEncrypter aes = new SymmetricEncrypter();
 		if (message.length() < MAX_MESSAGE_LENGTH) {

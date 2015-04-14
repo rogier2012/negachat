@@ -2,7 +2,6 @@ package negachat.presence;
 
 import negachat.client.RoutingTable;
 import negachat.messages.SendingMultiSocket;
-import negachat.packets.Packet;
 import negachat.packets.AODV.HELLO;
 import negachat.view.NegaView;
 

@@ -24,6 +24,7 @@ public class WhoIsOnlineController extends Observable implements ActionListener 
 		online.removeClient(name);
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
 		String name = actionEvent.getActionCommand();
 		handler.addChat(name, this);

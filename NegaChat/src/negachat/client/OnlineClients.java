@@ -31,6 +31,7 @@ public class OnlineClients implements Observer{
 		online.removeClient(client);
 	}
 
+	@Override
 	public void update(Observable obs, Object arg) {
 		if(obs == table){
 			if ((int)arg == 1){

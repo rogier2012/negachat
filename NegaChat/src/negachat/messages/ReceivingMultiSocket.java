@@ -32,13 +32,14 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 		
 		try {
 			multisocket = new MulticastSocket(MULTICAST_PORT);
-			group = (Inet4Address)Inet4Address.getByName("228.5.6.7");
+			group = InetAddress.getByName("228.5.6.7");
 			multisocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), NetworkInterface.getByName("wlan0"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	@Override
 	public void run() {
 		do {
 			byte[] buf = new byte[1000];
@@ -74,6 +75,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 		} while (1 < 2);
 	}
 
+	@Override
 	public void handlePacket(Packet packet) {
 		if (packet instanceof HELLO && !packet.getSource().equals(NegaView.getMyName())){
 			// Cast to HELLO
