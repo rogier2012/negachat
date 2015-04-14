@@ -20,7 +20,7 @@ public class MessageField extends JPanel {
 	 */
 	public MessageField() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {340, 85, 0};
+		gridBagLayout.columnWidths = new int[] {272, 85, 0};
 		gridBagLayout.rowHeights = new int[]{46, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
