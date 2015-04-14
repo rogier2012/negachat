@@ -1,5 +1,7 @@
 package negachat.packets;
 
+import negachat.packets.DirectPacket;
+import negachat.packets.Packet;
 import negachat.view.NegaView;
 
 public class MessagePacket extends Packet implements DirectPacket {
@@ -73,8 +75,8 @@ public class MessagePacket extends Packet implements DirectPacket {
 	@Override
 	public byte[] toByteArray() {
 
-		byte[] dest, src, msg;
-		byte type, opt, hash;
+		byte[] dest, src, msg, hash;
+		byte type, opt;
 		type = TYPE;
 		dest = this.fillNickname(getDestination());
 		src = this.fillNickname(this.getSource());
@@ -95,7 +97,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 		bytePacket[TYPELENGTH + DESTINATION + SOURCE + MESSAGE] = opt;
 		
 
-		hash = (byte) makeHash(bytePacket);
+		hash = new byte[4]; //(byte) makeHash(bytePacket;
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE
 				+ MESSAGE + OPTIONS, HASH);
 		System.out.println("Group message has been sent! \n");
