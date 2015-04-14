@@ -6,7 +6,7 @@ import java.awt.Graphics;
 
 import javax.swing.Icon;
 
-class CloseIcon implements Icon {
+public class CloseIcon implements Icon {
 	public void paintIcon(Component c, Graphics g, int x, int y) {
 		g.setColor(Color.RED);
 		g.drawLine(6, 6, getIconWidth() - 7, getIconHeight() - 7);
