@@ -2,10 +2,11 @@ package negachat.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import java.awt.Insets;
+import javax.swing.text.DefaultCaret;
 
 @SuppressWarnings("serial")
 public class ChatFrame extends JPanel {
@@ -59,6 +60,8 @@ public class ChatFrame extends JPanel {
 		add(scrollPane, gbc_scrollPane);
 		
 		chatbox = new ChatBox();
+		DefaultCaret caret = (DefaultCaret)chatbox.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		scrollPane.setViewportView(chatbox);
 
 		mField = new MessageField();
