@@ -22,7 +22,7 @@ public class SendingMultiSocket {
 		try {
 			group = (Inet4Address)InetAddress.getByName("228.5.6.7");
 			sendingSocket = new MulticastSocket(MULTICAST_PORT);
-			sendingSocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), NetworkInterface.getByName("wlan0"));
+			sendingSocket.joinGroup(group);
 		} catch (IOException e) {
 			System.out.println("Couldn't connect to port " + MULTICAST_PORT);
 		}
