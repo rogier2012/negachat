@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class RREQTest {
 	
+	private String source;
 	private String destination;
 	
 	private byte identifier;
@@ -19,11 +20,14 @@ public class RREQTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		source = "HENKHENKHENKHENK";
 		destination = "BERTBERTBERTBERT";
 		identifier = 29;
 		lifespan = 100;
 		
 		packeti = new RREQ(destination, lifespan, identifier);
+		packeti.setSource(source);
+		packeti.setDestination(destination);
 		byteArray = packeti.toByteArray();
 		packetii = new RREQ(byteArray);
 	}

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class RERRTest {
 	
+	private String source;
 	private String destination;
 	
 	private String[] lostRoutes;
@@ -18,10 +19,12 @@ public class RERRTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		source = "HENKHENKHENKHENK";
 		destination = "BERTBERTBERTBERT";
 		lostRoutes = new String[]{"KEESKEESKEESKEES", "KAASKAASKAASKAAS", "JOOPJOOPJOOPJOOP", "GIJSGIJSGIJSGIJS"};
 		
 		packeti = new RERR(destination, lostRoutes);
+		packeti.setSource(source);
 		byteArray = packeti.toByteArray();
 		packetii = new RERR(byteArray);
 	}
