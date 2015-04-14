@@ -77,6 +77,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	public void handlePacket(Packet packet) {
 		if (packet instanceof HELLO && !packet.getSource().equals(NegaView.getMyName())){
 			// Cast to HELLO
+			System.out.println("A wild chatling appeard \n");
 			HELLO pakket = (HELLO) packet;
 			String source = pakket.getSource();
 			// Do I not know this node?
