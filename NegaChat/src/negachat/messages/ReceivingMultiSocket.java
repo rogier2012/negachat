@@ -103,7 +103,8 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				table.getTable().get(source).set(2, RoutingTable.MAXTTL);
 			}
 			// Is the maximum travel distance for this HELLO packet reached?
-			if (hopCount >= HELLO.MAXHOPS)	{
+			// Did I send this HELLO?
+			if (hopCount >= HELLO.MAXHOPS || pakket.getSource() == NegaView.getMyName())	{
 				// Do nothing!
 			} else	{ // (Packet should be forwarded)
 				SendingMultiSocket sendSocket = new SendingMultiSocket();
