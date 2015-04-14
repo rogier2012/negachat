@@ -18,7 +18,7 @@ public class RoutingTable extends Observable {
 	 */
 	
 	// A route is dropped from the RoutingTable if no HELLO broadcasts have been received from the destination for MAXTTL seconds.
-	public final int MAXTTL = 20;
+	public static final int MAXTTL = 20;
 	
 	/*
 	 * Instance variables

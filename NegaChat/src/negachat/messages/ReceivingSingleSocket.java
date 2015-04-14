@@ -105,11 +105,26 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			RERR pakket = (RERR) packet;
 			int initialsize = table.getTable().keySet().size();
 			
+			// Remove routes for these destinations
 			for (String element : pakket.getLostRoutes())	{
 				table.getTable().get(element).set(0, null);
 				table.getTable().get(element).set(1, 0);
-				table.getTable().get(element).set(0, 0);
+				table.getTable().get(element).set(2, RoutingTable.MAXTTL);
 			}
+			// Clear Routes where these destinations are next hops
+			for (String route : table.getTable().keySet())	{
+				// Loop through nexthops that should be cleared
+				for (String nextHop : pakket.getLostRoutes()){
+					// If the route's nextHop is equal to the nexthop that is to be removed
+					if (table.getNextHop(route) == nextHop)	{
+						// Clear Route
+						table.getTable().get(route).set(0, null);
+						table.getTable().get(route).set(1, 0);
+						table.getTable().get(route).set(2, RoutingTable.MAXTTL);
+					}
+				}
+			}
+			
 			
 			if (initialsize > table.getTable().keySet().size())	{
 				// Forward RERR
