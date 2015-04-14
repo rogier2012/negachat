@@ -23,7 +23,9 @@ public class EncryptionTest {
 		
 		System.out.println("Message 1 = " + message1);
 		System.out.println("Message 2 = " + message2);
-		
+		System.out.println("encrypted message aes 2 " + new String(encryptedMessage2));
+		System.out.println((new String(encryptedMessage2)).length());
+		System.out.println(message2.length());
 		System.out.println("Ron decrypts message1:");
 		System.out.println(new String(Ron.Decrypt(encryptedMessage1ToRon)));
 		
@@ -36,6 +38,11 @@ public class EncryptionTest {
 		System.out.println("Decrypting message 2 with AES implementation");
 		System.out.println(new String(aes.Decrypt(encryptedMessage2)));
 		String hash;
+		
+		
+		
+		System.out.println("---------------------------------");
+		byte[] encrypted = aes.Encrypt(message1.getBytes());
 		
 	}
 }

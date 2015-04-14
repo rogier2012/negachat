@@ -72,8 +72,8 @@ public class MessagePacket extends Packet implements DirectPacket {
 
 	public byte[] toByteArray() {
 
-		byte[] dest, src, msg, hash;
-		byte type, opt;
+		byte[] dest, src, msg;
+		byte type, opt, hash;
 		type = TYPE;
 		dest = this.fillNickname(getDestination());
 		src = this.fillNickname(this.getSource());
@@ -94,7 +94,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 		bytePacket[TYPELENGTH + DESTINATION + SOURCE + MESSAGE] = opt;
 		
 
-		hash = makeHash(bytePacket);
+		hash = (byte) makeHash(bytePacket);
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE
 				+ MESSAGE + OPTIONS, HASH);
 		System.out.println("Group message has been sent! \n");
@@ -114,13 +114,13 @@ public class MessagePacket extends Packet implements DirectPacket {
 		return packet;
 	}
 
-	public byte[] makeHash(byte[] bytePacket) {
+	public int makeHash(byte[] bytePacket) {
 		hash = new byte[4];
 		int hashCode = bytePacket.hashCode();
-		byte[] hash = new byte[] { (byte) ((hashCode >> 24) & 0xFF),
-				(byte) ((hashCode >> 16) & 0xFF),
-				(byte) ((hashCode >> 8) & 0xFF), (byte) (hashCode & 0xFF) };
-		return hash;
+//		byte[] hash = new byte[] { (byte) ((hashCode >> 24) & 0xFF),
+//				(byte) ((hashCode >> 16) & 0xFF),
+//				(byte) ((hashCode >> 8) & 0xFF), (byte) (hashCode & 0xFF) };
+		return hashCode;
 	}
 
 	public byte getSeqNum() {

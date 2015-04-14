@@ -2,10 +2,12 @@ package Tests;
 
 import negachat.packets.MessagePacket;
 
-public class CreatePacketTest {
+public class HashTest {
 	public static void main(String[] args) {
 		MessagePacket packet = new MessagePacket("tekst");
 		packet.setMessage("ditiseentest!");
+		packet.toByteArray();
+		
 		MessagePacket received = new MessagePacket(packet.toByteArray());
 		
 		byte[] hash = received.retrieveHash(packet.toByteArray());
@@ -14,10 +16,7 @@ public class CreatePacketTest {
 		System.out.println(hash.length);
 		System.out.println(packet2.length);
 		
-		
-		
-
-		System.out.println(new String(hash).equals(new String(received.makeHash(packet2))));
+//		System.out.println(new String(hash).equals(new String(received.makeHash(packet2))));
 	}
 }
 
