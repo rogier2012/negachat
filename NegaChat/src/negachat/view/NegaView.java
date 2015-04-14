@@ -14,12 +14,15 @@ import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
 import negachat.presence.PresenceFlooder;
 import negachat.presence.TableDecay;
+import javax.swing.JPanel;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.GridBagLayout;
 
 public class NegaView {
 
 	private JFrame frame;
 	private static String myName;
-	private WhoIsOnline online;
 	private WhoIsOnlineController wioController;
 	
 	public static final String GROUP_CHAT_NAME = "All";
@@ -28,6 +31,7 @@ public class NegaView {
 
 	/**
 	 * Launch the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -50,24 +54,26 @@ public class NegaView {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public NegaView() {
-		myName = JOptionPane.showInputDialog(frame,"Please enter a nickname between 3 and 14 characters", null);
-		if (myName != null){
-			while (myName.length() > 14|| myName.length() < 4){
-				if(myName.length() < 4){
-					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
-				} else{
-					myName = JOptionPane.showInputDialog(frame,"Please don't use more than 14 characters", null);
-				}
-				
-			} 
-			initialize();
-		}
+//		myName = JOptionPane.showInputDialog(frame,"Please enter a nickname between 3 and 14 characters", null);
+//		if (myName != null){
+//			while (myName.length() > 14|| myName.length() < 4){
+//				if(myName.length() < 4){
+//					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
+//				} else{
+//					myName = JOptionPane.showInputDialog(frame,"Please don't use more than 14 characters", null);
+//				}
+//				
+//			} 
+		initialize();
+//		}
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
 		frame = new JFrame(NEGA_CHAT);
@@ -76,6 +82,8 @@ public class NegaView {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		WhoIsOnline online = new WhoIsOnline();
+		frame.getContentPane().add(online, BorderLayout.EAST);
 		RoutingTable routingTable = new RoutingTable();
 		PresenceFlooder flooder = new PresenceFlooder(routingTable);
 		TableDecay tabledecay = new TableDecay(routingTable);
@@ -85,21 +93,27 @@ public class NegaView {
 		threadt.start();
 		
 		
+		
 		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(routingTable);
 		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket(routingTable);
 		Thread threadrs = new Thread(rssocket);
 		Thread threadrm = new Thread(rmsocket);
-//		threadrs.start();
+		threadrs.start();
 		threadrm.start();
-		online = new WhoIsOnline();
 		ClientHandler handler = new ClientHandler(tabbedPane, rssocket, routingTable);
 		wioController = new WhoIsOnlineController(online, handler);
+		
+		Component horizontalStrut = Box.createHorizontalStrut(50);
+		online.add(horizontalStrut);
 		ChatFrame cFrame1 = new ChatFrame();
+		GridBagLayout gridBagLayout = (GridBagLayout) cFrame1.getLayout();
+		gridBagLayout.columnWidths = new int[] {210, 0};
 		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, GROUP_CHAT_NAME, rmsocket, routingTable);
 		wioController.addObserver(cFrameControl1);
 		rmsocket.addObserver(cFrameControl1);
 		tabbedPane.add(GROUP_CHAT_NAME, cFrame1);
-		tabbedPane.add(WHO_IS_ONLINE, online);
+		
+		
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);
 		
