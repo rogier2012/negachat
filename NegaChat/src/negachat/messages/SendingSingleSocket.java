@@ -40,10 +40,10 @@ public class SendingSingleSocket {
 				}
 			}
 		}
-		
+		System.out.println("zemm");
 		address = table.getIP(table.getNextHop(packet.getDestination()));
 		byte[] bytePacket = packet.toByteArray();
-		DatagramPacket toSend = new DatagramPacket(bytePacket, bytePacket.length, address, UDP_PORT);
+		DatagramPacket toSend = new DatagramPacket(bytePacket, bytePacket.length, address, ReceivingSingleSocket.UDP_PORT);
 		try {
 			sendingSocket = new DatagramSocket(UDP_PORT);
 			sendingSocket.send(toSend);		

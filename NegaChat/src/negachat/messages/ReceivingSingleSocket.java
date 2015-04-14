@@ -17,7 +17,7 @@ import negachat.view.NegaView;
 
 public class ReceivingSingleSocket extends ReceivingSocket {
 	private DatagramSocket clientsocket;
-	public final int UDP_PORT = 6116;
+	public static final int UDP_PORT = 6116;
 	private String myName;
 	
 
