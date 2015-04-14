@@ -82,7 +82,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			HELLO pakket = (HELLO) packet;
 			String source = pakket.getSource();
 			// Do I not know this node?
-			if (!table.getTable().containsKey(source))	{
+			if (!table.getTable().containsKey(source) || !source.equals(NegaView.getMyName()))	{
 				// TODO moet nog aangepast worden
 				// Source is nu altijd de nexthop!
 				table.addDestination(source, source, 0);

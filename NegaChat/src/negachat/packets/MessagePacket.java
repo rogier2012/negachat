@@ -43,7 +43,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 		this.setDestination(this.removePadding(new String(destArray)));
 
 		byte[] messageArray = new byte[128];
-		System.arraycopy(packetArray, TYPELENGTH + SOURCE, messageArray, 0,
+		System.arraycopy(packetArray, TYPELENGTH + SOURCE + DESTINATION, messageArray, 0,
 				MESSAGE);
 		this.setMessage(this.removePadding(new String(messageArray)));
 
