@@ -7,7 +7,6 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import negachat.client.ClientHandler;
 import negachat.client.RoutingTable;
 import negachat.packets.DirectPacket;
 import negachat.packets.MessagePacket;
@@ -18,6 +17,7 @@ import negachat.view.NegaView;
 
 public class ReceivingSingleSocket extends ReceivingSocket {
 	private DatagramSocket clientsocket;
+	private DatagramPacket recv;
 	public static final int UDP_PORT = 6116;
 	private String myName;
 	
@@ -30,13 +30,14 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 		} catch (SocketException | UnknownHostException e) {
 			e.printStackTrace();
 		}
+		byte[] buf = new byte[1000];
+		recv = new DatagramPacket(buf, 166);
 	}
 
 	@Override
 	public void run() {
 		do {
-			byte[] buf = new byte[1000];
-			DatagramPacket recv = new DatagramPacket(buf, 166);
+			
 			try {
 				clientsocket.receive(recv);
 			} catch (IOException e) {
@@ -62,7 +63,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 				RERR packet = new RERR(recv.getData());
 				handlePacket(packet);
 			}
-
+			
 		} while (true);
 	}
 

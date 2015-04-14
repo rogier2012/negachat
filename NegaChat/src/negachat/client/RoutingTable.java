@@ -86,12 +86,9 @@ public class RoutingTable extends Observable {
 		table.get(destination).add(nexthop);
 		table.get(destination).add(hopCount);
 		table.get(destination).add(MAXTTL);	
-		System.out.println("Destination added to table enzo :)");
 		this.setChanged();
 		this.notifyObservers(1);
-		for (String namen : table.keySet() ){
-			System.out.println(namen);
-		}
+		
 	}
 	
 	public void removeDestination(String destination){
