@@ -122,6 +122,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			String destination = pakket.getDestination();
 			
 			// TODO -- UPDATE ROUTES
+			// Not possible atm since we dont know who forwarded the RREQ
 			
 			// Am I the requested node? 
 			if (NegaView.getMyName() == destination)	{
