@@ -10,7 +10,7 @@ import negachat.view.NegaView;
  */
 public class PresenceFlooder implements Runnable {
 	private RoutingTable table;
-	public static final int DELAY = 5000;
+	public static final int DELAY = 50000;
 
 	public PresenceFlooder(RoutingTable table){
 		this.table = table;
@@ -19,18 +19,19 @@ public class PresenceFlooder implements Runnable {
 	@Override
 	public void run() {
 		do {
-			// Wait before new transmission
-			try {
-				Thread.sleep(DELAY);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			// Send new HELLO packet
 			HELLO hello = new HELLO(NegaView.getMyName(),table);
 			
 			
 			SendingMultiSocket sock = new SendingMultiSocket();
 			sock.send(hello);
+			// Wait before new transmission
+			try {
+				Thread.sleep(DELAY);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 		} while (true);
 	}
 }
