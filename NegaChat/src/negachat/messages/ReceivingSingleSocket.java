@@ -63,7 +63,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 				RERR packet = new RERR(recv.getData());
 				handlePacket(packet);
 			}
-
+			
 		} while (true);
 	}
 
