@@ -1,3 +1,32 @@
+package Tests;
+
+import negachat.packets.MessagePacket;
+
+public class CreatePacketTest {
+	public static void main(String[] args) {
+		MessagePacket packet = new MessagePacket("tekst");
+		packet.setMessage("ditiseentest!");
+		MessagePacket received = new MessagePacket(packet.toByteArray());
+		System.out.println(received.getHash());
+		System.out.println(received.makeHash());
+		System.out.println(received.getHash().equals(received.makeHash()));
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //package Tests;
 //
 //import negachat.packets.CreatePacket;

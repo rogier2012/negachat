@@ -46,8 +46,8 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			}
 			if (recv.getData()[0] == MessagePacket.TYPE) {
 				MessagePacket packet = new MessagePacket(recv.getData());
+				System.out.println("MessagePacket received!");
 				handlePacket(packet);
-				System.out.println("receive");
 			} else if (recv.getData()[0] == RREP.TYPE) {
 				RREP packet = new RREP(recv.getData());
 				if (packet.getDestination().equals(NegaView.getMyName())){
@@ -63,7 +63,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 				handlePacket(packet);
 			}
 
-		} while (1 < 2);
+		} while (true);
 	}
 
 	public void handlePacket(Packet packet) {
