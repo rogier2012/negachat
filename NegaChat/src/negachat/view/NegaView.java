@@ -105,7 +105,7 @@ public class NegaView {
 		wioController.addObserver(cFrameControl1);
 		rmsocket.addObserver(cFrameControl1);
 		tabbedPane.add(GROUP_CHAT_NAME, cFrame1);
-		tabbedPane.setComponentAt(0, new ButtonTabComponent(tabbedPane));
+//		tabbedPane.setComponentAt(0, new ButtonTabComponent(tabbedPane));
 		
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);
