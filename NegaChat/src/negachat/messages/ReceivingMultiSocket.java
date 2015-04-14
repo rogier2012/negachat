@@ -108,7 +108,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				// Do nothing!
 			} else	{ // (Packet should be forwarded)
 				SendingMultiSocket sendSocket = new SendingMultiSocket();
-				HELLO forward = pakket;
+				HELLO forward = new HELLO(pakket.toByteArray());
 				// Increment hopCount
 				forward.setHopCount((byte)(pakket.getHopCount() + 1));
 				// Send HELLO!
@@ -122,6 +122,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			String destination = pakket.getDestination();
 			
 			// TODO -- UPDATE ROUTES
+			// Not possible atm since we dont know who forwarded the RREQ
 			
 			// Am I the requested node? 
 			if (NegaView.getMyName() == destination)	{
