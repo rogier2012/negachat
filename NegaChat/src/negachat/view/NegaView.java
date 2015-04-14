@@ -105,8 +105,8 @@ public class NegaView {
 		ClientHandler handler = new ClientHandler(tabbedPane, rssocket, routingTable);
 		wioController = new WhoIsOnlineController(online, handler);
 		
-		Component horizontalStrut = Box.createHorizontalStrut(150);
-		online.add(horizontalStrut);
+//		Component horizontalStrut = Box.createHorizontalStrut(350);
+//		online.add(horizontalStrut);
 		ChatFrame cFrame1 = new ChatFrame();
 		GridBagLayout gridBagLayout = (GridBagLayout) cFrame1.getLayout();
 		gridBagLayout.columnWidths = new int[] {210, 0};
@@ -114,7 +114,8 @@ public class NegaView {
 		wioController.addObserver(cFrameControl1);
 		rmsocket.addObserver(cFrameControl1);
 		tabbedPane.add(GROUP_CHAT_NAME, cFrame1);
-		
+//		tabbedPane.add("online", online);
+		tabbedPane.add("onzin", new JPanel());
 		
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);

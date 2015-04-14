@@ -32,7 +32,6 @@ public class OnlineClients implements Observer{
 	}
 
 	public void update(Observable obs, Object arg) {
-		System.out.println("ja");
 		if(obs == table){
 			if ((int)arg == 1){
 				this.addClient(table.getAddedDestination());
