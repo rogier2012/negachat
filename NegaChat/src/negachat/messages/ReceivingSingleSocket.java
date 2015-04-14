@@ -77,7 +77,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 //				}
 			}
 			
-		} else if (packet instanceof RREP){
+		} else if (packet instanceof RREP){ 
 			// Cast to RREP
 			RREP pakket = (RREP) packet;
 			System.out.println("RREP arrived!");

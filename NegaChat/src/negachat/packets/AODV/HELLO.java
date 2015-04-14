@@ -35,7 +35,7 @@ public class HELLO extends Packet {
 	public HELLO(String source, RoutingTable table) {
 		this.myIP = table.getMyIP();
 		this.setType(TYPE);
-		hopCount = 0;
+		hopCount = 0; 
 	}
 	
 	public HELLO(byte[] byteArray)	{

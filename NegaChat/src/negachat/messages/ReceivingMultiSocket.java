@@ -122,7 +122,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			
 			// TODO -- UPDATE ROUTES
 			
-			// Am I the requested node?
+			// Am I the requested node? 
 			if (NegaView.getMyName() == destination)	{
 				// Send reply
 				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
