@@ -6,9 +6,18 @@ public class CreatePacketTest {
 	public static void main(String[] args) {
 		MessagePacket packet = new MessagePacket("tekst");
 		packet.setMessage("ditiseentest!");
-		MessagePacket received = new MessagePacket(packet.toByteArray(), true);
+		MessagePacket received = new MessagePacket(packet.toByteArray());
+		
+		byte[] hash = received.retrieveHash(packet.toByteArray());
+		byte[] packet2 = received.packetWithoutHash(packet.toByteArray());
+		
+		System.out.println(hash.length);
+		System.out.println(packet2.length);
+		
+		
+		
 
-		System.out.println(new String(received.getHash()).equals(new String(received.makeHash())));
+		System.out.println(new String(hash).equals(new String(received.makeHash(packet2))));
 	}
 }
 

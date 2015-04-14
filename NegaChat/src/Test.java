@@ -24,7 +24,7 @@ public class Test {
 	public static void main(String[] args) {
 		NetworkInterface in;
 		try {
-			in = NetworkInterface.getByName("wlan0");
+			in = NetworkInterface.getByName("en1");
 			Enumeration<InetAddress> hallo = in.getInetAddresses();
 			System.out.println(hallo.nextElement());
 			System.out.println(hallo.nextElement());

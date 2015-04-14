@@ -2,8 +2,11 @@ package negachat.messages;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
@@ -19,16 +22,18 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	private InetAddress group;
 	private MulticastSocket multisocket;
 	
+	
 	private HashMap<String, Byte> lastSeqNumber = new HashMap<String, Byte>();
 	
 	public static final int MULTICAST_PORT = 6112;
 	
 	public ReceivingMultiSocket(RoutingTable table){
 		super(table);
+		
 		try {
 			multisocket = new MulticastSocket(MULTICAST_PORT);
-			group = InetAddress.getByName("228.5.6.7");
-			multisocket.joinGroup(group);
+			group = (Inet4Address)Inet4Address.getByName("228.0.0.0");
+			multisocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), NetworkInterface.getByName("wlan0"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

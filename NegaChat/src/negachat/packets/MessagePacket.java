@@ -27,30 +27,6 @@ public class MessagePacket extends Packet implements DirectPacket {
 		this.source = NegaView.getMyName();
 		this.destination = destination;
 	}
-	
-	public MessagePacket(byte[] packetArray, boolean checkHash) {
-		super(packetArray);
-		this.setType(packetArray[0]);
-		byte[] sourceArray = new byte[16];
-		System.arraycopy(packetArray, TYPELENGTH, sourceArray, 0, SOURCE);
-		this.setSource(new String(sourceArray));
-
-		byte[] destArray = new byte[16];
-		System.arraycopy(packetArray, TYPELENGTH + SOURCE, destArray, 0,
-				DESTINATION);
-		this.setDestination(new String(destArray));
-
-		byte[] messageArray = new byte[128];
-		System.arraycopy(packetArray, TYPELENGTH + SOURCE, messageArray, 0,
-				MESSAGE);
-		this.setMessage(new String(messageArray));
-
-		this.setSeqNum(packetArray[TYPELENGTH + + DESTINATION +SOURCE + MESSAGE]);
-		byte[] hashArray = new byte[4];
-		System.arraycopy(packetArray, TYPELENGTH + SOURCE + MESSAGE + OPTIONS,
-				hashArray, 0, HASH);
-		setHash(hashArray);
-	}
 
 	public MessagePacket(byte[] packetArray) {
 		super(packetArray);
@@ -103,6 +79,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 		src = this.fillNickname(this.getSource());
 		msg = this.fillMessage(this.getMessage());
 		opt = this.getSeqNum();
+		
 
 		byte[] bytePacket = new byte[TOTAL];
 		bytePacket[0] = type;
@@ -116,18 +93,30 @@ public class MessagePacket extends Packet implements DirectPacket {
 
 		bytePacket[TYPELENGTH + DESTINATION + SOURCE + MESSAGE] = opt;
 		
-		hash = makeHash();
 
+		hash = makeHash(bytePacket);
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE
 				+ MESSAGE + OPTIONS, HASH);
 
 		System.out.println("length: " + bytePacket.length);
 		return bytePacket;
 	}
+	
+	public byte[] retrieveHash(byte[] packetArray) {
+		byte[] hash = new byte[4];
+		System.arraycopy(packetArray, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, hash, 0, HASH);
+		return hash;
+	}
+	
+	public byte[] packetWithoutHash(byte[] packetArray) {
+		byte[] packet = new byte[162];
+		System.arraycopy(packetArray, 0, packet, 0, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS);
+		return packet;
+	}
 
-	public byte[] makeHash() {
+	public byte[] makeHash(byte[] bytePacket) {
 		hash = new byte[4];
-		int hashCode = this.hashCode();
+		int hashCode = bytePacket.hashCode();
 		byte[] hash = new byte[] { (byte) ((hashCode >> 24) & 0xFF),
 				(byte) ((hashCode >> 16) & 0xFF),
 				(byte) ((hashCode >> 8) & 0xFF), (byte) (hashCode & 0xFF) };

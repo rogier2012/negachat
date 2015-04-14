@@ -1,6 +1,8 @@
 package negachat.presence;
 
 import negachat.client.RoutingTable;
+import negachat.messages.SendingMultiSocket;
+import negachat.packets.Packet;
 import negachat.packets.AODV.HELLO;
 import negachat.view.NegaView;
 
@@ -26,8 +28,11 @@ public class PresenceFlooder implements Runnable {
 			}
 			// Send new HELLO packet
 			HELLO hello = new HELLO(NegaView.getMyName(),table);
-			hello.send(hello);
-			System.out.println("\nHELLO sent!");
+			
+			
+			SendingMultiSocket sock = new SendingMultiSocket();
+			sock.send(hello);
+			System.out.println("HELLO sent!");
 		} while (true);
 	}
 }
