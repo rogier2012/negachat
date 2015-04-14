@@ -57,7 +57,6 @@ public abstract class Packet {
 	
 	public byte[] fillNickname(String nickname) {
 		String myName = nickname;
-		System.out.println("before padding: " + myName);
 		if (myName.length() < MAX_NAME_LENGTH) {
 			int length = myName.length();
 			int todo = MAX_NAME_LENGTH - length;
@@ -65,7 +64,6 @@ public abstract class Packet {
 				myName += "=";
 			}
 		}
-		System.out.println("After padding: " + myName);
 		return myName.getBytes();
 	}
 	

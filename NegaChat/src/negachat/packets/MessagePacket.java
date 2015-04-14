@@ -19,19 +19,45 @@ public class MessagePacket extends Packet implements DirectPacket {
 			+ OPTIONS + HASH;
 
 	private byte seqnum;
-	private String source, destination, message, hash;
+	private String source, destination, message;
+	byte[] hash;
 
 	public MessagePacket(String destination) {
 		super();
 		this.source = NegaView.getMyName();
 		this.destination = destination;
-		this.destination = destination;
+	}
+	
+	public MessagePacket(byte[] packetArray, boolean checkHash) {
+		super(packetArray);
+		this.setType(packetArray[0]);
+		byte[] sourceArray = new byte[16];
+		System.arraycopy(packetArray, TYPELENGTH, sourceArray, 0, SOURCE);
+		this.setSource(new String(sourceArray));
+
+		byte[] destArray = new byte[16];
+		System.arraycopy(packetArray, TYPELENGTH + SOURCE, destArray, 0,
+				DESTINATION);
+		this.setDestination(new String(destArray));
+
+		byte[] messageArray = new byte[128];
+		System.arraycopy(packetArray, TYPELENGTH + SOURCE, messageArray, 0,
+				MESSAGE);
+		this.setMessage(new String(messageArray));
+
+		this.setSeqNum(packetArray[TYPELENGTH + + DESTINATION +SOURCE + MESSAGE]);
+		byte[] hashArray = new byte[4];
+		System.arraycopy(packetArray, TYPELENGTH + SOURCE + MESSAGE + OPTIONS,
+				hashArray, 0, HASH);
+		setHash(hashArray);
 	}
 
 	public MessagePacket(byte[] packetArray) {
 		super(packetArray);
 		this.setType(packetArray[0]);
 		byte[] sourceArray = new byte[16];
+
+
 		System.arraycopy(packetArray, TYPELENGTH, sourceArray, 0, SOURCE);
 		this.setSource(this.removePadding(new String(sourceArray)));
 
@@ -46,10 +72,12 @@ public class MessagePacket extends Packet implements DirectPacket {
 		this.setMessage(this.removePadding(new String(messageArray)));
 
 		this.setSeqNum(packetArray[TYPELENGTH + + DESTINATION +SOURCE + MESSAGE]);
+		
+		
 		byte[] hashArray = new byte[4];
 		System.arraycopy(packetArray, TYPELENGTH + SOURCE + MESSAGE + OPTIONS,
 				hashArray, 0, HASH);
-		setHash(new String(hashArray));
+		setHash(hashArray);
 	}
 
 	// TODO
@@ -75,7 +103,6 @@ public class MessagePacket extends Packet implements DirectPacket {
 		src = this.fillNickname(this.getSource());
 		msg = this.fillMessage(this.getMessage());
 		opt = this.getSeqNum();
-		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
 		bytePacket[0] = type;
@@ -88,22 +115,23 @@ public class MessagePacket extends Packet implements DirectPacket {
 				MESSAGE);
 
 		bytePacket[TYPELENGTH + DESTINATION + SOURCE + MESSAGE] = opt;
+		
+		hash = makeHash();
 
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE
 				+ MESSAGE + OPTIONS, HASH);
 
 		System.out.println("length: " + bytePacket.length);
-		System.out.println("bytePacket string: " + new String(bytePacket));
 		return bytePacket;
 	}
 
-	public String makeHash() {
-		hash = "";
+	public byte[] makeHash() {
+		hash = new byte[4];
 		int hashCode = this.hashCode();
 		byte[] hash = new byte[] { (byte) ((hashCode >> 24) & 0xFF),
 				(byte) ((hashCode >> 16) & 0xFF),
 				(byte) ((hashCode >> 8) & 0xFF), (byte) (hashCode & 0xFF) };
-		return new String(hash);
+		return hash;
 	}
 
 	public byte getSeqNum() {
@@ -138,11 +166,11 @@ public class MessagePacket extends Packet implements DirectPacket {
 		return message;
 	}
 
-	public void setHash(String hash) {
+	public void setHash(byte[] hash) {
 		this.hash = hash;
 	}
 
-	public String getHash() {
+	public byte[] getHash() {
 		return hash;
 	}
 }

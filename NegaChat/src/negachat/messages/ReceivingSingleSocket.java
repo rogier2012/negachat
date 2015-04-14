@@ -46,8 +46,8 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			}
 			if (recv.getData()[0] == MessagePacket.TYPE) {
 				MessagePacket packet = new MessagePacket(recv.getData());
+				System.out.println("MessagePacket received!");
 				handlePacket(packet);
-				System.out.println("receive");
 			} else if (recv.getData()[0] == RREP.TYPE) {
 				RREP packet = new RREP(recv.getData());
 				if (packet.getDestination().equals(NegaView.getMyName())){
@@ -63,7 +63,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 				handlePacket(packet);
 			}
 
-		} while (1 < 2);
+		} while (true);
 	}
 
 	public void handlePacket(Packet packet) {
@@ -80,23 +80,28 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			}
 			
 		} else if (packet instanceof RREP){
+			// Cast to RREP
 			RREP pakket = (RREP) packet;
 			String source = pakket.getSource();
-			String destination = pakket.getDestination();
 			byte hopCount = pakket.getHopcount();
 			String lastSource = pakket.getLastSource();
 			
+			// Update Table
 			table.addDestination(source, lastSource, hopCount);
 			
+			// Did I send the request for this RREP?
 			if (table.getRequestedDestinations().contains(source))	{
+				// Remove from destinations that are still in request
 				table.getRequestedDestinations().remove(source);
-			} else	{
+			} else	{ // (I did not send the RREQ for this RREP)
+				// Forward RREP to destination
 				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
 				((RREP) packet).setLastSource(NegaView.getMyName());
 				sendSocket.sendPacket((DirectPacket)packet);
 			}
 			
 		} else if (packet instanceof RERR){
+			// Cast to RERR
 			RERR pakket = (RERR) packet;
 			int initialsize = table.getTable().keySet().size();
 			
