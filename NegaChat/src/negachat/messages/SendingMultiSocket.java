@@ -21,7 +21,7 @@ public class SendingMultiSocket {
 		try {
 			group = (Inet4Address)Inet4Address.getByName("228.5.6.7");
 			sendingSocket = new MulticastSocket(MULTICAST_PORT);
-			sendingSocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), NetworkInterface.getByName("en1"));
+			sendingSocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), NetworkInterface.getByName("wlan0"));
 		} catch (IOException e) {
 			System.out.println("Couldn't connect to port " + MULTICAST_PORT);
 		}

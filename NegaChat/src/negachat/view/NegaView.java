@@ -1,8 +1,11 @@
 package negachat.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.GridBagLayout;
 
+import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -14,10 +17,6 @@ import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
 import negachat.presence.PresenceFlooder;
 import negachat.presence.TableDecay;
-import javax.swing.JPanel;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.GridBagLayout;
 
 public class NegaView {
 
@@ -58,18 +57,18 @@ public class NegaView {
 	 * @wbp.parser.entryPoint
 	 */
 	public NegaView() {
-		myName = JOptionPane.showInputDialog(frame,"Please enter a nickname between 3 and 14 characters", null);
-		if (myName != null){
-			while (myName.length() > 14|| myName.length() < 4){
-				if(myName.length() < 4){
-					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
-				} else{
-					myName = JOptionPane.showInputDialog(frame,"Please don't use more than 14 characters", null);
-				}
-				
-			} 
+//		myName = JOptionPane.showInputDialog(frame,"Please enter a nickname between 3 and 14 characters", null);
+//		if (myName != null){
+//			while (myName.length() > 14|| myName.length() < 4){
+//				if(myName.length() < 4){
+//					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
+//				} else{
+//					myName = JOptionPane.showInputDialog(frame,"Please don't use more than 14 characters", null);
+//				}
+//				
+//			} 
 		initialize();
-		}
+//		}
 	}
 
 	/**
@@ -104,21 +103,16 @@ public class NegaView {
 		threadrm.start();
 		ClientHandler handler = new ClientHandler(tabbedPane, rssocket, routingTable);
 		wioController = new WhoIsOnlineController(online, handler);
-		
-		Component horizontalStrut = Box.createHorizontalStrut(150);
-		online.add(horizontalStrut);
+
 		ChatFrame cFrame1 = new ChatFrame();
-		GridBagLayout gridBagLayout = (GridBagLayout) cFrame1.getLayout();
-		gridBagLayout.columnWidths = new int[] {210, 0};
 		ChatFrameController cFrameControl1 = new ChatFrameController(cFrame1, GROUP_CHAT_NAME, rmsocket, routingTable);
 		wioController.addObserver(cFrameControl1);
 		rmsocket.addObserver(cFrameControl1);
 		tabbedPane.add(GROUP_CHAT_NAME, cFrame1);
-		
+//		tabbedPane.add("online", online);
 		
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);
-		
 	}
 	
 	public static String getMyName(){

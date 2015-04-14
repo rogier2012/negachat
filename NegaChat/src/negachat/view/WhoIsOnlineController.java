@@ -18,6 +18,7 @@ public class WhoIsOnlineController extends Observable implements ActionListener 
 	public void addClient(String name) {
 		online.addClient(name);
 		online.getButton(name).addActionListener(this);
+		online.repaint();
 	}
 	
 	public void removeClient(String name){
