@@ -10,7 +10,7 @@ import negachat.view.NegaView;
  */
 public class PresenceFlooder implements Runnable {
 	private RoutingTable table;
-	public static final int DELAY = 50000;
+	public static final int DELAY = 5000;
 
 	public PresenceFlooder(RoutingTable table){
 		this.table = table;
