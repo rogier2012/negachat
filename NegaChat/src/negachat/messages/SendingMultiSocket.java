@@ -2,24 +2,27 @@ package negachat.messages;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.MulticastSocket;
+import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 
 import negachat.packets.Packet;
 
 public class SendingMultiSocket {
 
-	private MulticastSocket sendingSocket;
+	private DatagramSocket sendingSocket;
 	
-	public static final int MULTICAST_PORT = 6114;
+	public static final int MULTICAST_PORT = 6115;
 	
-	private InetAddress group;
+	private Inet4Address group;
 
 	public SendingMultiSocket() {
 		try {
-			group = InetAddress.getByName("228.5.6.7");
-			sendingSocket = new MulticastSocket(MULTICAST_PORT);
-			sendingSocket.joinGroup(group);
+			group = (Inet4Address)Inet4Address.getByName("228.5.6.7");
+			sendingSocket = new DatagramSocket(MULTICAST_PORT);
+//			sendingSocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), NetworkInterface.getByName("en1"));
 		} catch (IOException e) {
 			System.out.println("Couldn't connect to port " + MULTICAST_PORT);
 		}
@@ -27,8 +30,11 @@ public class SendingMultiSocket {
 	
 	public void send(Packet packet) {
 		byte[] bytePacket = packet.toByteArray();
-		DatagramPacket dPacket = new DatagramPacket(bytePacket, bytePacket.length,
-				group, ReceivingMultiSocket.MULTICAST_PORT);
+		DatagramPacket dPacket = null;
+		
+		dPacket = new DatagramPacket(bytePacket, bytePacket.length,
+					group, ReceivingMultiSocket.MULTICAST_PORT);
+		
 		try {
 			sendingSocket.send(dPacket);
 			System.out.println("Packet sent!");
