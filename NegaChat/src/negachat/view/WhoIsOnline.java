@@ -3,9 +3,9 @@ package negachat.view;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.BoxLayout;
 
 @SuppressWarnings("serial")
 public class WhoIsOnline  extends JPanel{

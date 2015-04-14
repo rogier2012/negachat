@@ -75,12 +75,12 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	}
 
 	public void handlePacket(Packet packet) {
-		if (packet instanceof HELLO){
+		if (packet instanceof HELLO && !packet.getSource().equals(NegaView.getMyName())){
 			// Cast to HELLO
 			HELLO pakket = (HELLO) packet;
 			String source = pakket.getSource();
 			// Do I not know this node?
-			if (!table.getTable().containsKey(source) || !source.equals(NegaView.getMyName()))	{
+			if (!table.getTable().containsKey(source) )	{
 				// TODO moet nog aangepast worden
 				// Source is nu altijd de nexthop!
 				table.addDestination(source, source, 0);

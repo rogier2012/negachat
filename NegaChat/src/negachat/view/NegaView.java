@@ -91,8 +91,6 @@ public class NegaView {
 		Thread threadt = new Thread(tabledecay);
 		threadt.start();
 		
-		
-		
 		ReceivingSingleSocket rssocket = new ReceivingSingleSocket(routingTable);
 		ReceivingMultiSocket rmsocket = new ReceivingMultiSocket(routingTable);
 		Thread threadrs = new Thread(rssocket);
@@ -107,7 +105,7 @@ public class NegaView {
 		wioController.addObserver(cFrameControl1);
 		rmsocket.addObserver(cFrameControl1);
 		tabbedPane.add(GROUP_CHAT_NAME, cFrame1);
-		tabbedPane.add("online", new JPanel());
+//		tabbedPane.add("online", new JPanel());
 		
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);
