@@ -80,25 +80,40 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			System.out.println("A wild chatling appeard \n");
 			HELLO pakket = (HELLO) packet;
 			String source = pakket.getSource();
+			byte hopCount = pakket.getHopCount();
 			// Do I not know this node?
-			if (!table.getTable().containsKey(source) )	{
-				// TODO moet nog aangepast worden
-				// Source is nu altijd de nexthop!
-				table.addDestination(source, source, 0);
+			if (!table.getTable().containsKey(source) )	{		
+				// Update Table
+				// Check for neighbour
+				if (pakket.getHopCount() == 0)	{
+					// Add neighbour to table
+					table.addDestination(source, source, RoutingTable.MAXTTL);
+				} else { // (No neighbour)
+					// Add the destination's existence
+					table.addDestination(source, null, hopCount);
+				}
+				// Add the source's InetAddress to table
 				try {
 					table.add(source, InetAddress.getByAddress(((HELLO)packet).getMyIP()));
 				} catch (UnknownHostException e) {
-
-					// TODO Auto-generated catch block
 //					e.printStackTrace();
 				}
-				
 			} else { // (I do know of this node)
 				// Reset the route TTL
-				table.getTable().get(source).set(2, table.MAXTTL);
+				table.getTable().get(source).set(2, RoutingTable.MAXTTL);
 			}
-			
-			// TODO -- forward HELLO!
+			// Is the maximum travel distance for this HELLO packet reached?
+			// Did I send this HELLO?
+			if (hopCount >= HELLO.MAXHOPS || pakket.getSource() == NegaView.getMyName())	{
+				// Do nothing!
+			} else	{ // (Packet should be forwarded)
+				SendingMultiSocket sendSocket = new SendingMultiSocket();
+				HELLO forward = pakket;
+				// Increment hopCount
+				forward.setHopCount((byte)(pakket.getHopCount() + 1));
+				// Send HELLO!
+				sendSocket.send(forward);
+			}
 			
 		} else if (packet instanceof RREQ){
 			// Cast to RREQ
@@ -108,7 +123,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			
 			// TODO -- UPDATE ROUTES
 			
-			// Am I the requested node?
+			// Am I the requested node? 
 			if (NegaView.getMyName() == destination)	{
 				// Send reply
 				SendingSingleSocket sendSocket = new SendingSingleSocket(table);

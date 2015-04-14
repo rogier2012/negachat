@@ -11,7 +11,6 @@ import negachat.messages.SendingMultiSocket;
 import negachat.messages.SendingSingleSocket;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.MessagePacket;
-import negachat.packets.Packet;
 
 public class ChatFrameController implements Observer {
 	// main view of this Controller
@@ -55,7 +54,6 @@ public class ChatFrameController implements Observer {
 		} else if (obs instanceof ReceivingSingleSocket && socket.getRecvPacket().getSource().equals(chatName)) {
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((MessagePacket)socket.getRecvPacket()).getMessage() + "\n");
 		} else if (obs instanceof ReceivingMultiSocket){
-			System.out.println("receivingMultiSocket");
 			cbController.setMessage(socket.getRecvPacket().getSource() + ": " + ((GroupMessagePacket)socket.getRecvPacket()).getMessage() + "\n" );
 		}
 	}
