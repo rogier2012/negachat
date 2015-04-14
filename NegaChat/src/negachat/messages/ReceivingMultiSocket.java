@@ -89,14 +89,12 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				try {
 					table.add(source, InetAddress.getByAddress(((HELLO)packet).getMyIP()));
 				} catch (UnknownHostException e) {
-
-					// TODO Auto-generated catch block
 //					e.printStackTrace();
 				}
 				
 			} else { // (I do know of this node)
 				// Reset the route TTL
-				table.getTable().get(source).set(2, table.MAXTTL);
+				table.getTable().get(source).set(2, RoutingTable.MAXTTL);
 			}
 			
 			// TODO -- forward HELLO!
