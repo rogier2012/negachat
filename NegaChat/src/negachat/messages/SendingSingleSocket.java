@@ -51,6 +51,7 @@ public class SendingSingleSocket {
 		try {
 			sendingSocket = new DatagramSocket(UDP_PORT);
 			sendingSocket.send(toSend);
+			sendingSocket.disconnect();
 			sendingSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
