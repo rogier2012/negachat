@@ -12,7 +12,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class SymmetricEncrypter {
 	private SecretKey SecKey;
-	private final String ENCRYPTIONALGORITHM = "AES";
+	private final String ENCRYPTIONALGORITHM = "AES/ECB/NoPadding";
 	Cipher AESCipher;
 	private final String PASS = "donthackusplease";
 

@@ -1,5 +1,6 @@
 package negachat.packets;
 
+import negachat.encryption.SymmetricEncrypter;
 import negachat.view.NegaView;
 
 //10/4 PACKET FORMAT:
@@ -109,6 +110,20 @@ public class GroupMessagePacket extends Packet{
 	
 	public String getHash(){
 		return hash;
+	}
+	
+	public byte[] fillMessage(String message) {
+		SymmetricEncrypter aes = new SymmetricEncrypter();
+		if (message.length() < MAX_MESSAGE_LENGTH) {
+			int length = message.length();
+			int todo = MAX_MESSAGE_LENGTH - length;
+			for (int i = todo; i > 0; i--) {
+				message += "=";
+			}
+		}
+		byte[] encryptedMessage = aes.Encrypt(message.getBytes());
+		
+		return encryptedMessage;
 	}
 	
 	
