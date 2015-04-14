@@ -110,7 +110,6 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			for (String element : pakket.getLostRoutes())	{
 				table.getTable().get(element).set(0, null);
 				table.getTable().get(element).set(1, 0);
-				table.getTable().get(element).set(2, RoutingTable.MAXTTL);
 			}
 			// Clear Routes where these destinations are next hops
 			for (String route : table.getTable().keySet())	{
@@ -121,7 +120,6 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 						// Clear Route
 						table.getTable().get(route).set(0, null);
 						table.getTable().get(route).set(1, 0);
-						table.getTable().get(route).set(2, RoutingTable.MAXTTL);
 					}
 				}
 			}

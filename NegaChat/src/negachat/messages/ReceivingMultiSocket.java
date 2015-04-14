@@ -32,7 +32,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 		
 		try {
 			multisocket = new MulticastSocket(MULTICAST_PORT);
-			group = (Inet4Address)Inet4Address.getByName("228.0.0.0");
+			group = (Inet4Address)Inet4Address.getByName("228.5.6.7");
 			multisocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), NetworkInterface.getByName("wlan0"));
 		} catch (IOException e) {
 			e.printStackTrace();
