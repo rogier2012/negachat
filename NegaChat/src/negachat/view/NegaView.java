@@ -1,13 +1,11 @@
 package negachat.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.GridBagLayout;
 
-import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import negachat.client.ClientHandler;
@@ -57,18 +55,18 @@ public class NegaView {
 	 * @wbp.parser.entryPoint
 	 */
 	public NegaView() {
-//		myName = JOptionPane.showInputDialog(frame,"Please enter a nickname between 3 and 14 characters", null);
-//		if (myName != null){
-//			while (myName.length() > 14|| myName.length() < 4){
-//				if(myName.length() < 4){
-//					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
-//				} else{
-//					myName = JOptionPane.showInputDialog(frame,"Please don't use more than 14 characters", null);
-//				}
-//				
-//			} 
+		myName = JOptionPane.showInputDialog(frame,"Please enter a nickname between 3 and 14 characters", null);
+		if (myName != null){
+			while (myName.length() > 14|| myName.length() < 4){
+				if(myName.length() < 4){
+					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
+				} else{
+					myName = JOptionPane.showInputDialog(frame,"Please don't use more than 14 characters", null);
+				}
+				
+			} 
 		initialize();
-//		}
+		}
 	}
 
 	/**
@@ -109,7 +107,7 @@ public class NegaView {
 		wioController.addObserver(cFrameControl1);
 		rmsocket.addObserver(cFrameControl1);
 		tabbedPane.add(GROUP_CHAT_NAME, cFrame1);
-//		tabbedPane.add("online", online);
+		tabbedPane.add("online", new JPanel());
 		
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);

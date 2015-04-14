@@ -9,7 +9,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 @SuppressWarnings("serial")
-public class WhoIsOnline extends JPanel {
+public class WhoIsOnline  extends JPanel{
 	HashMap<String, JButton> buttons;
 	
 	
@@ -26,6 +26,7 @@ public class WhoIsOnline extends JPanel {
 		JButton btn = new JButton(name);
 		add(btn);
 		buttons.put(name, btn);
+		this.revalidate();
 	}
 	
 	public void removeClient(String name){
@@ -36,4 +37,5 @@ public class WhoIsOnline extends JPanel {
 	public JButton getButton(String name){
 		return buttons.get(name);
 	}
+
 }
