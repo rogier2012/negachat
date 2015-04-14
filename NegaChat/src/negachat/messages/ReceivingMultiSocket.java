@@ -79,6 +79,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			// Do I not know this node?
 			if (!table.getTable().containsKey(source))	{
 				// TODO moet nog aangepast worden
+				// Source is nu altijd de nexthop!
 				table.addDestination(source, source, 0);
 				try {
 					table.add(source, InetAddress.getByAddress(((HELLO)packet).getMyIP()));
@@ -88,7 +89,8 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 //					e.printStackTrace();
 				}
 				
-			} else {
+			} else { // (I do know of this node)
+				// Reset the route TTL
 				table.getTable().get(source).set(2, table.MAXTTL);
 			}
 			
