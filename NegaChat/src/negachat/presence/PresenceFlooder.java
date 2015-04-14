@@ -32,7 +32,6 @@ public class PresenceFlooder implements Runnable {
 			
 			SendingMultiSocket sock = new SendingMultiSocket();
 			sock.send(hello);
-			System.out.println("HELLO sent!");
 		} while (true);
 	}
 }

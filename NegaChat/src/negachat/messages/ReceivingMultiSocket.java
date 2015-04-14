@@ -45,8 +45,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			DatagramPacket recv = new DatagramPacket(buf, 166);
 			try {
 				multisocket.receive(recv);
-				System.out.println("Packet received?");
-				System.out.println("packet type: " + recv.getData()[0]);
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Oops... Something went wrong receiving a packet.");
@@ -130,6 +128,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 		} else if (packet instanceof GroupMessagePacket){
 //			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
 			if (!packet.getSource().equals(NegaView.getMyName()))	{
+				System.out.println("Group Message received! \n");
 				setTimestamp(System.currentTimeMillis());
 				this.setRecvPacket(packet);
 				this.setChanged();

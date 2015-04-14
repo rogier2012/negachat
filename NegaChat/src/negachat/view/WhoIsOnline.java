@@ -5,7 +5,6 @@ import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 @SuppressWarnings("serial")

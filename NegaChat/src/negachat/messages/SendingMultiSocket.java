@@ -36,7 +36,6 @@ public class SendingMultiSocket {
 		
 		try {
 			sendingSocket.send(dPacket);
-			System.out.println("Packet sent!");
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Oops... Something went wrong sending this packet.");

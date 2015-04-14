@@ -61,10 +61,8 @@ public class GroupMessagePacket extends Packet{
 		bytePacket[TOTAL - HASH - 1] = opt;
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+SEQNUM, HASH - 1);
 		
-		System.out.println("GroupMessagePackage bytePacket composed");
-		System.out.println("length: " + bytePacket.length);
-		System.out.println("bytePacket string: " + new String(bytePacket));
 		
+		System.out.println("Group message has been sent! \n");
 		return bytePacket;
 	}
 	
