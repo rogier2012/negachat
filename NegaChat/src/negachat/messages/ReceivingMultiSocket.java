@@ -96,23 +96,28 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 		} else if (packet instanceof RREQ){
 			// Cast to RREQ
 			RREQ pakket = (RREQ) packet;
-			
 			String source = pakket.getSource();
 			String destination = pakket.getDestination();
 			
 			// TODO -- UPDATE ROUTES
 			
+			// Am I the requested node?
 			if (NegaView.getMyName() == destination)	{
+				// Send reply
+				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
+				sendSocket.sendPacket(new RREP(source, destination));
+			} else { // (I am not the requested node)
+				// Do I know a valid route to the requested node?
 				if (table.getTable().containsKey(destination) && table.getTable().get(destination).get(0) != null)	{
+					// Send reply
 					SendingSingleSocket sendSocket = new SendingSingleSocket(table);
 					sendSocket.sendPacket(new RREP(source, destination));
+				} else	{ // (I do not know a route to the requested destination)
+					// Forward RREQ with a decremented TTL
+					SendingMultiSocket sendSocket = new SendingMultiSocket();
+					sendSocket.send(new RREQ(destination, (byte)(pakket.getLifeSpan() - 1), pakket.getIdentifier()));
 				}
-			} else {
-				SendingMultiSocket sendSocket = new SendingMultiSocket();
-				sendSocket.send(new RREQ(destination, (byte)(pakket.getLifeSpan() - 1), pakket.getIdentifier()));
-			}
-			
-			 
+			}	
 			
 		} else if (packet instanceof GroupMessagePacket){
 //			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {

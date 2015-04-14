@@ -22,17 +22,22 @@ public class SendingSingleSocket {
 	
 
 	public void sendPacket(DirectPacket packet) {
-		
-		
+		// If the RoutingTable does not have a route to this destination:
 		if (!table.getTable().containsKey(packet.getDestination()) || table.getTable().get(packet.getDestination()).get(0) == null)	{
-			byte identifier = (byte) table.randInt(0, 127);
+			// Pick a random identifier for the RREQ
+			byte identifier = (byte) table.randInt(0, 255);
+			// Add destination to requested destinations in the routing table
 			table.getRequestedDestinations().add(packet.getDestination());
+			// Set RREQ lifespan
 			byte lifeSpan = 50;
+			// As long as a route is still not in the table:
 			while (!table.getTable().containsKey(packet.getDestination()) || table.getTable().get(packet.getDestination()).get(0) == null){
+				// Send RREQ
 				SendingMultiSocket sendSocket = new SendingMultiSocket();
 				sendSocket.send(new RREQ(packet.getDestination(), lifeSpan, identifier));
-				
+				// Raise lifespan for next RREQ
 				lifeSpan++;
+				// Delay before sending new RREQ
 				try { 
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
