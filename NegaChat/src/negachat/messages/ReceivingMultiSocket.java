@@ -108,7 +108,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				// Do nothing!
 			} else	{ // (Packet should be forwarded)
 				SendingMultiSocket sendSocket = new SendingMultiSocket();
-				HELLO forward = pakket;
+				HELLO forward = new HELLO(pakket.toByteArray());
 				// Increment hopCount
 				forward.setHopCount((byte)(pakket.getHopCount() + 1));
 				// Send HELLO!
