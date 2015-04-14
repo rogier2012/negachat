@@ -23,8 +23,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 
 	public MessagePacket(String destination) {
 		super();
-		this.source = NegaView.getMyName();
-		this.destination = destination;
+		this.source = "gijs";
 		this.destination = destination;
 	}
 
