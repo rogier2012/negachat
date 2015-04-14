@@ -102,6 +102,7 @@ public class NegaView {
 		tabbedPane.add(WHO_IS_ONLINE, online);
 		OnlineClients clientlist = new OnlineClients(wioController, routingTable);
 		routingTable.addObserver(clientlist);
+		
 	}
 	
 	public static String getMyName(){
