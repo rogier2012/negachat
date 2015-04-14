@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import negachat.client.ClientHandler;
 import negachat.client.RoutingTable;
 import negachat.packets.DirectPacket;
 import negachat.packets.MessagePacket;

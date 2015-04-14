@@ -57,18 +57,18 @@ public class NegaView {
 	 * @wbp.parser.entryPoint
 	 */
 	public NegaView() {
-//		myName = JOptionPane.showInputDialog(frame,"Please enter a nickname between 3 and 14 characters", null);
-//		if (myName != null){
-//			while (myName.length() > 14|| myName.length() < 4){
-//				if(myName.length() < 4){
-//					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
-//				} else{
-//					myName = JOptionPane.showInputDialog(frame,"Please don't use more than 14 characters", null);
-//				}
-//				
-//			} 
+		myName = JOptionPane.showInputDialog(frame,"Please enter a nickname between 3 and 14 characters", null);
+		if (myName != null){
+			while (myName.length() > 14|| myName.length() < 4){
+				if(myName.length() < 4){
+					myName = JOptionPane.showInputDialog(frame,"Please use a nickname with more than 3 characters", null);
+				} else{
+					myName = JOptionPane.showInputDialog(frame,"Please don't use more than 14 characters", null);
+				}
+				
+			} 
 		initialize();
-//		}
+		}
 	}
 
 	/**
@@ -77,13 +77,14 @@ public class NegaView {
 	 */
 	private void initialize() {
 		frame = new JFrame(NEGA_CHAT);
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 550, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		WhoIsOnline online = new WhoIsOnline();
 		frame.getContentPane().add(online, BorderLayout.EAST);
+		
 		RoutingTable routingTable = new RoutingTable();
 		PresenceFlooder flooder = new PresenceFlooder(routingTable);
 		TableDecay tabledecay = new TableDecay(routingTable);
@@ -103,7 +104,7 @@ public class NegaView {
 		ClientHandler handler = new ClientHandler(tabbedPane, rssocket, routingTable);
 		wioController = new WhoIsOnlineController(online, handler);
 		
-		Component horizontalStrut = Box.createHorizontalStrut(50);
+		Component horizontalStrut = Box.createHorizontalStrut(150);
 		online.add(horizontalStrut);
 		ChatFrame cFrame1 = new ChatFrame();
 		GridBagLayout gridBagLayout = (GridBagLayout) cFrame1.getLayout();
