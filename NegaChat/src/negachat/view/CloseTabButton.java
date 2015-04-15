@@ -38,6 +38,7 @@ public class CloseTabButton extends JPanel implements ActionListener {
 		int i = pane.indexOfTabComponent(this);
 		if (i != -1) {
 			this.handler.deleteClient(pane.getTitleAt(i));
+			pane.remove(i);
 		}
 	}
 }

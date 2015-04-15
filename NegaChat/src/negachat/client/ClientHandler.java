@@ -44,8 +44,6 @@ public class ClientHandler {
 		if(tabs.contains(name)){
 			tabs.remove(name);
 		}
-		tabbedPane.remove(tabbedPane.indexOfTab(name));
-		
 	}
 
 }
