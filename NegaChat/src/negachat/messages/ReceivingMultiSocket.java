@@ -111,7 +111,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				table.getTable().get(source).set(2, RoutingTable.MAXTTL);
 			}
 			// Is the maximum travel distance for this HELLO packet reached?
-			// Did I send this HELLO?
+			// Did I send this HELLO? 
 			if (hopCount >= HELLO.MAXHOPS
 					|| pakket.getSource().equals(NegaView.getMyName())) {
 				// Do nothing!
