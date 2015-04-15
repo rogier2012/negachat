@@ -22,6 +22,7 @@ public class WhoIsOnlineController extends Observable implements ActionListener 
 	
 	public void removeClient(String name){
 		online.removeClient(name);
+		handler.deleteClient(name);
 	}
 
 	@Override

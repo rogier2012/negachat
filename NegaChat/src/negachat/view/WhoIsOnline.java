@@ -31,6 +31,7 @@ public class WhoIsOnline  extends JPanel{
 	public void removeClient(String name){
 		this.remove(buttons.get(name));
 		buttons.remove(name);
+		this.revalidate();
 	}
 	
 	public JButton getButton(String name){
