@@ -1,10 +1,9 @@
 package negachat.view;
 
-import negachat.audio.AudioPlayer;
+import negachat.audio.SoundThread;
 
 public class ChatBoxController {
 	private ChatBox chatBox;
-	private AudioPlayer audioPlayer;
 	private static final String NOTIFIER = "Notification.wav";
 	private static final String WOLOLO = "30_Wololo.wav";
 	private static final String HERB_LAUGH = "11_Herb_laugh.wav";
@@ -14,7 +13,6 @@ public class ChatBoxController {
 	}
 
 	public void setMessage(String message){
-		audioPlayer = new AudioPlayer();
 		chatBox.append(message);
 		String msg = message.split(":")[1].trim();
 		if (msg.length() > 1 && msg.charAt(0) == '3' && msg.charAt(1) == '0')	{
@@ -28,7 +26,9 @@ public class ChatBoxController {
 	}
 
 	public void playSound(String file){
-		audioPlayer.play(file);
+		SoundThread st = new SoundThread(file);
+		Thread thread = new Thread(st);
+		thread.start();
 	}
 	
 }
