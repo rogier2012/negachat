@@ -72,7 +72,7 @@ public class RoutingTable extends Observable {
 		NetworkInterface in;
 		Enumeration<InetAddress> hallo = null;
 		try {
-			in = NetworkInterface.getByName("wlan0");
+			in = NetworkInterface.getByName("wlan1");
 			hallo = in.getInetAddresses();
 			hallo.nextElement();
 		} catch	(SocketException e){

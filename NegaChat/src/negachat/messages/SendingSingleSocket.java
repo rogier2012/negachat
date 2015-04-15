@@ -35,11 +35,12 @@ public class SendingSingleSocket {
 				// Send RREQ
 				SendingMultiSocket sendSocket = new SendingMultiSocket();
 				sendSocket.send(new RREQ(packet.getDestination(), lifeSpan, identifier));
-				// Raise lifespan for next RREQ
+				// Raise lifeThreadspan for next RREQ
 				lifeSpan++;
 				// Delay before sending new RREQ
 				try { 
-					Thread.sleep(500);
+					Thread.sleep(5000);
+					System.out.println("BERT");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
