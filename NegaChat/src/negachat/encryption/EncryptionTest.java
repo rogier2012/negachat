@@ -1,5 +1,11 @@
 package negachat.encryption;
 
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+
 public class EncryptionTest {
 	
 	
@@ -52,5 +58,21 @@ public class EncryptionTest {
 		System.out.println(Ron.getKey().getEncoded().length);
 		System.out.println(Gijs.getKey().getEncoded().length);
 		System.out.println(Christiaan.getKey().getEncoded().length);
+		
+		 X509EncodedKeySpec bobPubKeySpec = new X509EncodedKeySpec(Christiaan.getKey().getEncoded());
+		 KeyFactory keyFactory;
+		try {
+			keyFactory = KeyFactory.getInstance("RSA");
+			PublicKey bobPubKey = keyFactory.generatePublic(bobPubKeySpec);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		 
 	}
 }

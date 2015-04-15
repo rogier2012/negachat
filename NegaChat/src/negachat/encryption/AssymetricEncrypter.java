@@ -100,5 +100,9 @@ public class AssymetricEncrypter {
 	public PublicKey getKey() {
 		return publicKey;
 	}
+	
+	public void setKey(PublicKey publicKey){
+		this.publicKey = publicKey;
+	}
 
 }
