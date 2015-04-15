@@ -1,6 +1,7 @@
 package negachat.packets;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 
 import negachat.packets.DirectPacket;
@@ -53,13 +54,13 @@ public class MessagePacket extends Packet implements DirectPacket {
 				MESSAGE);
 		this.setMessage(this.removePadding(new String(messageArray)));
 
-		this.setSeqNum(packetArray[TYPELENGTH + + DESTINATION +SOURCE + MESSAGE]);
+		this.setSeqNum(packetArray[TYPELENGTH + DESTINATION +SOURCE + MESSAGE]);
 		
 		
 		byte[] hashArray = new byte[4];
-		System.arraycopy(packetArray, TYPELENGTH + SOURCE + MESSAGE + OPTIONS,
+		System.arraycopy(packetArray, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS,
 				hashArray, 0, HASH);
-		setHash(hashArray);
+		hash = hashArray;
 	}
 
 	// TODO
@@ -79,7 +80,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 	@Override
 	public byte[] toByteArray() {
 
-		byte[] dest, src, msg, hash;
+		byte[] dest, src, msg;
 		byte type, opt;
 		type = TYPE;
 		dest = this.fillNickname(getDestination());
@@ -101,7 +102,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 		bytePacket[TYPELENGTH + DESTINATION + SOURCE + MESSAGE] = opt;
 		
 
-		hash = makeHash(bytePacket);
+		hash = makeHash(getSource(), getDestination(), getMessage());
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, HASH);
 		
 //		System.out.println("Group message has been sent! \n");
@@ -109,26 +110,17 @@ public class MessagePacket extends Packet implements DirectPacket {
 		return bytePacket;
 	}
 	
-	public byte[] retrieveHash(byte[] packetArray) {
-		byte[] hash = new byte[4];
-		System.arraycopy(packetArray, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, hash, 0, HASH);
-		System.out.println("hash length: " + hash.length);
-
-
-		return hash;
-	}
+	public byte[] makeHash(String src, String dest, String msg) {
+		byte[] toHash = new byte[msg.length() + dest.length() + source.length()];
 	
-	public byte[] packetWithoutHash(byte[] packetArray) {
-		byte[] packet = new byte[162];
-		System.arraycopy(packetArray, 0, packet, 0, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS);
-		return packet;
-	}
+		System.arraycopy(src.getBytes(), 0, toHash, 0, src.length());
 
-	public byte[] makeHash(byte[] bytePacket) {
-		hash = new byte[4];
-		int hashCode = bytePacket.hashCode();
-		hash = ByteBuffer.allocate(4).putInt(hashCode).array();
-		return hash;
+		System.arraycopy(dest.getBytes(), 0, toHash, src.length(), dest.length());
+
+		System.arraycopy(msg.getBytes(), 0, toHash, src.length() + dest.length(), msg.length());
+		
+		int hashCode = toHash.hashCode();
+		return ByteBuffer.allocate(4).putInt(hashCode).array();
 	}
 
 	public byte getSeqNum() {
