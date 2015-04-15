@@ -1,6 +1,5 @@
 package negachat.packets;
 
-import java.security.DigestException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
