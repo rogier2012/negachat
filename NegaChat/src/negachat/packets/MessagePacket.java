@@ -28,7 +28,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 	private RoutingTable table;
 	byte[] hash;
 
-	public MessagePacket(String destination) {
+	public MessagePacket(String destination, RoutingTable table) {
 		super();
 		this.source = NegaView.getMyName();
 		this.destination = destination;
