@@ -56,7 +56,7 @@ public class SendingSingleSocket {
 			DatagramPacket toSend = new DatagramPacket(bytePacket,
 					bytePacket.length, address, ReceivingSingleSocket.UDP_PORT);
 			try {
-				sendingSocket = new DatagramSocket(UDP_PORT);
+				sendingSocket = new DatagramSocket(UDP_PORT); 
 				sendingSocket.send(toSend);
 				sendingSocket.disconnect();
 				sendingSocket.close();
