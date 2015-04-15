@@ -39,5 +39,11 @@ public class ClientHandler {
 		}
 		
 	}
+	
+	public void deleteClient(String name){
+		if(tabs.contains(name)){
+			tabs.remove(name);
+		}
+	}
 
 }
