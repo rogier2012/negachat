@@ -37,11 +37,15 @@ public class SendingMultiSocket {
 		
 		try {
 			sendingSocket.send(dPacket);
+			sendingSocket.leaveGroup(group);
+			sendingSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Oops... Something went wrong sending this packet.");
 
 		}
+		
+		
 	}
 
 }
