@@ -1,5 +1,7 @@
 package negachat.packets;
 
+import java.nio.ByteBuffer;
+
 import negachat.view.NegaView;
 
 public class MessagePacket extends Packet implements DirectPacket {
@@ -95,17 +97,20 @@ public class MessagePacket extends Packet implements DirectPacket {
 		bytePacket[TYPELENGTH + DESTINATION + SOURCE + MESSAGE] = opt;
 		
 
-		hash = new byte[4]; //(byte) makeHash(bytePacket;
-		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE
-				+ MESSAGE + OPTIONS, HASH);
+		hash = makeHash(bytePacket);
+		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, HASH);
+		
+		
+//		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE
+//				+ MESSAGE + OPTIONS, HASH);
 		System.out.println("Group message has been sent! \n");
 
 		return bytePacket;
 	}
 	
-	public byte[] retrieveHash(byte[] packetArray) {
-		byte[] hash = new byte[4];
-		System.arraycopy(packetArray, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, hash, 0, HASH);
+	public int retrieveHash(byte[] packetArray) {
+		int hash;
+		hash = packetArray[TYPELENGTH + DESTINATION + SOURCE + MESSAGE + HASH];
 		return hash;
 	}
 	
@@ -115,13 +120,11 @@ public class MessagePacket extends Packet implements DirectPacket {
 		return packet;
 	}
 
-	public int makeHash(byte[] bytePacket) {
+	public byte[] makeHash(byte[] bytePacket) {
 		hash = new byte[4];
 		int hashCode = bytePacket.hashCode();
-//		byte[] hash = new byte[] { (byte) ((hashCode >> 24) & 0xFF),
-//				(byte) ((hashCode >> 16) & 0xFF),
-//				(byte) ((hashCode >> 8) & 0xFF), (byte) (hashCode & 0xFF) };
-		return hashCode;
+		hash = ByteBuffer.allocate(4).putInt(hashCode).array();
+		return hash;
 	}
 
 	public byte getSeqNum() {
