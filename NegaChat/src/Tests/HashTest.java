@@ -6,7 +6,7 @@ import negachat.packets.MessagePacket;
 
 public class HashTest {
 	public static void main(String[] args) {
-		MessagePacket packet = new MessagePacket("tekst");
+//		MessagePacket packet = new MessagePacket("tekst");
 //		packet.setMessage("ditiseentest!");
 //		
 //		MessagePacket received = new MessagePacket(packet.toByteArray());
