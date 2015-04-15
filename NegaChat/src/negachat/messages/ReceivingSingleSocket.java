@@ -77,6 +77,9 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 					setChanged();
 					notifyObservers();
 //				}
+			} else if (this.table.getTable().containsKey(((MessagePacket)packet).getDestination())){
+				SendingSingleSocket sendingsocket = new SendingSingleSocket(table);
+				sendingsocket.sendPacket((MessagePacket)packet);
 			}
 			
 		} else if (packet instanceof RREP){ 
