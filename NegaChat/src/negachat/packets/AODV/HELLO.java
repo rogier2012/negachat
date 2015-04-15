@@ -1,5 +1,7 @@
 package negachat.packets.AODV;
 
+import java.security.PublicKey;
+
 import negachat.client.RoutingTable;
 import negachat.packets.Packet;
 
@@ -23,6 +25,8 @@ public class HELLO extends Packet {
 	
 	public static final int SOURCELENGTH = 16;
 	
+	public static final int PUBLICKEYLENGTH = 162;
+	
 	/*
 	 * Instance Variables
 	 */
@@ -30,6 +34,8 @@ public class HELLO extends Packet {
 	private byte[] myIP;
 	
 	private byte hopCount;
+	
+	private PublicKey key;
 	
 	public HELLO(String source, RoutingTable table) {
 		this.myIP = table.getMyIP();

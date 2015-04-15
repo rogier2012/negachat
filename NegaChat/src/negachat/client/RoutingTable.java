@@ -3,6 +3,7 @@ package negachat.client;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class RoutingTable extends Observable {
 	private Map<String, List<Object>> table;
 	// Map that links nicknames to InetAddresses
 	private Map<String, InetAddress> iptable;
+	
 	
 	// Last destination that was removed to the RoutingTable
 	private  String removedDestination;
@@ -80,12 +82,13 @@ public class RoutingTable extends Observable {
 	 * Commands
 	 */
 	
-	public void addDestination(String destination, String nexthop, int hopCount){
+	public void addDestination(String destination, String nexthop, int hopCount, PublicKey key){
 		addedDestination = destination;
 		table.put(destination, new ArrayList<Object>());
 		table.get(destination).add(nexthop);
 		table.get(destination).add(hopCount);
 		table.get(destination).add(MAXTTL);	
+		table.get(destination).add(key);
 		this.setChanged();
 		this.notifyObservers(1);
 		
@@ -131,7 +134,7 @@ public class RoutingTable extends Observable {
 	}
 	
 	public String getAddedDestination(){
-		return  this.addedDestination;
+		return this.addedDestination;
 	}
 	
 	public String getRemovedDestination() {
