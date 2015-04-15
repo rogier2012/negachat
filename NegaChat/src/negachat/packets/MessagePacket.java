@@ -104,17 +104,17 @@ public class MessagePacket extends Packet implements DirectPacket {
 		hash = makeHash(bytePacket);
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, HASH);
 		
-		
-//		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE
-//				+ MESSAGE + OPTIONS, HASH);
-		System.out.println("Group message has been sent! \n");
+//		System.out.println("Group message has been sent! \n");
 
 		return bytePacket;
 	}
 	
-	public int retrieveHash(byte[] packetArray) {
-		int hash;
-		hash = packetArray[TYPELENGTH + DESTINATION + SOURCE + MESSAGE + HASH];
+	public byte[] retrieveHash(byte[] packetArray) {
+		byte[] hash = new byte[4];
+		System.arraycopy(packetArray, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, hash, 0, HASH);
+		System.out.println("hash length: " + hash.length);
+
+
 		return hash;
 	}
 	
