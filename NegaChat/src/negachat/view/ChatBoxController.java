@@ -11,10 +11,10 @@ public class ChatBoxController {
 	
 	public ChatBoxController(ChatBox chatbox){
 		this.chatBox = chatbox;
-		audioPlayer = new AudioPlayer();
 	}
 
 	public void setMessage(String message){
+		audioPlayer = new AudioPlayer();
 		chatBox.append(message);
 		if (message.charAt(0) == '3' && message.charAt(1) == '0')	{
 			playSound(WOLOLO);
