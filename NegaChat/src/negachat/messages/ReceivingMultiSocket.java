@@ -108,6 +108,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			// Did I send this HELLO?
 			if (hopCount >= HELLO.MAXHOPS || pakket.getSource() == NegaView.getMyName())	{
 				// Do nothing!
+	
 			} else	{ // (Packet should be forwarded)
 				
 				// But only if the route is outdated TODO

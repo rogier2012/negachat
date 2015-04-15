@@ -2,6 +2,10 @@ package negachat.packets;
 
 import java.nio.ByteBuffer;
 
+
+import negachat.packets.DirectPacket;
+import negachat.packets.Packet;
+
 import negachat.view.NegaView;
 
 public class MessagePacket extends Packet implements DirectPacket {
