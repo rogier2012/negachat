@@ -136,10 +136,6 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 		} 
 	}
 
-	public void testrun() {
-		MessagePacket nPacket = new MessagePacket("All");
-		nPacket.setMessage("Ik ben Rogier");
-		handlePacket(nPacket);
-	}
+	
 
 }

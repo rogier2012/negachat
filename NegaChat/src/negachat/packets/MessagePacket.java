@@ -1,10 +1,7 @@
 package negachat.packets;
 
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-
-import negachat.packets.DirectPacket;
-import negachat.packets.Packet;
+import java.security.PublicKey;
 
 import negachat.client.RoutingTable;
 import negachat.encryption.AssymetricEncrypter;
@@ -28,9 +25,10 @@ public class MessagePacket extends Packet implements DirectPacket {
 
 	private byte seqnum;
 	private String source, destination, message;
+	private RoutingTable table;
 	byte[] hash;
 
-	public MessagePacket(String destination) {
+	public MessagePacket(String destination, RoutingTable table) {
 		super();
 		this.source = NegaView.getMyName();
 		this.destination = destination;
@@ -38,6 +36,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 
 	public MessagePacket(byte[] packetArray, RoutingTable table) {
 		super(packetArray);
+		this.table = table;
 		this.setType(packetArray[0]);
 		byte[] sourceArray = new byte[16];
 
@@ -84,9 +83,9 @@ public class MessagePacket extends Packet implements DirectPacket {
 		byte[] dest, src, msg;
 		byte type, opt;
 		type = TYPE;
-		dest = this.fillNickname(getDestination());
+		dest = this.fillNickname(this.getDestination());
 		src = this.fillNickname(this.getSource());
-		msg = this.fillMessage(this.getMessage());
+		msg = AssymetricEncrypter.Encrypt(this.getMessage().getBytes(), (PublicKey)table.getTable().get(getDestination()).get(3));
 		opt = this.getSeqNum();
 		
 
