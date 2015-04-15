@@ -8,8 +8,8 @@ import negachat.packets.Packet;
 /*
  * HELLO packets are broadcasted over the network to notify other nodes of its existence in the network.
  * 
- * Lay-Out:
- * [Type][Source][myIP][hopCount]
+ * Lay-Out: 1 + 16 + 4 + 1 + 168 = 190
+ * [Type][Source][myIP][hopCount][Publickey]
  * 
  */
 public class HELLO extends Packet {

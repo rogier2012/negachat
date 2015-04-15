@@ -1,6 +1,7 @@
 package negachat.presence;
 
 import negachat.client.RoutingTable;
+import negachat.encryption.AssymetricEncrypter;
 import negachat.messages.SendingMultiSocket;
 import negachat.packets.AODV.HELLO;
 import negachat.view.NegaView;
@@ -11,7 +12,7 @@ import negachat.view.NegaView;
 public class PresenceFlooder implements Runnable {
 	private RoutingTable table;
 	public static final int DELAY = 5000;
-
+	AssymetricEncrypter encrypter = new AssymetricEncrypter();
 	public PresenceFlooder(RoutingTable table){
 		this.table = table;
 	}
