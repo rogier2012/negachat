@@ -37,7 +37,7 @@ public class GroupMessagePacket extends Packet{
 			
 			byte[] messageArray = new byte[128];
 			System.arraycopy(data, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
-			this.setMessage(this.removePadding(new String(messageArray)));
+			this.setMessage(this.removePadding(new String(decrypt(messageArray))));
 			
 			this.setSeqNum(data[TYPELENGTH + SOURCE + MESSAGE]);
 			byte[] hashArray = new byte[4];
@@ -129,5 +129,14 @@ public class GroupMessagePacket extends Packet{
 		return encryptedMessage;
 	}
 	
+	public String removePadding(String paddedString){
+		return (paddedString.split("==")[0]);
+	}
+	
+	public byte[] decrypt(byte[] message){
+		SymmetricEncrypter aes = new SymmetricEncrypter();
+		byte[] result = aes.Decrypt(message);
+		return result;
+	}
 	
 }
