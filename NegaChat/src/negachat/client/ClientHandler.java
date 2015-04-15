@@ -32,7 +32,7 @@ public class ClientHandler {
 			ChatFrameController cFrameControl = new ChatFrameController(cFrame1, name, rsocket, table);
 			rsocket.addObserver(cFrameControl);
 			tabbedPane.add(name, cFrame1);
-			new CloseTabButton(tabbedPane, tabbedPane.indexOfTab(name), onlineController);
+			new CloseTabButton(tabbedPane, tabbedPane.indexOfTab(name), this);
 			tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(name));
 		} else {
 			tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(name));
