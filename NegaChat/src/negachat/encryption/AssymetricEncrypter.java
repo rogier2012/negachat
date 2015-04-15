@@ -28,7 +28,7 @@ public class AssymetricEncrypter {
 		KeyPairGenerator keyGen;
 		try {
 			keyGen = KeyPairGenerator.getInstance(ALGORITHM);
-			keyGen.initialize(2048);
+			keyGen.initialize(1024);
 			KeyPair keyPair = keyGen.generateKeyPair();
 			privateKey = keyPair.getPrivate();
 			publicKey = keyPair.getPublic();

@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
 
 public class EncryptionTest {
 	
@@ -13,6 +14,7 @@ public class EncryptionTest {
 		
 		//Message of 128 bytes
 		String message1 = "AIezMweXiGjBr8pbRQSqvcqxXXkt3INaLqqfbGi6G6q9Tp1Au3OfCMHsDU7u0nzL7v32ZK55IpVeVA8ph36MVjjLUvKTqbe2xuCobgrP29NZ4fuj2Kg8qECYKsXp====";
+//		                   AIezMweXiGjBr8pbRQSqvcqxXXkt3INaLqqfbGi6G6q9Tp1Au3OfCMHsDU7u0nz 7v32ZK55IpVeVA8ph36MVjjLUvKTqbe2xuCobgrP29NZ4fuj2Kg8qECYKsXp===
 		//Random message of our names
 		String message2 = "RONGIJSCHRISTIAANROGIER";
 		String message3 = "AIezMweXiGjBr8pbRQSqvcqxXXkt3INaLqqfbGi6G6q9Tp1Au3OfCMHsDU7u0nzL7v32ZK55IpVeVA8ph36MVjjLUvKTqbe2xuCobgrP29NZ4fuj2Kg8qE";
@@ -59,20 +61,17 @@ public class EncryptionTest {
 		System.out.println(Gijs.getKey().getEncoded().length);
 		System.out.println(Christiaan.getKey().getEncoded().length);
 		
-		 X509EncodedKeySpec bobPubKeySpec = new X509EncodedKeySpec(Christiaan.getKey().getEncoded());
-		 KeyFactory keyFactory;
-		try {
-			keyFactory = KeyFactory.getInstance("RSA");
-			PublicKey bobPubKey = keyFactory.generatePublic(bobPubKeySpec);
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+
+
+		String testcase1 = "aa";
+		String testcase2 = "sprhYgLiG8bytmYAadwaISVFozxt6S78WDraUX6UcnPXZA3DzWmQ1GpzPm71HBq39gfaWyGVaeucBmemLi7XDwHgmlUrbcyAxrgzhi8o1PBtzvZczCz6m";
 		 
+	}
+	
+	public static ArrayList<String> split(String msg){
+		ArrayList<String> result = new ArrayList<String>();
+		result.add(msg.substring(0, 64));
+		result.add(msg.substring(64, 128));
+		return result;
 	}
 }
