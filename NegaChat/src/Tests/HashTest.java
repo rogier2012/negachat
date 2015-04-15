@@ -2,27 +2,19 @@ package Tests;
 
 import java.security.DigestException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import negachat.client.RoutingTable;
 import negachat.packets.MessagePacket;
 
 public class HashTest {
 	public static void main(String[] args) {
-		
-		 MessageDigest md = MessageDigest.getInstance("SHA");
-
-		 try {
-		    
-		 } catch (CloneNotSupportedException cnse) {
-		     throw new DigestException("couldn't make digest of partial content");
-		 }
-		MessagePacket packet = new MessagePacket("tekst");
+		MessagePacket packet = new MessagePacket("tekst", new RoutingTable());
 		packet.setMessage("ditiseentest!");
 		
-		MessagePacket received = new MessagePacket(packet.toByteArray());
+		MessagePacket received = new MessagePacket(packet.toByteArray(), new RoutingTable());
 		
-		byte[] hash = received.retrieveHash(packet.toByteArray());
-		byte[] packet2 = received.packetWithoutHash(packet.toByteArray());
 		
 		System.out.println(packet.getMessage().equals(received.getMessage()));
 		System.out.println(packet.getSource().equals(received.getSource()));
@@ -32,7 +24,10 @@ public class HashTest {
 		
 		System.out.println(Arrays.equals(packet.makeHash(packet.getSource(), packet.getDestination(), packet.getMessage()), received.makeHash(packet.getSource(), packet.getDestination(), packet.getMessage())));
 		
-		
+		System.out.println(Arrays.equals(received.getHash(), received.makeHash(received.getSource(), received.getDestination(), received.getMessage())));
+		System.out.println(new String(received.getHash()));
+		System.out.println(new String(received.makeHash(received.getSource(), received.getDestination(), received.getMessage())));
+
 //		System.out.println(Arrays.equals(received.getHash(), a2));
 		
 		

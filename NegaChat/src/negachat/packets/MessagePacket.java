@@ -124,8 +124,8 @@ public class MessagePacket extends Packet implements DirectPacket {
 		}
 		byte[] toHash = new byte[msg.length() + dest.length() + source.length()];
 		System.arraycopy(src.getBytes(), 0, toHash, 0, src.length());
-		System.arraycopy(dest.getBytes(), 0, toHash, src.length(), dest.length());
-		System.arraycopy(msg.getBytes(), 0, toHash, src.length() + dest.length(), msg.length());
+		System.arraycopy(dest.getBytes(), 0, toHash, src.length() - 1, dest.length());
+		System.arraycopy(msg.getBytes(), 0, toHash, src.length() + dest.length() - 1, msg.length());
 		try {
 		    md.update(toHash);
 		    hashCode = ((MessageDigest) md.clone()).digest();
