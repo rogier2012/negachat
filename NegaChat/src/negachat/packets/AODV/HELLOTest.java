@@ -1,7 +1,5 @@
 package negachat.packets.AODV;
 
-import negachat.client.RoutingTable;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +15,7 @@ public class HELLOTest {
 	@Before
 	public void setUp() throws Exception {
 		source = null;
-		packeti = new HELLO(source, new RoutingTable());
+//		packeti = new HELLO(source, new RoutingTable());
 		packeti.setSource("HENKHENKHENK");
 		byteArray = packeti.toByteArray();
 		packetii = new HELLO(byteArray);

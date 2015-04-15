@@ -3,6 +3,8 @@ package negachat.client;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -29,10 +31,13 @@ public class RoutingTable extends Observable {
 	// Map that links nicknames to InetAddresses
 	private Map<String, InetAddress> iptable;
 	
+	
 	// Last destination that was removed to the RoutingTable
 	private  String removedDestination;
 	// Last destination that was added to the RoutingTable
 	private  String addedDestination;
+	
+	private PrivateKey privateKey;
 	
 	// List of all nodes for which we have sent a RREQ and no RREP has returned
 	private  List<String> requestedDestinations;
@@ -80,16 +85,19 @@ public class RoutingTable extends Observable {
 	 * Commands
 	 */
 	
-	public void addDestination(String destination, String nexthop, int hopCount){
+	public void addDestination(String destination, String nexthop, int hopCount, PublicKey key){
 		addedDestination = destination;
 		table.put(destination, new ArrayList<Object>());
 		table.get(destination).add(nexthop);
 		table.get(destination).add(hopCount);
 		table.get(destination).add(MAXTTL);	
+		table.get(destination).add(key);
 		this.setChanged();
 		this.notifyObservers(1);
 		
 	}
+	
+	
 	
 	public void removeDestination(String destination){
 		removedDestination = destination;
@@ -131,7 +139,7 @@ public class RoutingTable extends Observable {
 	}
 	
 	public String getAddedDestination(){
-		return  this.addedDestination;
+		return this.addedDestination;
 	}
 	
 	public String getRemovedDestination() {
@@ -152,6 +160,14 @@ public class RoutingTable extends Observable {
 
 	public void setRequestedDestinations(List<String> requestedDestinations) {
 		this.requestedDestinations = requestedDestinations;
+	}
+
+	public PrivateKey getPrivateKey() {
+		return privateKey;
+	}
+
+	public void setPrivateKey(PrivateKey privateKey) {
+		this.privateKey = privateKey;
 	}
 	
 }

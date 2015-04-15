@@ -43,7 +43,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	public void run() {
 		do {
 			byte[] buf = new byte[1000];
-			DatagramPacket recv = new DatagramPacket(buf, 166);
+			DatagramPacket recv = new DatagramPacket(buf, 184);
 			try {
 				multisocket.receive(recv);
 			} catch (IOException e) {
@@ -89,10 +89,10 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				// Check for neighbour
 				if (pakket.getHopCount() == 0)	{
 					// Add neighbour to table
-					table.addDestination(source, source, RoutingTable.MAXTTL);
+					table.addDestination(source, source, RoutingTable.MAXTTL,pakket.getPublickey());
 				} else { // (No neighbour)
 					// Add the destination's existence
-					table.addDestination(source, null, hopCount);
+					table.addDestination(source, null, hopCount, pakket.getPublickey());
 				}
 				// Add the source's InetAddress to table
 				try {

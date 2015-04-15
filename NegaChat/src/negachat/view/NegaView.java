@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 import negachat.client.ClientHandler;
 import negachat.client.OnlineClients;
 import negachat.client.RoutingTable;
+import negachat.encryption.AssymetricEncrypter;
 import negachat.messages.ReceivingMultiSocket;
 import negachat.messages.ReceivingSingleSocket;
 import negachat.presence.PresenceFlooder;
@@ -83,9 +84,12 @@ public class NegaView {
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		WhoIsOnline online = new WhoIsOnline();
 		frame.getContentPane().add(online, BorderLayout.EAST);
+		AssymetricEncrypter encrypter = new AssymetricEncrypter();
 		
 		RoutingTable routingTable = new RoutingTable();
-		PresenceFlooder flooder = new PresenceFlooder(routingTable);
+		routingTable.setPrivateKey(encrypter.getPrivateKey());
+		
+		PresenceFlooder flooder = new PresenceFlooder(routingTable, encrypter);
 		TableDecay tabledecay = new TableDecay(routingTable);
 		Thread threadf = new Thread(flooder);
 		threadf.start();
