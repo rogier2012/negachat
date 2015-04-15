@@ -84,7 +84,7 @@ public class AssymetricEncrypter {
 
 	}
 
-	public byte[] Encrypt(byte[] message, PublicKey pubKey) {
+	public static byte[] Encrypt(byte[] message, PublicKey pubKey) {
 		byte[] EncryptedMessage = null;
 		try {
 			RSACipher.init(Cipher.ENCRYPT_MODE, pubKey);
