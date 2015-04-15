@@ -1,6 +1,8 @@
 package negachat.packets;
 
-import java.nio.ByteBuffer;
+import java.security.DigestException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 
 import negachat.client.RoutingTable;
@@ -112,16 +114,41 @@ public class MessagePacket extends Packet implements DirectPacket {
 	}
 	
 	public byte[] makeHash(String src, String dest, String msg) {
+		byte[] hashCode = null;
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			System.out.println("No such algorithm!");
+		}
 		byte[] toHash = new byte[msg.length() + dest.length() + source.length()];
-	
 		System.arraycopy(src.getBytes(), 0, toHash, 0, src.length());
-
 		System.arraycopy(dest.getBytes(), 0, toHash, src.length(), dest.length());
-
 		System.arraycopy(msg.getBytes(), 0, toHash, src.length() + dest.length(), msg.length());
+		try {
+		    md.update(toHash);
+		    hashCode = ((MessageDigest) md.clone()).digest();
+		 } catch (CloneNotSupportedException cnse) {
+		     System.out.println("couldn't make digest of this content.");
+		 } catch (NullPointerException e) {
+			 System.out.println("MessageDigest md not initialized!");
+		 }
+		return hashCode;
 		
-		int hashCode = toHash.hashCode();
-		return ByteBuffer.allocate(4).putInt(hashCode).array();
+		
+		
+		
+//		byte[] toHash = new byte[msg.length() + dest.length() + source.length()];
+//	
+//		System.arraycopy(src.getBytes(), 0, toHash, 0, src.length());
+//
+//		System.arraycopy(dest.getBytes(), 0, toHash, src.length(), dest.length());
+//
+//		System.arraycopy(msg.getBytes(), 0, toHash, src.length() + dest.length(), msg.length());
+//		
+//		int hashCode = toHash.hashCode();
+//		return ByteBuffer.allocate(4).putInt(hashCode).array();
 	}
 
 	public byte getSeqNum() {
