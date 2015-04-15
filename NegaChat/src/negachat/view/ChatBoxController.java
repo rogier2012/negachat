@@ -16,9 +16,12 @@ public class ChatBoxController {
 
 	public void setMessage(String message){
 		chatBox.append(message);
-		if (message.charAt(0) == '3' && message.charAt(1) == '0')	{
+		String msg = message.split(":")[1].trim();
+		System.out.println("0: " + msg.charAt(0));
+		System.out.println("1: " + msg.charAt(1));
+		if (msg.charAt(0) == '3' && msg.charAt(1) == '0')	{
 			playSound(WOLOLO);
-		} else if(message.charAt(0) == '1' && message.charAt(1) == '1')	{
+		} else if(msg.charAt(0) == '1' && msg.charAt(1) == '1')	{
 			playSound(HERB_LAUGH);
 		} else	{
 			playSound(NOTIFIER);
