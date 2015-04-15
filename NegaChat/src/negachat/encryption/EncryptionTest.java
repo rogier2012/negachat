@@ -62,16 +62,19 @@ public class EncryptionTest {
 		System.out.println(Christiaan.getKey().getEncoded().length);
 		
 
-
+		AssymetricEncrypter bob = new AssymetricEncrypter();
+		
 		String testcase1 = "aa";
 		String testcase2 = "sprhYgLiG8bytmYAadwaISVFozxt6S78WDraUX6UcnPXZA3DzWmQ1GpzPm71HBq39gfaWyGVaeucBmemLi7XDwHgmlUrbcyAxrgzhi8o1PBtzvZczCz6m";
-		 
+		byte[] t1e = bob.Encrypt(testcase1.getBytes());
+		byte[] t2e = bob.Encrypt(testcase2.getBytes());
+		System.out.println("Testcase 1 heeft een grootte: " + testcase1.length() +  " maar een encrypted byte[] size van " + t1e.length);
+		System.out.println("Testcase 2 heeft een grootte: " + testcase2.length() +  " maar een encrypted byte[] size van " + t2e.length);
+		System.out.println(bob.getKey().getEncoded().length);
+		PublicKey test = bob.unwrapKey(bob.wrapKey());
+		byte[] test1 = bob.Encrypt(testcase1, test);
+		System.out.println(new String(bob.Decrypt(test1)));
 	}
 	
-	public static ArrayList<String> split(String msg){
-		ArrayList<String> result = new ArrayList<String>();
-		result.add(msg.substring(0, 64));
-		result.add(msg.substring(64, 128));
-		return result;
-	}
+
 }
