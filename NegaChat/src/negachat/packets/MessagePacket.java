@@ -32,7 +32,6 @@ public class MessagePacket extends Packet implements DirectPacket {
 		super();
 		this.source = NegaView.getMyName();
 		this.destination = destination;
-		this.table = table;
 	}
 
 	public MessagePacket(byte[] packetArray, RoutingTable table) {
