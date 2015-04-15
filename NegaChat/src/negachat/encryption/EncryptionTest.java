@@ -71,9 +71,9 @@ public class EncryptionTest {
 		System.out.println("Testcase 1 heeft een grootte: " + testcase1.length() +  " maar een encrypted byte[] size van " + t1e.length);
 		System.out.println("Testcase 2 heeft een grootte: " + testcase2.length() +  " maar een encrypted byte[] size van " + t2e.length);
 		System.out.println(bob.getKey().getEncoded().length);
-		PublicKey test = bob.unwrapKey(bob.wrapKey());
+		PublicKey test = AssymetricEncrypter.unwrapKey(bob.wrapKey());
 		byte[] test1 = bob.Encrypt(testcase1, test);
-		System.out.println(new String(bob.Decrypt(test1)));
+		System.out.println(new String(AssymetricEncrypter.Decrypt(test1, bob.getPrivateKey())));
 	}
 	
 

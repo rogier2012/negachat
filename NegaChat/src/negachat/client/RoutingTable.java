@@ -3,6 +3,7 @@ package negachat.client;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -35,6 +36,8 @@ public class RoutingTable extends Observable {
 	private  String removedDestination;
 	// Last destination that was added to the RoutingTable
 	private  String addedDestination;
+	
+	private PrivateKey privateKey;
 	
 	// List of all nodes for which we have sent a RREQ and no RREP has returned
 	private  List<String> requestedDestinations;
@@ -93,6 +96,8 @@ public class RoutingTable extends Observable {
 		this.notifyObservers(1);
 		
 	}
+	
+	
 	
 	public void removeDestination(String destination){
 		removedDestination = destination;
@@ -155,6 +160,14 @@ public class RoutingTable extends Observable {
 
 	public void setRequestedDestinations(List<String> requestedDestinations) {
 		this.requestedDestinations = requestedDestinations;
+	}
+
+	public PrivateKey getPrivateKey() {
+		return privateKey;
+	}
+
+	public void setPrivateKey(PrivateKey privateKey) {
+		this.privateKey = privateKey;
 	}
 	
 }

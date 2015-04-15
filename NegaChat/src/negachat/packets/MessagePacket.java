@@ -1,7 +1,7 @@
 package negachat.packets;
 
-import negachat.packets.DirectPacket;
-import negachat.packets.Packet;
+import negachat.client.RoutingTable;
+import negachat.encryption.AssymetricEncrypter;
 import negachat.view.NegaView;
 
 public class MessagePacket extends Packet implements DirectPacket {
@@ -30,7 +30,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 		this.destination = destination;
 	}
 
-	public MessagePacket(byte[] packetArray) {
+	public MessagePacket(byte[] packetArray, RoutingTable table) {
 		super(packetArray);
 		this.setType(packetArray[0]);
 		byte[] sourceArray = new byte[16];
@@ -47,7 +47,7 @@ public class MessagePacket extends Packet implements DirectPacket {
 		byte[] messageArray = new byte[128];
 		System.arraycopy(packetArray, TYPELENGTH + SOURCE + DESTINATION, messageArray, 0,
 				MESSAGE);
-		this.setMessage(this.removePadding(new String(messageArray)));
+		this.setMessage((new String(this.decrypt(messageArray, table))));
 
 		this.setSeqNum(packetArray[TYPELENGTH + + DESTINATION +SOURCE + MESSAGE]);
 		
@@ -150,6 +150,11 @@ public class MessagePacket extends Packet implements DirectPacket {
 
 	public void setDestination(String destination) {
 		this.destination = destination;
+	}
+	
+	public byte[] decrypt(byte[] encryptedMessage, RoutingTable table){
+		byte[] result = AssymetricEncrypter.Decrypt(encryptedMessage, table.getPrivateKey());
+		return result;
 	}
 
 	@Override

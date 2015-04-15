@@ -3,12 +3,13 @@ package negachat.packets.AODV;
 import java.security.PublicKey;
 
 import negachat.client.RoutingTable;
+import negachat.encryption.AssymetricEncrypter;
 import negachat.packets.Packet;
 
 /*
  * HELLO packets are broadcasted over the network to notify other nodes of its existence in the network.
  * 
- * Lay-Out: 1 + 16 + 4 + 1 + 168 = 190
+ * Lay-Out: 1 + 16 + 4 + 1 + 162 = 190
  * [Type][Source][myIP][hopCount][Publickey]
  * 
  */
@@ -35,12 +36,15 @@ public class HELLO extends Packet {
 	
 	private byte hopCount;
 	
-	private PublicKey key;
+	private PublicKey publickey;
 	
-	public HELLO(String source, RoutingTable table) {
+	
+
+	public HELLO(String source, RoutingTable table, PublicKey publickey) {
 		this.myIP = table.getMyIP();
 		this.setType(TYPE);
-		hopCount = 0; 
+		hopCount = 0;
+		this.publickey = publickey;
 	}
 	
 	public HELLO(byte[] byteArray)	{
@@ -51,8 +55,13 @@ public class HELLO extends Packet {
 		this.setSource(this.removePadding(new String(temp)));
 		temp = new byte[4];
 		System.arraycopy(byteArray, SOURCEINDEX + SOURCELENGTH, temp, 0, 4);
+		
 		this.myIP = temp;
-		this.hopCount = byteArray[byteArray.length - 1];
+		this.hopCount = byteArray[21];
+		
+		temp = new byte[PUBLICKEYLENGTH];
+		System.arraycopy(byteArray, 22, temp, 0, PUBLICKEYLENGTH);
+		this.setPublickey(AssymetricEncrypter.unwrapKey(temp));
 	}
 	
 	/*
@@ -61,8 +70,9 @@ public class HELLO extends Packet {
 	
 	@Override
 	public byte[] toByteArray() {
-		byte[] result = new byte[22];
+		byte[] result = new byte[184];
 		byte[] source = fillNickname(this.getSource());
+		byte[] publickey = this.getPublickey().getEncoded();
 		byte type = this.getType();
 		
 		result[0] = type;
@@ -70,7 +80,9 @@ public class HELLO extends Packet {
 		System.arraycopy(source, 0, result, SOURCEINDEX, SOURCELENGTH);
 		System.arraycopy(this.myIP, 0, result, SOURCEINDEX + SOURCELENGTH, 4);
 		
-		result[result.length - 1] = hopCount;
+		result[21] = hopCount;
+		System.arraycopy(publickey, 0, result, 22, PUBLICKEYLENGTH);
+		
 		return result;
 	}
 
@@ -88,5 +100,13 @@ public class HELLO extends Packet {
 
 	public void setHopCount(byte hopCount) {
 		this.hopCount = hopCount;
+	}
+	
+	public PublicKey getPublickey() {
+		return publickey;
+	}
+
+	public void setPublickey(PublicKey publickey) {
+		this.publickey = publickey;
 	}
 }

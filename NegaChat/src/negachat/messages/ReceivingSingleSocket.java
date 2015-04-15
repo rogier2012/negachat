@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.security.PublicKey;
 
 import negachat.client.RoutingTable;
 import negachat.packets.DirectPacket;
@@ -46,7 +47,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 						.println("Oops... Something went wrong receiving a packet.");
 			}
 			if (recv.getData()[0] == MessagePacket.TYPE) {
-				MessagePacket packet = new MessagePacket(recv.getData());
+				MessagePacket packet = new MessagePacket(recv.getData(), table);
 				System.out.println("MessagePacket received!");
 				handlePacket(packet);
 			} else if (recv.getData()[0] == RREP.TYPE) {
@@ -91,7 +92,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 			String lastSource = pakket.getLastSource();
 			
 			// Update Table
-			table.addDestination(source, lastSource, hopCount);
+			table.addDestination(source, lastSource, hopCount, (PublicKey)table.getTable().get(source).get(3));
 			
 			// Did I send the request for this RREP?
 			if (table.getRequestedDestinations().contains(source))	{

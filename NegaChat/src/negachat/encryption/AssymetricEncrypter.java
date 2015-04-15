@@ -16,7 +16,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 public class AssymetricEncrypter {
-	Cipher RSACipher;
+	private static Cipher RSACipher;
 	private PrivateKey privateKey;
 	private PublicKey publicKey;
 	private final String ALGORITHM = "RSA";
@@ -65,10 +65,10 @@ public class AssymetricEncrypter {
 		return EncryptedMessage;
 	}
 
-	public byte[] Decrypt(byte[] message) {
+	public static byte[] Decrypt(byte[] message, PrivateKey pkey) {
 		byte[] DecryptedMessage = null;
 		try {
-			RSACipher.init(Cipher.DECRYPT_MODE, privateKey);
+			RSACipher.init(Cipher.DECRYPT_MODE, pkey);
 		} catch (InvalidKeyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,6 +116,10 @@ public class AssymetricEncrypter {
 		return publicKey;
 	}
 
+	public PrivateKey getPrivateKey() {
+		return privateKey;
+	}
+
 	public void setKey(PublicKey publicKey) {
 		this.publicKey = publicKey;
 	}
@@ -124,7 +128,7 @@ public class AssymetricEncrypter {
 		return publicKey.getEncoded();
 	}
 
-	public PublicKey unwrapKey(byte[] encodedKey) {
+	public static PublicKey unwrapKey(byte[] encodedKey) {
 		try {
 			PublicKey publicKey = KeyFactory.getInstance("RSA").generatePublic(
 					new X509EncodedKeySpec(encodedKey));

@@ -8,13 +8,13 @@ public class HashTest {
 		packet.setMessage("ditiseentest!");
 		packet.toByteArray();
 		
-		MessagePacket received = new MessagePacket(packet.toByteArray());
+//		MessagePacket received = new MessagePacket(packet.toByteArray());
 		
-		byte[] hash = received.retrieveHash(packet.toByteArray());
-		byte[] packet2 = received.packetWithoutHash(packet.toByteArray());
+//		byte[] hash = received.retrieveHash(packet.toByteArray());
+//		byte[] packet2 = received.packetWithoutHash(packet.toByteArray());
 		
-		System.out.println(hash.length);
-		System.out.println(packet2.length);
+//		System.out.println(hash.length);
+//		System.out.println(packet2.length);
 
 //		System.out.println(new String(hash).equals(new String(received.makeHash(packet2))));
 	}
