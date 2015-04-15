@@ -11,14 +11,16 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
+import negachat.client.ClientHandler;
+
 @SuppressWarnings("serial")
 public class CloseTabButton extends JPanel implements ActionListener {
 	private JTabbedPane pane;
-	private WhoIsOnlineController onlineController;
+	private ClientHandler handler;
 
-	public CloseTabButton(JTabbedPane pane, int index, WhoIsOnlineController onlineController) {
+	public CloseTabButton(JTabbedPane pane, int index, ClientHandler handler) {
 		this.pane = pane;
-		this.onlineController = onlineController;
+		this.handler = handler;
 		setOpaque(false);
 		add(new JLabel(pane.getTitleAt(index), pane.getIconAt(index),
 				SwingConstants.LEFT));
@@ -35,9 +37,9 @@ public class CloseTabButton extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		int i = pane.indexOfTabComponent(this);
 		if (i != -1) {
-			this.onlineController.removeClient(pane.getTitleAt(i));
+			this.handler.deleteClient(pane.getTitleAt(i));
 			pane.remove(i);
-
+			
 		}
 	}
 }
