@@ -5,7 +5,7 @@ import negachat.audio.AudioPlayer;
 public class ChatBoxController {
 	private ChatBox chatBox;
 	private AudioPlayer audioPlayer;
-	private static final String NOTIFIER = "Notifier.wav";
+	private static final String NOTIFIER = "Notification.wav";
 	private static final String WOLOLO = "30_Wololo.wav";
 	private static final String HERB_LAUGH = "11_Herb_laugh.wav";
 	
