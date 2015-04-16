@@ -65,10 +65,10 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 						if (seq > packet.getSeqNum()) {
 							SendingMultiSocket sendingsocket = new SendingMultiSocket();
 							sendingsocket.send(packet);
-							lastSeqNumber.put(packet.getSource(), packet.getSeqNum());
+							lastSeqNumber.put(packet.getSource(), (byte) (packet.getSeqNum() % 255));
 						}
 					} else { // als ik deze source nog niet eerder heb ontvangen, seq nummer onthouden en doorsturen
-						lastSeqNumber.put(packet.getSource(), packet.getSeqNum());
+						lastSeqNumber.put(packet.getSource(), (byte) (packet.getSeqNum() % 255));
 						SendingMultiSocket sendingsocket = new SendingMultiSocket();
 						sendingsocket.send(packet);
 					}
