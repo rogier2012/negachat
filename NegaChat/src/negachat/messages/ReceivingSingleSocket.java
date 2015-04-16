@@ -120,7 +120,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 				// Loop through nexthops that should be cleared
 				for (String nextHop : pakket.getLostRoutes()){
 					// If the route's nextHop is equal to the nexthop that is to be removed
-					if (table.getNextHop(route) == nextHop)	{
+					if (table.getNextHop(route).equals(nextHop))	{
 						// Clear Route
 						table.getTable().get(route).set(0, null);
 						table.getTable().get(route).set(1, 0);
