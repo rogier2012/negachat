@@ -77,7 +77,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			
 		} while (true);
 	}
-
+	
 	@Override
 	public void handlePacket(Packet packet) {
 		if (packet instanceof HELLO && !packet.getSource().equals(NegaView.getMyName())){
