@@ -91,11 +91,11 @@ public class GroupMessagePacket extends Packet{
 		return message;
 	}
 	
-	public void setReserved(String hash){
-		this.reserved = hash;
+	public void setReserved(String reserved){
+		this.reserved = reserved;
 	}
 	
-	public String getHash(){
+	public String getReserved(){
 		return reserved;
 	}
 	
