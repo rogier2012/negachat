@@ -116,7 +116,7 @@ public class ReceivingSingleSocket extends ReceivingSocket {
 				table.getTable().get(element).set(1, 0);
 			}
 			// Clear Routes where these destinations are next hops
-			for (String route : table.getTable().keySet())	{
+			for (String route : table.getTable().keySet())	{ 
 				// Loop through nexthops that should be cleared
 				for (String nextHop : pakket.getLostRoutes()){
 					// If the route's nextHop is equal to the nexthop that is to be removed
