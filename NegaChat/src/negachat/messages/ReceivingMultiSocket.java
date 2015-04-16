@@ -57,6 +57,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			} else if (recv.getData()[0] == GroupMessagePacket.TYPE) {
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
+				System.out.println("sequence number of received packet from " + packet.getSource() + " has sequence number " + packet.getSeqNum());
 				if(!packet.getSource().equals(NegaView.getMyName())) {
 					// als ik al een pakket heb gehad van deze source en het seq nummer uit het pakket is groter dan een die ik al heb gehad => doorsturen
 					if (lastSeqNumber.containsKey(packet.getSource())) {
@@ -64,10 +65,10 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 						if (seq > packet.getSeqNum()) {
 							SendingMultiSocket sendingsocket = new SendingMultiSocket();
 							sendingsocket.send(packet);
-							lastSeqNumber.put(packet.getSource(), packet.getSeqNum());
+							lastSeqNumber.put(packet.getSource(), (byte) (packet.getSeqNum() % 255));
 						}
 					} else { // als ik deze source nog niet eerder heb ontvangen, seq nummer onthouden en doorsturen
-						lastSeqNumber.put(packet.getSource(), packet.getSeqNum());
+						lastSeqNumber.put(packet.getSource(), (byte) (packet.getSeqNum() % 255));
 						SendingMultiSocket sendingsocket = new SendingMultiSocket();
 						sendingsocket.send(packet);
 					}
@@ -76,7 +77,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			
 		} while (true);
 	}
-
+	
 	@Override
 	public void handlePacket(Packet packet) {
 		if (packet instanceof HELLO && !packet.getSource().equals(NegaView.getMyName())){
@@ -155,7 +156,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 		} else if (packet instanceof GroupMessagePacket){
 //			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
 			if (!packet.getSource().equals(NegaView.getMyName()))	{
-				System.out.println("Group Message received! \n");
+				System.out.println("Group Message received from " + packet.getSource());
 				setTimestamp(System.currentTimeMillis());
 				this.setRecvPacket(packet);
 				this.setChanged();

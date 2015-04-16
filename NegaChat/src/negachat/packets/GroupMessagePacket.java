@@ -53,7 +53,7 @@ public class GroupMessagePacket extends Packet{
 		type = TYPE;
 		src = this.fillNickname(this.getSource());
 		msg = this.fillMessage(this.getMessage());
-		sqn = (byte) (this.getSeqNum() + 1);
+		sqn = (byte) ((this.getSeqNum() + 1) % 255);
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
