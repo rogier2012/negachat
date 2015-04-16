@@ -123,7 +123,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 					// Send HELLO!
 					sendSocket.send(forward);
 				}
-				
 			}
 			 
 		} else if (packet instanceof RREQ){
