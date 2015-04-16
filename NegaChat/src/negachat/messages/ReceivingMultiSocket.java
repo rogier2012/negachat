@@ -81,7 +81,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 	public void handlePacket(Packet packet) {
 		if (packet instanceof HELLO && !packet.getSource().equals(NegaView.getMyName())){
 			// Cast to HELLO
-			System.out.println("A wild chatling appeared \n");
+			System.out.println("A wild chatling appeared from " + packet.getSource());
 			HELLO pakket = (HELLO) packet;
 			String source = pakket.getSource();
 			byte hopCount = pakket.getHopCount();
@@ -121,8 +121,9 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 					forward.setHopCount((byte)(pakket.getHopCount() + 1));
 					// Send HELLO!
 					sendSocket.send(forward);
+					System.out.println("HELLO received from " + forward.getSource());
+					System.out.println("HELLO forwarded");
 				}
-				
 			}
 			 
 		} else if (packet instanceof RREQ){
@@ -139,6 +140,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				// Send reply
 				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
 				sendSocket.sendPacket(new RREP(destination, source));
+				System.out.println("RREP sent!");
 			} else if (pakket.getLifeSpan() > 2){ // (I am not the requested node)
 				// Do I know a valid route to the requested node?
 				if (table.getTable().containsKey(destination) && table.getTable().get(destination).get(0) != null)	{
