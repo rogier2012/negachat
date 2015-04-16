@@ -3,10 +3,11 @@ package negachat.messages;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-
 import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
@@ -61,7 +62,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 					// als ik al een pakket heb gehad van deze source en het seq nummer uit het pakket is groter dan een die ik al heb gehad => doorsturen
 					if (lastSeqNumber.containsKey(packet.getSource())) {
 						byte seq = lastSeqNumber.get(packet.getSource());
-						if (seq > packet.getSeqNum()) {
+						if (seq > packet.getSeqNum() || (packet.getSeqNum() % 255) == 0) {
 							SendingMultiSocket sendingsocket = new SendingMultiSocket();
 							sendingsocket.send(packet);
 							lastSeqNumber.put(packet.getSource(), (byte) (packet.getSeqNum() % 255));
@@ -139,19 +140,18 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			if (NegaView.getMyName().equals(destination))	{
 				// Send reply
 				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
-				sendSocket.sendPacket(new RREP(destination, source));
+				sendSocket.sendPacket(new RREP(source, destination));
 				System.out.println("RREP sent!");
 			} else if (pakket.getLifeSpan() > 2){ // (I am not the requested node)
 				// Do I know a valid route to the requested node?
 				if (table.getTable().containsKey(destination) && table.getTable().get(destination).get(0) != null)	{
 					// Send reply
 					SendingSingleSocket sendSocket = new SendingSingleSocket(table);
-					sendSocket.sendPacket(new RREP(destination, source));
+					sendSocket.sendPacket(new RREP(source, destination));
 				} else	{ // (I do not know a route to the requested destination)
 					// Forward RREQ with a decremented TTL
 					SendingMultiSocket sendSocket = new SendingMultiSocket();
-					((RREQ) packet).setLifeSpan((byte)(((RREQ) packet).getLifeSpan()-1));
-					sendSocket.send(packet);
+					sendSocket.send(new RREQ(destination, (byte)(pakket.getLifeSpan() - 1), pakket.getIdentifier()));
 				}
 			}	
 			
