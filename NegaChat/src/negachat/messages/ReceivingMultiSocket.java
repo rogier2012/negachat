@@ -8,7 +8,6 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-
 import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
@@ -105,7 +104,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			}
 			// Is the maximum travel distance for this HELLO packet reached?
 			// Did I send this HELLO?
-			if (hopCount >= HELLO.MAXHOPS || pakket.getSource() == NegaView.getMyName())	{
+			if (hopCount >= HELLO.MAXHOPS || pakket.getSource().equals(NegaView.getMyName()))	{
 				// Do nothing!
 	
 			} else	{ // (Packet should be forwarded)
@@ -132,11 +131,11 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			// Not possible atm since we dont know who forwarded the RREQ
 			
 			// Am I the requested node? 
-			if (NegaView.getMyName() == destination)	{
+			if (NegaView.getMyName().equals(destination))	{
 				// Send reply
 				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
 				sendSocket.sendPacket(new RREP(source, destination));
-			} else { // (I am not the requested node)
+			} else if (pakket.getLifeSpan() > 2){ // (I am not the requested node)
 				// Do I know a valid route to the requested node?
 				if (table.getTable().containsKey(destination) && table.getTable().get(destination).get(0) != null)	{
 					// Send reply

@@ -9,7 +9,7 @@ import negachat.packets.Packet;
 /*
  * HELLO packets are broadcasted over the network to notify other nodes of its existence in the network.
  * 
- * Lay-Out: 1 + 16 + 4 + 1 + 162 = 190
+ * Lay-Out: 1 + 16 + 4 + 1 + 162 = 184
  * [Type][Source][myIP][hopCount][Publickey]
  * 
  */
@@ -20,13 +20,19 @@ public class HELLO extends Packet {
 	 */
 	
 	// Maximum travel distance for a HELLO packet
-	public static final byte MAXHOPS = 4;
+	public static final int MAXHOPS = 4;
 	// Type ID of packet
 	public static final byte TYPE = 1;
 	
 	public static final int SOURCELENGTH = 16;
 	
+	public static final int IPLENGTH = 4;
+	
+	public static final int HOPCOUNTLENGTH =1;
+	
 	public static final int PUBLICKEYLENGTH = 162;
+	
+	public static final int TOTAL = 1 + SOURCELENGTH + IPLENGTH + HOPCOUNTLENGTH + PUBLICKEYLENGTH;
 	
 	/*
 	 * Instance Variables
@@ -53,14 +59,14 @@ public class HELLO extends Packet {
 		byte[] temp = new byte[SOURCELENGTH];
 		System.arraycopy(byteArray, SOURCEINDEX, temp, 0, SOURCELENGTH);
 		this.setSource(this.removePadding(new String(temp)));
-		temp = new byte[4];
-		System.arraycopy(byteArray, SOURCEINDEX + SOURCELENGTH, temp, 0, 4);
+		temp = new byte[IPLENGTH];
+		System.arraycopy(byteArray, SOURCEINDEX + SOURCELENGTH, temp, 0, IPLENGTH);
 		
 		this.myIP = temp;
-		this.hopCount = byteArray[21];
+		this.hopCount = byteArray[SOURCEINDEX + SOURCELENGTH + IPLENGTH];
 		
 		temp = new byte[PUBLICKEYLENGTH];
-		System.arraycopy(byteArray, 22, temp, 0, PUBLICKEYLENGTH);
+		System.arraycopy(byteArray, SOURCEINDEX + SOURCELENGTH + IPLENGTH + HOPCOUNTLENGTH, temp, 0, PUBLICKEYLENGTH);
 		this.setPublickey(AssymetricEncrypter.unwrapKey(temp));
 	}
 	
@@ -70,7 +76,7 @@ public class HELLO extends Packet {
 	
 	@Override
 	public byte[] toByteArray() {
-		byte[] result = new byte[184];
+		byte[] result = new byte[TOTAL];
 		byte[] source = fillNickname(this.getSource());
 		byte[] publickey = this.getPublickey().getEncoded();
 		byte type = this.getType();

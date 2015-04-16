@@ -65,15 +65,6 @@ public class MessagePacket extends Packet implements DirectPacket {
 		hash = hashArray;
 	}
 
-	// TODO
-	// public Packet(String source, String destination, String message, byte[]
-	// options) {
-	// this.setSource(source);
-	// this.setDestination(destination);
-	// this.setMessage(message);
-	// this.setOptions(options);
-	// }
-
 	// 10/4 PACKET FORMAT:
 
 	// [type] [source] [destination] [message] [options] [hash]
