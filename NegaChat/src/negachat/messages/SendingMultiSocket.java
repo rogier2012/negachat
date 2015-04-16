@@ -37,6 +37,7 @@ public class SendingMultiSocket {
 			sendingSocket.send(dPacket);
 			sendingSocket.leaveGroup(group);
 			sendingSocket.close();
+			System.out.println("Group message sent! \n");
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Oops... Something went wrong sending this packet.");

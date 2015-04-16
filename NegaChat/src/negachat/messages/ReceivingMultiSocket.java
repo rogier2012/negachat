@@ -58,19 +58,23 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
 				if(!packet.getSource().equals(NegaView.getMyName())) {
+					// als ik al een pakket heb gehad van deze source en het seq nummer uit het pakket is groter dan een die ik al heb gehad => doorsturen
 					if (lastSeqNumber.containsKey(packet.getSource())) {
 						byte seq = lastSeqNumber.get(packet.getSource());
 						if (seq > packet.getSeqNum()) {
 							SendingMultiSocket sendingsocket = new SendingMultiSocket();
 							sendingsocket.send(packet);
+							lastSeqNumber.put(packet.getSource(), packet.getSeqNum());
 						}
-					} else {
-						lastSeqNumber.put(packet.getSource(), (byte) 0);
+					} else { // als ik deze source nog niet eerder heb ontvangen, seq nummer onthouden en doorsturen
+						lastSeqNumber.put(packet.getSource(), packet.getSeqNum());
+						SendingMultiSocket sendingsocket = new SendingMultiSocket();
+						sendingsocket.send(packet);
 					}
 				}
 			}
 			
-		} while (1 < 2);
+		} while (true);
 	}
 
 	@Override
