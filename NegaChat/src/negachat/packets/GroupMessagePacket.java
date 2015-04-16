@@ -40,6 +40,7 @@ public class GroupMessagePacket extends Packet{
 			this.setMessage(this.removePadding(new String(decrypt(messageArray))));
 			
 			this.setSeqNum(data[TYPELENGTH + SOURCE + MESSAGE]);
+			System.out.println("SequenceNumber: " + this.getSeqNum());
 			byte[] hashArray = new byte[4];
 			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + SEQNUM, hashArray, 0, HASH);
 			setHash(new String(hashArray));
@@ -48,22 +49,19 @@ public class GroupMessagePacket extends Packet{
 	@Override
 	public byte[] toByteArray() {		
 		byte[] src, msg, hash;
-		byte type, opt;
+		byte type, sqn;
 		type = TYPE;
 		src = this.fillNickname(this.getSource());
 		msg = this.fillMessage(this.getMessage());
-		opt = this.getSeqNum();	
+		sqn = (byte) (this.getSeqNum() + 1);
 		hash = makeHash().getBytes();
 
 		byte[] bytePacket = new byte[TOTAL];
 		bytePacket[0] = type;
 		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE - 1);
 		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+SOURCE, MESSAGE - 1);
-		bytePacket[TOTAL - HASH - 1] = opt;
+		bytePacket[TOTAL - HASH - 1] = sqn;
 		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+SEQNUM, HASH - 1);
-		
-		
-		System.out.println("Group message has been sent! \n");
 		return bytePacket;
 	}
 	

@@ -59,19 +59,23 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
 				if(!packet.getSource().equals(NegaView.getMyName())) {
+					// als ik al een pakket heb gehad van deze source en het seq nummer uit het pakket is groter dan een die ik al heb gehad => doorsturen
 					if (lastSeqNumber.containsKey(packet.getSource())) {
 						byte seq = lastSeqNumber.get(packet.getSource());
 						if (seq > packet.getSeqNum()) {
 							SendingMultiSocket sendingsocket = new SendingMultiSocket();
 							sendingsocket.send(packet);
+							lastSeqNumber.put(packet.getSource(), packet.getSeqNum());
 						}
-					} else {
-						lastSeqNumber.put(packet.getSource(), (byte) 0);
+					} else { // als ik deze source nog niet eerder heb ontvangen, seq nummer onthouden en doorsturen
+						lastSeqNumber.put(packet.getSource(), packet.getSeqNum());
+						SendingMultiSocket sendingsocket = new SendingMultiSocket();
+						sendingsocket.send(packet);
 					}
 				}
 			}
 			
-		} while (1 < 2);
+		} while (true);
 	}
 
 	@Override
@@ -105,7 +109,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			}
 			// Is the maximum travel distance for this HELLO packet reached?
 			// Did I send this HELLO?
-			if (hopCount >= HELLO.MAXHOPS || pakket.getSource() == NegaView.getMyName())	{
+			if (hopCount >= HELLO.MAXHOPS || pakket.getSource().equals(NegaView.getMyName()))	{
 				// Do nothing!
 	
 			} else	{ // (Packet should be forwarded)
@@ -132,7 +136,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			// Not possible atm since we dont know who forwarded the RREQ
 			
 			// Am I the requested node? 
-			if (NegaView.getMyName() == destination)	{
+			if (NegaView.getMyName().equals(destination))	{
 				// Send reply
 				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
 				sendSocket.sendPacket(new RREP(source, destination));
