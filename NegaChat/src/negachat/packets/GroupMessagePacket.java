@@ -11,7 +11,7 @@ import negachat.view.NegaView;
 public class GroupMessagePacket extends Packet{
 	
 	private byte seqNum;
-	private String source, message, hash;
+	private String source, message, reserved;
 
 
 	public static final byte TYPE = 0x05;
@@ -20,8 +20,8 @@ public class GroupMessagePacket extends Packet{
 	public static final int SOURCE = 16;
 	public static final int MESSAGE = 128;
 	public static final int SEQNUM = 1;
-	public static final int HASH = 4;
-	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + SEQNUM + HASH;
+	public static final int RESERVED = 4;
+	public static final int TOTAL = TYPELENGTH + SOURCE + MESSAGE + SEQNUM + RESERVED;
 	
 	public GroupMessagePacket(){
 		super();
@@ -40,9 +40,9 @@ public class GroupMessagePacket extends Packet{
 			this.setMessage(this.removePadding(new String(decrypt(messageArray))));
 			
 			this.setSeqNum(data[TYPELENGTH + SOURCE + MESSAGE]);
-			byte[] hashArray = new byte[HASH];
-			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + SEQNUM, hashArray, 0, HASH);
-			setHash(new String(hashArray));
+			byte[] hashArray = new byte[RESERVED];
+			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + SEQNUM, hashArray, 0, RESERVED);
+			setReserved(new String(hashArray));
 	}
 
 	@Override
@@ -53,27 +53,15 @@ public class GroupMessagePacket extends Packet{
 		src = this.fillNickname(this.getSource());
 		msg = this.fillMessage(this.getMessage());
 		sqn = (byte) ((this.getSeqNum() + 1) % 255);
-		hash = makeHash().getBytes();
+		hash = new byte[RESERVED];
 
 		byte[] bytePacket = new byte[TOTAL];
 		bytePacket[0] = type;
-		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE - 1);
-		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+SOURCE, MESSAGE - 1);
-		bytePacket[TOTAL - HASH - 1] = sqn;
-		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+SEQNUM, HASH - 1);
+		System.arraycopy(src, 0, bytePacket, TYPELENGTH, SOURCE);
+		System.arraycopy(msg, 0, bytePacket, TYPELENGTH+SOURCE, MESSAGE);
+		bytePacket[TOTAL - RESERVED - 1] = sqn;
+		System.arraycopy(hash, 0, bytePacket, TYPELENGTH+SOURCE+MESSAGE+SEQNUM, RESERVED);
 		return bytePacket;
-	}
-	
-	public String makeHash() {
-		hash =  "";
-		setHash("0x00");
-		int hashCode = this.hashCode();
-		byte[] hash = new byte[]{
-				(byte) ((hashCode >> 24) & 0xFF),
-		        (byte) ((hashCode >> 16) & 0xFF),   
-		        (byte) ((hashCode >> 8) & 0xFF),  
-		        (byte) (hashCode & 0xFF)};
-		return new String(hash);
 	}
 
 	public byte getSeqNum() {
@@ -103,12 +91,12 @@ public class GroupMessagePacket extends Packet{
 		return message;
 	}
 	
-	public void setHash(String hash){
-		this.hash = hash;
+	public void setReserved(String hash){
+		this.reserved = hash;
 	}
 	
 	public String getHash(){
-		return hash;
+		return reserved;
 	}
 	
 	@Override

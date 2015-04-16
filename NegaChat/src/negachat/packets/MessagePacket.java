@@ -1,7 +1,5 @@
 package negachat.packets;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 
 import negachat.client.RoutingTable;
@@ -19,15 +17,15 @@ public class MessagePacket extends Packet implements DirectPacket {
 	public static final int SOURCE = 16;
 	public static final int MESSAGE = 128;
 	public static final int OPTIONS = 1;
-	public static final int HASH = 4;
+	public static final int RESERVED = 4;
 
 	public static final int TOTAL = TYPELENGTH + SOURCE + DESTINATION + MESSAGE
-			+ OPTIONS + HASH;
+			+ OPTIONS + RESERVED;
 
 	private byte seqnum;
 	private String source, destination, message;
 	private RoutingTable table;
-	byte[] hash;
+	byte[] reserved;
 
 	public MessagePacket(String destination, RoutingTable table) {
 		super();
@@ -59,15 +57,15 @@ public class MessagePacket extends Packet implements DirectPacket {
 		this.setSeqNum(packetArray[TYPELENGTH + DESTINATION +SOURCE + MESSAGE]);
 		
 		
-		byte[] hashArray = new byte[4];
+		byte[] reservedArray = new byte[RESERVED];
 		System.arraycopy(packetArray, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS,
-				hashArray, 0, HASH);
-		hash = hashArray;
+				reservedArray, 0, RESERVED);
+		reserved = reservedArray;
 	}
 
 	// 10/4 PACKET FORMAT:
 
-	// [type] [source] [destination] [message] [options] [hash]
+	// [type] [source] [destination] [message] [options] [reserved]
 	// 1 byte 16 bytes 16 bytes 128 bytes 1 byte 4 bytes
 
 	@Override
@@ -95,50 +93,12 @@ public class MessagePacket extends Packet implements DirectPacket {
 		bytePacket[TYPELENGTH + DESTINATION + SOURCE + MESSAGE] = opt;
 		
 
-		hash = makeHash(getSource(), getDestination(), getMessage());
-		System.arraycopy(hash, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, HASH);
+		reserved = new byte[RESERVED];
+		System.arraycopy(reserved, 0, bytePacket, TYPELENGTH + DESTINATION + SOURCE + MESSAGE + OPTIONS, RESERVED);
 		
 //		System.out.println("Group message has been sent! \n");
 
 		return bytePacket;
-	}
-	
-	public byte[] makeHash(String src, String dest, String msg) {
-		byte[] hashCode = null;
-		MessageDigest md = null;
-		try {
-			md = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			System.out.println("No such algorithm!");
-		}
-		byte[] toHash = new byte[msg.length() + dest.length() + source.length()];
-		System.arraycopy(src.getBytes(), 0, toHash, 0, src.length());
-		System.arraycopy(dest.getBytes(), 0, toHash, src.length() - 1, dest.length());
-		System.arraycopy(msg.getBytes(), 0, toHash, src.length() + dest.length() - 1, msg.length());
-		try {
-		    md.update(toHash);
-		    hashCode = ((MessageDigest) md.clone()).digest();
-		 } catch (CloneNotSupportedException cnse) {
-		     System.out.println("couldn't make digest of this content.");
-		 } catch (NullPointerException e) {
-			 System.out.println("MessageDigest md not initialized!");
-		 }
-		return hashCode;
-		
-		
-		
-		
-//		byte[] toHash = new byte[msg.length() + dest.length() + source.length()];
-//	
-//		System.arraycopy(src.getBytes(), 0, toHash, 0, src.length());
-//
-//		System.arraycopy(dest.getBytes(), 0, toHash, src.length(), dest.length());
-//
-//		System.arraycopy(msg.getBytes(), 0, toHash, src.length() + dest.length(), msg.length());
-//		
-//		int hashCode = toHash.hashCode();
-//		return ByteBuffer.allocate(4).putInt(hashCode).array();
 	}
 
 	public byte getSeqNum() {
@@ -181,11 +141,11 @@ public class MessagePacket extends Packet implements DirectPacket {
 		return message;
 	}
 
-	public void setHash(byte[] hash) {
-		this.hash = hash;
+	public void setReserved(byte[] reserved) {
+		this.reserved = reserved;
 	}
 
-	public byte[] getHash() {
-		return hash;
+	public byte[] getReserved() {
+		return reserved;
 	}
 }

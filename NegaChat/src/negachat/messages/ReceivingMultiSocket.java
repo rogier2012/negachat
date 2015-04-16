@@ -154,7 +154,6 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			}	
 			
 		} else if (packet instanceof GroupMessagePacket){
-//			if (((GroupMessagePacket) packet).makeHash() == ((GroupMessagePacket) packet).getHash()) {
 			if (!packet.getSource().equals(NegaView.getMyName()))	{
 				System.out.println("Group Message received from " + packet.getSource());
 				setTimestamp(System.currentTimeMillis());
