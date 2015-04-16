@@ -31,17 +31,16 @@ public class GroupMessagePacket extends Packet{
 	public GroupMessagePacket(byte[] data) {
 			super(data);
 			this.setType(data[0]);
-			byte[] sourceArray = new byte[16];
+			byte[] sourceArray = new byte[SOURCE];
 			System.arraycopy(data, TYPELENGTH, sourceArray, 0, SOURCE);
 			this.setSource(this.removePadding(new String(sourceArray)));
 			
-			byte[] messageArray = new byte[128];
+			byte[] messageArray = new byte[MESSAGE];
 			System.arraycopy(data, TYPELENGTH + SOURCE, messageArray, 0, MESSAGE);
 			this.setMessage(this.removePadding(new String(decrypt(messageArray))));
 			
 			this.setSeqNum(data[TYPELENGTH + SOURCE + MESSAGE]);
-			System.out.println("SequenceNumber: " + this.getSeqNum());
-			byte[] hashArray = new byte[4];
+			byte[] hashArray = new byte[HASH];
 			System.arraycopy(data, TYPELENGTH + SOURCE + MESSAGE + SEQNUM, hashArray, 0, HASH);
 			setHash(new String(hashArray));
 	}
