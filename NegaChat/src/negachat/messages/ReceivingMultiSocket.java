@@ -142,7 +142,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			if (pakket.getSource().equals(NegaView.getMyName())) {
 
 				// Am I the requested node?
-				if (NegaView.getMyName() == destination) {
+				if (NegaView.getMyName().equals(destination)) {
 					// Send reply
 					SendingSingleSocket sendSocket = new SendingSingleSocket(
 							table);
