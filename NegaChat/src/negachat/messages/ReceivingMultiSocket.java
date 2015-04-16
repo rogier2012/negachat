@@ -3,11 +3,10 @@ package negachat.messages;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
-import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+
 import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
@@ -139,17 +138,18 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			if (NegaView.getMyName().equals(destination))	{
 				// Send reply
 				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
-				sendSocket.sendPacket(new RREP(source, destination));
+				sendSocket.sendPacket(new RREP(destination, source));
 			} else if (pakket.getLifeSpan() > 2){ // (I am not the requested node)
 				// Do I know a valid route to the requested node?
 				if (table.getTable().containsKey(destination) && table.getTable().get(destination).get(0) != null)	{
 					// Send reply
 					SendingSingleSocket sendSocket = new SendingSingleSocket(table);
-					sendSocket.sendPacket(new RREP(source, destination));
+					sendSocket.sendPacket(new RREP(destination, source));
 				} else	{ // (I do not know a route to the requested destination)
 					// Forward RREQ with a decremented TTL
 					SendingMultiSocket sendSocket = new SendingMultiSocket();
-					sendSocket.send(new RREQ(destination, (byte)(pakket.getLifeSpan() - 1), pakket.getIdentifier()));
+					((RREQ) packet).setLifeSpan((byte)(((RREQ) packet).getLifeSpan()-1));
+					sendSocket.send(packet);
 				}
 			}	
 			
