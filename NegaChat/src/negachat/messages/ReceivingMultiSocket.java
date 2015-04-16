@@ -8,7 +8,6 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-
 import negachat.client.RoutingTable;
 import negachat.packets.GroupMessagePacket;
 import negachat.packets.Packet;
@@ -141,7 +140,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 				// Send reply
 				SendingSingleSocket sendSocket = new SendingSingleSocket(table);
 				sendSocket.sendPacket(new RREP(source, destination));
-			} else { // (I am not the requested node)
+			} else if (pakket.getLifeSpan() > 2){ // (I am not the requested node)
 				// Do I know a valid route to the requested node?
 				if (table.getTable().containsKey(destination) && table.getTable().get(destination).get(0) != null)	{
 					// Send reply
