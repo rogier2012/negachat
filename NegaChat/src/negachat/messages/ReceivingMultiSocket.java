@@ -57,7 +57,7 @@ public class ReceivingMultiSocket extends ReceivingSocket {
 			} else if (recv.getData()[0] == GroupMessagePacket.TYPE) {
 				GroupMessagePacket packet = new GroupMessagePacket(recv.getData());
 				handlePacket(packet);
-				System.out.println("sequence number of received packet from " + packet.getSource() + " has sequence number " + packet.getSeqNum());
+				System.out.println("Received packet from " + packet.getSource() + " has sequence number " + packet.getSeqNum());
 				if(!packet.getSource().equals(NegaView.getMyName())) {
 					// als ik al een pakket heb gehad van deze source en het seq nummer uit het pakket is groter dan een die ik al heb gehad => doorsturen
 					if (lastSeqNumber.containsKey(packet.getSource())) {
